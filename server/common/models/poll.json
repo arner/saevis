@@ -1,0 +1,46 @@
+{
+  "name": "Poll",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "mixins": {
+    "TimeStamp": {
+      "required": false
+    },
+    "Stats": [
+      {
+        "method": "stats",
+        "endpoint": "/stats",
+        "description": "Statistical information for Poll registers.",
+        "type": "model",
+        "count": {
+          "on": "createdAt",
+          "by": "index"
+        }
+      }
+    ]
+  },
+  "properties": {
+    "options": {
+      "type": "object",
+      "required": true
+    },
+    "settings": {
+      "type": "object"
+    }
+  },
+  "validations": [],
+  "relations": {
+    "block": {
+      "type": "belongsTo",
+      "polymorphic": {
+        "foreignKey": "blockContentId",
+        "discriminator": "blockContentType"
+      }
+    }
+  },
+  "acls": [],
+  "methods": {}
+}
