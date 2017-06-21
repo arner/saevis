@@ -10,14 +10,31 @@ class GenerateData {
 
   private async createAll() {
     const topic = await this.createTopic();
-    const poll = await this.createPoll();
-    const block = await this.createBlock(poll.id, topic.id);
+    const poll = await this.createPoll(topic.id);
+   // const block = await this.createBlock(poll.id, topic.id);
   }
 
-  private async createPoll(): Promise<any> {
+  private async createPoll(topicId: number): Promise<any> {
     const poll = {
-      "options": {"1":"hi"},
-      "settings": {}
+      "topicId": topicId,
+      "text": "Ga je mee?",
+      "options": [
+        {
+          "id": "1",
+          "text": "Ja"
+        },
+        {
+          "id": "2",
+          "text": "Nee"
+        },
+        {
+          "id": "3",
+          "text": "Misschien"
+        }
+      ],
+      "settings": {
+        "multipleChoice": false
+      }
     };
     return this.app.models.Poll.create(poll);
   }
@@ -25,7 +42,6 @@ class GenerateData {
 
   private async createBlock(pollId: number, topicId: number) {
     const block = {
-      "type": "p",
       "value": {},
       "blockContentId": pollId,
       "blockContentType": "Poll",
@@ -36,9 +52,9 @@ class GenerateData {
 
   private async createTopic() {
     const topic = {
-      "title": "string",
-      "text": "string",
-    }
+      "title": "Putten 2017",
+      "text": "Wie gaat er mee",
+    };
     return this.app.models.Topic.create(topic);
   }
 }

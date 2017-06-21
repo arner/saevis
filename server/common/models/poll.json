@@ -9,6 +9,8 @@
     "TimeStamp": {
       "required": false
     },
+    "CreateBlock": {
+    },
     "Stats": [
       {
         "method": "stats",
@@ -23,8 +25,11 @@
     ]
   },
   "properties": {
+    "text": {
+      "type": "string"
+    },
     "options": {
-      "type": "object",
+      "type": "array",
       "required": true
     },
     "settings": {
@@ -33,13 +38,6 @@
   },
   "validations": [],
   "relations": {
-    "block": {
-      "type": "belongsTo",
-      "polymorphic": {
-        "foreignKey": "blockContentId",
-        "discriminator": "blockContentType"
-      }
-    }
   },
   "acls": [],
   "methods": {}

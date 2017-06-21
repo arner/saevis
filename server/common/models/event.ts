@@ -1,8 +1,8 @@
 import { Model } from '@mean-expert/model';
 /**
- * @module Block
+ * @module Event
  * @description
- * Write a useful Block Model description.
+ * Write a useful Event Model description.
  * Register hooks and remote methods within the
  * Model Decorator
  **/
@@ -18,15 +18,14 @@ import { Model } from '@mean-expert/model';
   }
 })
 
-class Block {
+class Event {
   // LoopBack model instance is injected in constructor
   constructor(public model: any) {}
 
   // Example Operation Hook
   beforeSave(ctx: any, next: Function): void {
-    console.log('Block: Before Save');
+    console.log('Event: Before Save');
     console.log(ctx.instance);
-    console.log(ctx.request);
     next();
   }
   // Example Remote Method
@@ -35,4 +34,4 @@ class Block {
   }
 }
 
-module.exports = Block;
+module.exports = Event;

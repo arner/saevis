@@ -1,5 +1,5 @@
 {
-  "name": "Block",
+  "name": "Event",
   "base": "PersistedModel",
   "idInjection": true,
   "options": {
@@ -9,11 +9,13 @@
     "TimeStamp": {
       "required": false
     },
+    "CreateBlock": {
+    },
     "Stats": [
       {
         "method": "stats",
         "endpoint": "/stats",
-        "description": "Statistical information for Block registers.",
+        "description": "Statistical information for Event registers.",
         "type": "model",
         "count": {
           "on": "createdAt",
@@ -23,21 +25,24 @@
     ]
   },
   "properties": {
-    "value": {
-      "type": "any"
+    "startTime": {
+      "type": "date",
+      "required": true
+    },
+    "endTime": {
+      "type": "date",
+      "required": true
+    },
+    "locationText": {
+      "type": "string",
+      "required": true
+    },
+    "location": {
+      "type": "geopoint"
     }
   },
   "validations": [],
   "relations": {
-    "blockContent": {
-      "type": "belongsTo",
-      "polymorphic": true
-    },
-    "topic": {
-      "type": "belongsTo",
-      "model": "Topic",
-      "foreignKey": ""
-    }
   },
   "acls": [],
   "methods": {}
