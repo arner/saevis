@@ -1,0 +1,8 @@
+  <md-list>
+    <h3 md-subheader>Types</h3>
+    <md-list-item *ngFor="let type of blockTypes" (click)="dialogRef.close(type)">
+      <md-icon md-list-icon>folder</md-icon>
+      <h4 md-line>{{type}}</h4>
+      <p md-line>Description</p>
+    </md-list-item>
+  </md-list>

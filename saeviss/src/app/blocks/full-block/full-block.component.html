@@ -1,0 +1,14 @@
+<md-card>
+  <md-card-title>{{block.blockContentType}}</md-card-title>
+  <!--<md-card-content>-->
+    <ng-container [ngSwitch]="block.blockContentType">
+      <saevis-poll *ngSwitchCase="'Poll'" [poll]="block.blockContent"></saevis-poll>
+      <saevis-event *ngSwitchCase="'Event'" [event]="block.blockContent"></saevis-event>
+      <div *ngSwitchDefault>Not found</div>
+    </ng-container>
+  <!--</md-card-content>-->
+  <!--&lt;!&ndash;<md-card-actions>&ndash;&gt;-->
+
+  <!--&lt;!&ndash;</md-card-actions>&ndash;&gt;-->
+</md-card>
+

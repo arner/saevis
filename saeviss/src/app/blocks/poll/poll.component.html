@@ -1,0 +1,9 @@
+<p>{{poll.text}}</p>
+<md-radio-group [(ngModel)]="option">
+  <span *ngFor="let option of poll.options" >
+    <md-radio-button [value]="option.id">
+      {{option.text}}
+    </md-radio-button>
+    <br />
+  </span>
+</md-radio-group>

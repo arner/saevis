@@ -1,0 +1,16 @@
+<ng-container *ngIf="topic">
+  <md-card>
+    <md-card-title>{{topic.title}}</md-card-title>
+    <md-card-content>
+      {{topic.text}}
+    </md-card-content>
+    <md-card-actions>
+
+    </md-card-actions>
+  </md-card>
+
+  <saevis-full-block *ngFor="let block of topic.blocks" [block]="block"></saevis-full-block>
+
+  <a md-fab color="primary" (click)="createBlock()" class="add-block-button" *ngIf="!newBlock"><md-icon>add</md-icon></a>
+  <!--<saevis-create-block [block]="newBlock" *ngIf="newBlock" (onDiscard)="onDiscardBlock()"></saevis-create-block>-->
+</ng-container>

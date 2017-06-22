@@ -1,0 +1,6 @@
+<md-card *ngFor="let t of topics | async" [routerLink]="t.id">
+  <md-card-title>{{t.title}}</md-card-title>
+  <md-card-content>
+  </md-card-content>
+</md-card>
+<a md-fab color="primary" (click)="create()" class="add-topic-button"><md-icon>add</md-icon></a>

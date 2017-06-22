@@ -1,0 +1,11 @@
+.content {
+  padding: 20px;
+}
+
+md-sidenav-container {
+  height: 100%;
+
+  &.left-nav {
+    width: 180px;
+  }
+}
