@@ -8,29 +8,32 @@ export default (Model: any, bootOptions = {}) => {
 
   const options = Object.assign({test: 'hi'}, bootOptions);
 
-  //
-  // Model.defineProperty(options.updatedAt, {
-  //   type: Date,
-  //   required: options.required,
+  // Belongs to block
+  // Model.belongsTo('block', {
+  //   polymorphic: {
+  //     foreignKey: 'blockContentId',
+  //     discriminator: 'blockContentType'
+  //   }
   // });
 
-  // Belongs to block
-  Model.belongsTo('block', {
-    polymorphic: {
-      foreignKey: 'blockCOntentId',
-      discriminator: 'blockContentType'
-    }
-  });
-
   // Has one topic
-  if(Model.app) {
-    Model.hasOne(Model.app.models.Topic, {foreignKey: 'topicId', required: true});
-  }
+  // Model.hasOne('Topic', {
+  //   topic: {type: 'belongsTo', required: true}
+  // });
+
+  // let rel: any = {};
+  // rel[Model.modelName.toLowerCase()] = {
+  //   type: 'hasMany',
+  //   through: 'Block',
+  //   foreignKey: 'pollId'
+  // };
+  // Model.registry.modelBuilder.definitions.Topic.relations.push(rel);
+
   // Create block on create
   Model.observe('after save', (ctx: any, next: Function) => {
     if (!ctx.isNewInstance) { return next(); }
     if (!ctx.instance) { return next(); }
-    console.log('%s before save: %s', ctx.Model.modelName, ctx.instance.id);
+    console.log('%s after save: %s', ctx.Model.modelName, ctx.instance.id);
 
     const block = {
       topicId: ctx.instance.topicId,

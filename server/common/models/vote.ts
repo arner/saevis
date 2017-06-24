@@ -1,8 +1,9 @@
 import { Model } from '@mean-expert/model';
+import {Helper} from '../../server/services/helper';
 /**
- * @module Topic
+ * @module Vote
  * @description
- * Write a useful Topic Model description.
+ * Write a useful Vote Model description.
  * Register hooks and remote methods within the
  * Model Decorator
  **/
@@ -18,16 +19,15 @@ import { Model } from '@mean-expert/model';
   }
 })
 
-class Topic {
+class Vote {
   // LoopBack model instance is injected in constructor
-  constructor(public model: any) {}
+  constructor(public model: any) {
+    new Helper(this.model).disableRemoteMethods(['voter', 'poll']);
+  }
 
   // Example Operation Hook
   beforeSave(ctx: any, next: Function): void {
-    console.log('Topic: Before Save');
-
-    // author
-
+    console.log('Vote: Before Save');
     next();
   }
   // Example Remote Method
@@ -36,4 +36,4 @@ class Topic {
   }
 }
 
-module.exports = Topic;
+module.exports = Vote;

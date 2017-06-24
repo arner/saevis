@@ -9,8 +9,7 @@
     "TimeStamp": {
       "required": false
     },
-    "CreateBlock": {
-    },
+    "CreateBlock": {},
     "Stats": [
       {
         "method": "stats",
@@ -42,8 +41,7 @@
     }
   },
   "validations": [],
-  "relations": {
-  },
+  "relations": {},
   "acls": [],
   "methods": {}
 }

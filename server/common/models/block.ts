@@ -1,4 +1,5 @@
 import { Model } from '@mean-expert/model';
+import {Helper} from '../../server/services/helper';
 /**
  * @module Block
  * @description
@@ -20,13 +21,13 @@ import { Model } from '@mean-expert/model';
 
 class Block {
   // LoopBack model instance is injected in constructor
-  constructor(public model: any) {}
+  constructor(public model: any) {
+    new Helper(this.model).disableRemoteMethods(['blockContent', 'topic']);
+  }
 
   // Example Operation Hook
   beforeSave(ctx: any, next: Function): void {
     console.log('Block: Before Save');
-    console.log(ctx.instance);
-    console.log(ctx.request);
     next();
   }
   // Example Remote Method

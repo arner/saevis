@@ -2721,6 +2721,176 @@ paths:
           schema:
             $ref: '#/definitions/PersistedModel'
       deprecated: false
+  '/Polls/{id}/votes/{fk}':
+    get:
+      tags:
+        - Poll
+      summary: Find a related item by id for votes.
+      operationId: Poll.prototype.__findById__votes
+      parameters:
+        - name: fk
+          in: path
+          description: Foreign key for votes
+          required: true
+          type: string
+          format: JSON
+        - name: id
+          in: path
+          description: Poll id
+          required: true
+          type: string
+          format: JSON
+      responses:
+        '200':
+          description: Request was successful
+          schema:
+            $ref: '#/definitions/Vote'
+      deprecated: false
+    delete:
+      tags:
+        - Poll
+      summary: Delete a related item by id for votes.
+      operationId: Poll.prototype.__destroyById__votes
+      parameters:
+        - name: fk
+          in: path
+          description: Foreign key for votes
+          required: true
+          type: string
+          format: JSON
+        - name: id
+          in: path
+          description: Poll id
+          required: true
+          type: string
+          format: JSON
+      responses:
+        '204':
+          description: Request was successful
+      deprecated: false
+    put:
+      tags:
+        - Poll
+      summary: Update a related item by id for votes.
+      operationId: Poll.prototype.__updateById__votes
+      parameters:
+        - name: fk
+          in: path
+          description: Foreign key for votes
+          required: true
+          type: string
+          format: JSON
+        - name: data
+          in: body
+          required: false
+          schema:
+            $ref: '#/definitions/Vote'
+        - name: id
+          in: path
+          description: Poll id
+          required: true
+          type: string
+          format: JSON
+      responses:
+        '200':
+          description: Request was successful
+          schema:
+            $ref: '#/definitions/Vote'
+      deprecated: false
+  '/Polls/{id}/votes':
+    get:
+      tags:
+        - Poll
+      summary: Queries votes of Poll.
+      operationId: Poll.prototype.__get__votes
+      parameters:
+        - name: filter
+          in: query
+          required: false
+          type: string
+          format: JSON
+        - name: id
+          in: path
+          description: Poll id
+          required: true
+          type: string
+          format: JSON
+      responses:
+        '200':
+          description: Request was successful
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Vote'
+      deprecated: false
+    post:
+      tags:
+        - Poll
+      summary: Creates a new instance in votes of this model.
+      operationId: Poll.prototype.__create__votes
+      parameters:
+        - name: data
+          in: body
+          required: false
+          schema:
+            $ref: '#/definitions/Vote'
+        - name: id
+          in: path
+          description: Poll id
+          required: true
+          type: string
+          format: JSON
+      responses:
+        '200':
+          description: Request was successful
+          schema:
+            $ref: '#/definitions/Vote'
+      deprecated: false
+    delete:
+      tags:
+        - Poll
+      summary: Deletes all votes of this model.
+      operationId: Poll.prototype.__delete__votes
+      parameters:
+        - name: id
+          in: path
+          description: Poll id
+          required: true
+          type: string
+          format: JSON
+      responses:
+        '204':
+          description: Request was successful
+      deprecated: false
+  '/Polls/{id}/votes/count':
+    get:
+      tags:
+        - Poll
+      summary: Counts votes of Poll.
+      operationId: Poll.prototype.__count__votes
+      parameters:
+        - name: where
+          in: query
+          description: Criteria to match model instances
+          required: false
+          type: string
+          format: JSON
+        - name: id
+          in: path
+          description: Poll id
+          required: true
+          type: string
+          format: JSON
+      responses:
+        '200':
+          description: Request was successful
+          schema:
+            type: object
+            properties:
+              count:
+                type: number
+                format: double
+      deprecated: false
   /Polls:
     post:
       tags:
@@ -3081,23 +3251,6 @@ paths:
                 type: number
                 format: double
       deprecated: false
-  /Polls/my-remote:
-    get:
-      tags:
-        - Poll
-      operationId: Poll.myRemote
-      parameters: []
-      responses:
-        '200':
-          description: Request was successful
-          schema:
-            type: object
-            properties:
-              result:
-                type: array
-                items:
-                  type: object
-      deprecated: false
   /Polls/stats:
     get:
       tags:
@@ -3135,12 +3288,12 @@ paths:
             items:
               $ref: '#/definitions/x-any'
       deprecated: false
-  '/Events/{id}/topic':
+  '/Events/{id}/block':
     get:
       tags:
         - Event
-      summary: Fetches hasOne relation topic.
-      operationId: Event.prototype.__get__topic
+      summary: Fetches belongsTo relation block.
+      operationId: Event.prototype.__get__block
       parameters:
         - name: refresh
           in: query
@@ -3156,69 +3309,7 @@ paths:
         '200':
           description: Request was successful
           schema:
-            $ref: '#/definitions/Topic'
-      deprecated: false
-    post:
-      tags:
-        - Event
-      summary: Creates a new instance in topic of this model.
-      operationId: Event.prototype.__create__topic
-      parameters:
-        - name: data
-          in: body
-          required: false
-          schema:
-            $ref: '#/definitions/Topic'
-        - name: id
-          in: path
-          description: Event id
-          required: true
-          type: string
-          format: JSON
-      responses:
-        '200':
-          description: Request was successful
-          schema:
-            $ref: '#/definitions/Topic'
-      deprecated: false
-    put:
-      tags:
-        - Event
-      summary: Update topic of this model.
-      operationId: Event.prototype.__update__topic
-      parameters:
-        - name: data
-          in: body
-          required: false
-          schema:
-            $ref: '#/definitions/Topic'
-        - name: id
-          in: path
-          description: Event id
-          required: true
-          type: string
-          format: JSON
-      responses:
-        '200':
-          description: Request was successful
-          schema:
-            $ref: '#/definitions/Topic'
-      deprecated: false
-    delete:
-      tags:
-        - Event
-      summary: Deletes topic of this model.
-      operationId: Event.prototype.__destroy__topic
-      parameters:
-        - name: id
-          in: path
-          description: Event id
-          required: true
-          type: string
-          format: JSON
-      responses:
-        '204':
-          description: Request was successful
+            $ref: '#/definitions/PersistedModel'
       deprecated: false
   /Events:
     post:
@@ -3741,15 +3832,37 @@ definitions:
       creatorId:
         type: number
         format: double
-      eventId:
-        type: number
-        format: double
     additionalProperties: false
   PersistedModel:
     properties:
       id:
         type: number
         format: double
+    additionalProperties: false
+  Vote:
+    properties:
+      value:
+        type: array
+        items:
+          type: number
+          format: double
+      id:
+        type: number
+        format: double
+      pollId:
+        type: number
+        format: double
+      voterId:
+        type: number
+        format: double
+      createdAt:
+        type: string
+        format: date-time
+      updatedAt:
+        type: string
+        format: date-time
+    required:
+      - value
     additionalProperties: false
   Poll:
     properties:
@@ -3760,21 +3873,22 @@ definitions:
         items:
           $ref: '#/definitions/x-any'
       settings:
+        default: {}
         type: object
       id:
         type: number
         format: double
-      blockContentId:
-        type: number
-        format: double
-      blockContentType:
-        type: string
       createdAt:
         type: string
         format: date-time
       updatedAt:
         type: string
         format: date-time
+      blockCOntentId:
+        type: number
+        format: double
+      blockContentType:
+        type: string
     required:
       - options
     additionalProperties: false
@@ -3799,6 +3913,11 @@ definitions:
       updatedAt:
         type: string
         format: date-time
+      blockCOntentId:
+        type: number
+        format: double
+      blockContentType:
+        type: string
     required:
       - startTime
       - endTime

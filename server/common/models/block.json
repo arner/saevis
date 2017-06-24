@@ -8,19 +8,7 @@
   "mixins": {
     "TimeStamp": {
       "required": false
-    },
-    "Stats": [
-      {
-        "method": "stats",
-        "endpoint": "/stats",
-        "description": "Statistical information for Block registers.",
-        "type": "model",
-        "count": {
-          "on": "createdAt",
-          "by": "index"
-        }
-      }
-    ]
+    }
   },
   "properties": {
     "value": {

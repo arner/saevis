@@ -1,4 +1,5 @@
 import { Model } from '@mean-expert/model';
+import {Helper} from '../../server/services/helper';
 /**
  * @module Member
  * @description
@@ -20,7 +21,9 @@ import { Model } from '@mean-expert/model';
 
 class Member {
   // LoopBack model instance is injected in constructor
-  constructor(public model: any) {}
+  constructor(public model: any) {
+    new Helper(this.model).disableRemoteMethods(['accessTokens', 'topics'], ['prototype.__get__topics']);
+  }
 
   // Example Operation Hook
   beforeSave(ctx: any, next: Function): void {

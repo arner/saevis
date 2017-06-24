@@ -34,13 +34,11 @@
   "relations": {
     "blocks": {
       "type": "hasMany",
-      "model": "Block",
-      "foreignKey": ""
+      "model": "Block"
     },
     "creator": {
       "type": "hasOne",
-      "model": "Member",
-      "foreignKey": ""
+      "model": "Member"
     }
   },
   "acls": [],

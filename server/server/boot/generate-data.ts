@@ -4,14 +4,18 @@ import { BootScript } from '@mean-expert/boot-script';
 class GenerateData {
   constructor(private app: any) {
     console.log('Generating test data');
-    console.log(Object.keys(app.models));
     this.createAll();
   }
 
   private async createAll() {
     const topic = await this.createTopic();
     const poll = await this.createPoll(topic.id);
-   // const block = await this.createBlock(poll.id, topic.id);
+    this.createMember();
+  }
+
+  private async createMember() {
+    const member = {email: 'arne@example.com', password: 'password'};
+    return this.app.models.Member.create(member);
   }
 
   private async createPoll(topicId: number): Promise<any> {
@@ -20,15 +24,12 @@ class GenerateData {
       "text": "Ga je mee?",
       "options": [
         {
-          "id": "1",
           "text": "Ja"
         },
         {
-          "id": "2",
           "text": "Nee"
         },
         {
-          "id": "3",
           "text": "Misschien"
         }
       ],

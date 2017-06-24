@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import { Topic, FireLoopRef } from './shared/sdk/models';
 import { RealTime } from './shared/sdk/services';
 import {Observable} from 'rxjs';
+import {MemberApi} from './shared/sdk/services/custom/Member';
 
 @Component({
   selector: 'saevis-root',
@@ -15,7 +16,11 @@ export class AppComponent {
   private topic     : Topic = new Topic();
   private reference : FireLoopRef<Topic>;
 
-  constructor(private rt: RealTime) {
+  constructor(private rt: RealTime, private memberApi: MemberApi) {
+    this.memberApi.login({email:'arne@example.com', password: 'password'}).subscribe((m) => {
+      console.log(m, 'logged in');
+    });
+
     this.rt.onReady().subscribe(() => {
       this.initiate();
     });

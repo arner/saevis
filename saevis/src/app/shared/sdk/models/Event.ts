@@ -13,10 +13,10 @@ export interface EventInterface {
   "id"?: number;
   "createdAt"?: Date;
   "updatedAt"?: Date;
-  "blockCOntentId"?: number;
+  "blockContentId"?: number;
   "blockContentType"?: string;
-  topic?: Topic;
   block?: any;
+  topic?: Topic;
 }
 
 export class Event implements EventInterface {
@@ -27,10 +27,10 @@ export class Event implements EventInterface {
   "id": number;
   "createdAt": Date;
   "updatedAt": Date;
-  "blockCOntentId": number;
+  "blockContentId": number;
   "blockContentType": string;
-  topic: Topic;
   block: any;
+  topic: Topic;
   constructor(data?: EventInterface) {
     Object.assign(this, data);
   }
@@ -90,8 +90,8 @@ export class Event implements EventInterface {
           name: 'updatedAt',
           type: 'Date'
         },
-        "blockCOntentId": {
-          name: 'blockCOntentId',
+        "blockContentId": {
+          name: 'blockContentId',
           type: 'number'
         },
         "blockContentType": {
@@ -100,15 +100,15 @@ export class Event implements EventInterface {
         },
       },
       relations: {
-        topic: {
-          name: 'topic',
-          type: 'Topic',
-          model: 'Topic'
-        },
         block: {
           name: 'block',
           type: 'any',
           model: ''
+        },
+        topic: {
+          name: 'topic',
+          type: 'Topic',
+          model: 'Topic'
         },
       }
     }

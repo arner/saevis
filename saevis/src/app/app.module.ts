@@ -9,7 +9,7 @@ import { Routes, RouterModule } from '@angular/router';
 import {
   MdCardModule, MdButtonModule, MdCheckboxModule, MdToolbarModule, MdSidenavModule,
   MdIcon, MdIconModule, MdRadioModule, MdListModule, MdNativeDateModule, MdDatepickerModule, MdInputModule,
-  MdSelectModule, MdDialogModule
+  MdSelectModule, MdDialogModule, MdSlideToggleModule, MdMenuModule
 } from '@angular/material';
 import { TopicsComponent } from './topics/topics.component';
 import { ToolbarComponent } from './toolbar/toolbar.component';
@@ -69,7 +69,9 @@ const routes: Routes = [
     MdNativeDateModule,
     MdInputModule,
     MdSelectModule,
-    MdDialogModule
+    MdDialogModule,
+    MdSlideToggleModule,
+    MdMenuModule
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -1,30 +1,37 @@
 /* tslint:disable */
+import {
+  Topic
+} from '../index';
 
 declare var Object: any;
 export interface PollInterface {
   "text"?: string;
   "options": any;
   "settings"?: any;
+  "userVoted"?: boolean;
   "id"?: number;
-  "blockContentId"?: number;
-  "blockContentType"?: string;
   "createdAt"?: Date;
   "updatedAt"?: Date;
-  "blockCOntentId"?: number;
+  "blockContentId"?: number;
+  "blockContentType"?: string;
   block?: any;
+  topic?: Topic;
+  votes?: any[];
 }
 
 export class Poll implements PollInterface {
   "text": string;
   "options": any;
   "settings": any;
+  "userVoted": boolean;
   "id": number;
-  "blockContentId": number;
-  "blockContentType": string;
   "createdAt": Date;
   "updatedAt": Date;
-  "blockCOntentId": number;
+  "blockContentId": number;
+  "blockContentType": string;
   block: any;
+  topic: Topic;
+  votes: any[];
   constructor(data?: PollInterface) {
     Object.assign(this, data);
   }
@@ -66,19 +73,16 @@ export class Poll implements PollInterface {
         },
         "settings": {
           name: 'settings',
-          type: 'any'
+          type: 'any',
+          default: <any>null
+        },
+        "userVoted": {
+          name: 'userVoted',
+          type: 'boolean'
         },
         "id": {
           name: 'id',
           type: 'number'
-        },
-        "blockContentId": {
-          name: 'blockContentId',
-          type: 'number'
-        },
-        "blockContentType": {
-          name: 'blockContentType',
-          type: 'string'
         },
         "createdAt": {
           name: 'createdAt',
@@ -88,15 +92,29 @@ export class Poll implements PollInterface {
           name: 'updatedAt',
           type: 'Date'
         },
-        "blockCOntentId": {
-          name: 'blockCOntentId',
+        "blockContentId": {
+          name: 'blockContentId',
           type: 'number'
+        },
+        "blockContentType": {
+          name: 'blockContentType',
+          type: 'string'
         },
       },
       relations: {
         block: {
           name: 'block',
           type: 'any',
+          model: ''
+        },
+        topic: {
+          name: 'topic',
+          type: 'Topic',
+          model: 'Topic'
+        },
+        votes: {
+          name: 'votes',
+          type: 'any[]',
           model: ''
         },
       }

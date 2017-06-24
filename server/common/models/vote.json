@@ -1,5 +1,5 @@
 {
-  "name": "Poll",
+  "name": "Vote",
   "base": "PersistedModel",
   "idInjection": true,
   "options": {
@@ -9,12 +9,11 @@
     "TimeStamp": {
       "required": false
     },
-    "CreateBlock": {},
     "Stats": [
       {
         "method": "stats",
         "endpoint": "/stats",
-        "description": "Statistical information for Poll registers.",
+        "description": "Statistical information for Vote registers.",
         "type": "model",
         "count": {
           "on": "createdAt",
@@ -24,31 +23,26 @@
     ]
   },
   "properties": {
-    "text": {
-      "type": "string"
-    },
-    "options": {
-      "type": "array",
+    "value": {
+      "type": [
+        "number"
+      ],
       "required": true
-    },
-    "settings": {
-      "type": "object",
-      "default": {}
-    },
-    "userVoted": {
-      "type": "boolean"
     }
   },
   "validations": [],
   "relations": {
-    "votes": {
-      "type": "hasMany",
-      "model": "Vote"
+    "poll": {
+      "type": "belongsTo",
+      "model": "Poll",
+      "foreignKey": ""
+    },
+    "voter": {
+      "type": "belongsTo",
+      "model": "Member",
+      "foreignKey": ""
     }
   },
   "acls": [],
-  "methods": {},
-  "scope": {
-    "include": "votes"
-  }
+  "methods": {}
 }

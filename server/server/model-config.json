@@ -17,7 +17,8 @@
     ]
   },
   "User": {
-    "dataSource": "db"
+    "dataSource": "db",
+    "public": false
   },
   "AccessToken": {
     "dataSource": "db",
@@ -37,7 +38,16 @@
   },
   "Topic": {
     "dataSource": "db",
-    "public": true
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "create": true,
+          "find": true,
+          "findById": true
+        }
+      }
+    }
   },
   "Block": {
     "dataSource": "db",
@@ -45,13 +55,42 @@
   },
   "Member": {
     "dataSource": "db",
-    "public": true
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "login": true,
+          "logout": true
+        }
+      }
+    }
   },
   "Poll": {
     "dataSource": "db",
-    "public": true
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "create": true
+        }
+      }
+    }
   },
   "Event": {
+    "dataSource": "db",
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "create": true,
+          "update": true,
+          "delete": true,
+          "findById": true
+        }
+      }
+    }
+  },
+  "Vote": {
     "dataSource": "db",
     "public": true
   }

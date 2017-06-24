@@ -1,5 +1,8 @@
 {
   "verbose": true,
   "ext": "js,ts,json",
+  "env": {
+    "DEBUG": ""
+  },
   "watch": ["common", "server"]
 }

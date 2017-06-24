@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {TopicApi, Topic} from '../../shared/sdk';
-import {MdDialog} from '@angular/material';
-import {TypeSelectorComponent} from '../../blocks/type-selector/type-selector.component';
 import {BlockExtended} from "../../shared/BlockExtended";
 
 @Component({
@@ -16,8 +14,11 @@ export class TopicDetailComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private topicApi: TopicApi,
-    private dialog: MdDialog
   ) { }
+
+  public get addingBlock() {
+    return !!this.topic.blocks.find((block: BlockExtended) => !block.id);
+  }
 
   ngOnInit() {
     this.route.params.map(p => p['id']).subscribe(id => {
@@ -29,13 +30,7 @@ export class TopicDetailComponent implements OnInit {
     });
   }
 
-  createBlock() {
-    let dialogRef = this.dialog.open(TypeSelectorComponent, {
-      hasBackdrop: false,
-    });
-    dialogRef.afterClosed().subscribe(type => {
-      console.log(`Dialog result: ${type}`);
+  public createBlock(type: string) {
       this.topic.blocks.push(new BlockExtended({blockContentType: type, topicId: this.topic.id}));
-    });
   }
 }

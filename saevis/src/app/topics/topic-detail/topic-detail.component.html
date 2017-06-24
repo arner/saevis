@@ -11,6 +11,9 @@
 
   <saevis-full-block *ngFor="let block of topic.blocks" [block]="block"></saevis-full-block>
 
-  <a md-fab color="primary" (click)="createBlock()" class="add-block-button" *ngIf="!newBlock"><md-icon>add</md-icon></a>
-  <!--<saevis-create-block [block]="newBlock" *ngIf="newBlock" (onDiscard)="onDiscardBlock()"></saevis-create-block>-->
+  <a md-fab color="primary" [mdMenuTriggerFor]="newBlockMenu" class="add-block-button" *ngIf="!addingBlock"><md-icon>add</md-icon></a>
+  <md-menu #newBlockMenu="mdMenu" [overlapTrigger]="false">
+    <button md-menu-item (click)="createBlock('Poll')"> <md-icon> poll </md-icon> <span> Poll </span></button>
+    <button md-menu-item (click)="createBlock('Event')"> <md-icon> event </md-icon> <span> Event </span></button>
+  </md-menu>
 </ng-container>

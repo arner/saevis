@@ -9,6 +9,9 @@ import {Event, EventApi} from '../../shared/sdk';
 export class EventComponent implements OnInit {
 
   @Input()
+  public set content(event: Event) {
+    this.event = event;
+  }
   public event: Event;
   public minDate: Date;
 
@@ -35,6 +38,7 @@ export class EventComponent implements OnInit {
   }
 
   public save() {
-    this.eventApi.upsert(this.event).subscribe(event => console.log(event), err => console.warn(err.message));
+    delete this.event.id;
+    this.eventApi.create(this.event).subscribe(event => console.log(event), err => console.warn(err.message));
   }
 }
