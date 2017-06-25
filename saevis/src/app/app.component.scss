@@ -4,8 +4,13 @@
 
 md-sidenav-container {
   height: 100%;
+  // background-color: #183152;
 
   &.left-nav {
-    width: 180px;
+    width: 280px;
   }
+}
+
+md-sidenav {
+  // background-color: #183152;
 }

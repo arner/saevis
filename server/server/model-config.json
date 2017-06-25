@@ -71,7 +71,8 @@
     "options": {
       "remoting": {
         "sharedMethods": {
-          "create": true
+          "create": true,
+          "findById": true
         }
       }
     }
@@ -82,8 +83,11 @@
     "options": {
       "remoting": {
         "sharedMethods": {
+          "*": true,
           "create": true,
           "update": true,
+          "upsert": true,
+          "updateById": true,
           "delete": true,
           "findById": true
         }

@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Event, EventApi} from '../../shared/sdk';
+import {BlockMode} from "../../shared/BlockExtended";
 
 @Component({
   selector: 'saevis-event',
@@ -10,20 +11,20 @@ export class EventComponent implements OnInit {
 
   @Input()
   public set content(event: Event) {
+    if (event.startTime) {
+      event.startTime = new Date(Date.parse(event.startTime.toString()));
+    }
+    if (event.endTime) {
+      event.endTime = new Date(Date.parse(event.endTime.toString()));
+    }
     this.event = event;
   }
   public event: Event;
   public minDate: Date;
 
-  public editClicked: boolean = false;
-
-  public get isNew(): boolean {
-    return this.event && !this.event.id;
-  }
-
-  public get editing(): boolean {
-    return this.isNew || this.editClicked;
-  }
+  @Input()
+  private mode: BlockMode;
+  private blockMode = BlockMode;
 
   constructor(private eventApi: EventApi) { }
 
@@ -38,7 +39,21 @@ export class EventComponent implements OnInit {
   }
 
   public save() {
-    delete this.event.id;
-    this.eventApi.create(this.event).subscribe(event => console.log(event), err => console.warn(err.message));
+    // delete this.event.id;
+    console.log(this.mode);
+    if (this.mode === BlockMode.NEW) {
+      delete this.event.id;
+      this.eventApi.create(this.event).subscribe((event: Event) => {
+        this.mode = BlockMode.NORMAL;
+      }, (err: Error) => {
+        console.warn('c', err.message);
+      });
+    } else {
+      this.eventApi.updateAttributes(this.event.id, this.event).subscribe((event: Event) => {
+        this.mode = BlockMode.NORMAL;
+      }, (err: Error) => {
+        console.warn('u', err.message);
+      });
+    }
   }
 }

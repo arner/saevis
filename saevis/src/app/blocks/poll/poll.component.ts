@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {Poll} from '../../shared/sdk/models/Poll';
 import {MemberApi} from '../../shared/sdk/services/custom/Member';
 import {PollApi} from '../../shared/sdk/services/custom/Poll';
+import {BlockMode} from '../../shared/BlockExtended';
 
 @Component({
   selector: 'saevis-poll',
@@ -11,13 +12,15 @@ import {PollApi} from '../../shared/sdk/services/custom/Poll';
 export class PollComponent implements OnInit {
   private poll: Poll;
   private option: string;
-  private mode: 'new'|'edit'|'normal' = 'normal';
+
+  @Input()
+  private mode: BlockMode;
+  private blockMode = BlockMode;
 
   @Input() set content(poll: Poll) {
     this.poll = poll;
     this.poll.settings = this.poll.settings || {};
-    if (!this.poll.id) {
-      this.mode = 'new';
+    if (this.mode === BlockMode.NEW) {
       this.poll.options = [{text: ''}, {text: ''}];
     }
   }
@@ -39,7 +42,7 @@ export class PollComponent implements OnInit {
     console.log('create', this.poll);
     this.pollApi.create(this.poll).subscribe((poll: Poll) => {
       this.poll = poll;
-      this.mode = 'normal';
+      this.mode = BlockMode.NORMAL;
     });
   }
 

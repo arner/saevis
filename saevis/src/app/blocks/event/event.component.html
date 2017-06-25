@@ -1,4 +1,4 @@
-<ng-container *ngIf="editing">
+<ng-container *ngIf="mode === blockMode.EDIT || mode === blockMode.NEW">
   <md-input-container>
     <input mdInput [mdDatepicker]="startDatepicker" [min]="minDate" placeholder="Start" [(ngModel)]="event.startTime" (change)="onChangeStartTime()">
     <button mdSuffix [mdDatepickerToggle]="startDatepicker"></button>
@@ -17,12 +17,10 @@
   <br>
   <!--<md-card-actions>-->
     <a md-button (click)="save()">Opslaan</a>
-    <a md-button (click)="discard()" *ngIf="isNew">Annuleren</a>
+    <!--<a md-button (click)="discard()" *ngIf="isNew">Annuleren</a>-->
   <!--</md-card-actions>-->
 </ng-container>
 
-<ng-container *ngIf="!editing">
+<ng-container *ngIf="mode === blockMode.NORMAL">
   Bij {{event.locationText}} van {{event.startTime | date}} tot {{event.endTime | date}}.
-  <br>
-  <a md-button (click)="editClicked = true">Bewerk</a>
 </ng-container>
