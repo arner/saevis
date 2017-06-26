@@ -1,46 +1,44 @@
 /* tslint:disable */
 
 declare var Object: any;
-export interface BlockInterface {
-  "value"?: any;
+export interface VoteInterface {
+  "value": Array<any>;
   "id"?: number;
-  "blockContentId"?: number;
-  "blockContentType"?: string;
-  "topicId"?: number;
+  "pollId"?: number;
+  "voterId"?: number;
   "createdAt"?: Date;
   "updatedAt"?: Date;
-  blockContent?: any;
-  topic?: any;
+  poll?: any;
+  voter?: any;
 }
 
-export class Block implements BlockInterface {
-  "value": any;
+export class Vote implements VoteInterface {
+  "value": Array<any>;
   "id": number;
-  "blockContentId": number;
-  "blockContentType": string;
-  "topicId": number;
+  "pollId": number;
+  "voterId": number;
   "createdAt": Date;
   "updatedAt": Date;
-  blockContent: any;
-  topic: any;
-  constructor(data?: BlockInterface) {
+  poll: any;
+  voter: any;
+  constructor(data?: VoteInterface) {
     Object.assign(this, data);
   }
   /**
    * The name of the model represented by this $resource,
-   * i.e. `Block`.
+   * i.e. `Vote`.
    */
   public static getModelName() {
-    return "Block";
+    return "Vote";
   }
   /**
   * @method factory
   * @author Jonathan Casarrubias
   * @license MIT
-  * This method creates an instance of Block for dynamic purposes.
+  * This method creates an instance of Vote for dynamic purposes.
   **/
-  public static factory(data: BlockInterface): Block{
-    return new Block(data);
+  public static factory(data: VoteInterface): Vote{
+    return new Vote(data);
   }
   /**
   * @method getModelDefinition
@@ -51,27 +49,23 @@ export class Block implements BlockInterface {
   **/
   public static getModelDefinition() {
     return {
-      name: 'Block',
-      plural: 'Blocks',
+      name: 'Vote',
+      plural: 'Votes',
       properties: {
         "value": {
           name: 'value',
-          type: 'any'
+          type: 'Array&lt;any&gt;'
         },
         "id": {
           name: 'id',
           type: 'number'
         },
-        "blockContentId": {
-          name: 'blockContentId',
+        "pollId": {
+          name: 'pollId',
           type: 'number'
         },
-        "blockContentType": {
-          name: 'blockContentType',
-          type: 'string'
-        },
-        "topicId": {
-          name: 'topicId',
+        "voterId": {
+          name: 'voterId',
           type: 'number'
         },
         "createdAt": {
@@ -84,13 +78,13 @@ export class Block implements BlockInterface {
         },
       },
       relations: {
-        blockContent: {
-          name: 'blockContent',
+        poll: {
+          name: 'poll',
           type: 'any',
           model: ''
         },
-        topic: {
-          name: 'topic',
+        voter: {
+          name: 'voter',
           type: 'any',
           model: ''
         },

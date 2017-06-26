@@ -1,6 +1,6 @@
 /* tslint:disable */
 import {
-  Topic
+  Vote
 } from '../index';
 
 declare var Object: any;
@@ -12,11 +12,7 @@ export interface PollInterface {
   "id"?: number;
   "createdAt"?: Date;
   "updatedAt"?: Date;
-  "blockContentId"?: number;
-  "blockContentType"?: string;
-  block?: any;
-  topic?: Topic;
-  votes?: any[];
+  votes?: Vote[];
 }
 
 export class Poll implements PollInterface {
@@ -27,11 +23,7 @@ export class Poll implements PollInterface {
   "id": number;
   "createdAt": Date;
   "updatedAt": Date;
-  "blockContentId": number;
-  "blockContentType": string;
-  block: any;
-  topic: Topic;
-  votes: any[];
+  votes: Vote[];
   constructor(data?: PollInterface) {
     Object.assign(this, data);
   }
@@ -92,30 +84,12 @@ export class Poll implements PollInterface {
           name: 'updatedAt',
           type: 'Date'
         },
-        "blockContentId": {
-          name: 'blockContentId',
-          type: 'number'
-        },
-        "blockContentType": {
-          name: 'blockContentType',
-          type: 'string'
-        },
       },
       relations: {
-        block: {
-          name: 'block',
-          type: 'any',
-          model: ''
-        },
-        topic: {
-          name: 'topic',
-          type: 'Topic',
-          model: 'Topic'
-        },
         votes: {
           name: 'votes',
-          type: 'any[]',
-          model: ''
+          type: 'Vote[]',
+          model: 'Vote'
         },
       }
     }

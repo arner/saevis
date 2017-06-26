@@ -48,12 +48,12 @@ import { SocketBrowser } from './sockets/socket.browser';
 import { SocketDriver } from './sockets/socket.driver';
 import { SocketConnection } from './sockets/socket.connections';
 import { RealTime } from './services/core/real.time';
-import { UserApi } from './services/custom/User';
 import { TopicApi } from './services/custom/Topic';
 import { BlockApi } from './services/custom/Block';
 import { MemberApi } from './services/custom/Member';
 import { PollApi } from './services/custom/Poll';
 import { EventApi } from './services/custom/Event';
+import { VoteApi } from './services/custom/Vote';
 /**
 * @module SDKBrowserModule
 * @description
@@ -85,12 +85,12 @@ export class SDKBrowserModule {
         JSONSearchParams,
         SDKModels,
         RealTime,
-        UserApi,
         TopicApi,
         BlockApi,
         MemberApi,
         PollApi,
         EventApi,
+        VoteApi,
         internalStorageProvider,
         { provide: SDKStorage, useClass: StorageBrowser },
         { provide: SocketDriver, useClass: SocketBrowser }

@@ -3,7 +3,7 @@
 }
 
 md-sidenav-container {
-  height: 100%;
+  height: calc(100% - 64px);
   // background-color: #183152;
 
   &.left-nav {

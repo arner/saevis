@@ -22,6 +22,8 @@ import {Helper} from '../../server/services/helper';
 class Vote {
   // LoopBack model instance is injected in constructor
   constructor(public model: any) {
+    this.model.validatesLengthOf('value', {min: 1});
+
     new Helper(this.model).disableRemoteMethods(['voter', 'poll']);
   }
 

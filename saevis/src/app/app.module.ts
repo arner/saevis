@@ -18,6 +18,9 @@ import { PollComponent } from './blocks/poll/poll.component';
 import { TopicDetailComponent } from './topics/topic-detail/topic-detail.component';
 import { EventComponent } from './blocks/event/event.component';
 import { TypeSelectorComponent } from './blocks/type-selector/type-selector.component';
+import { LoginComponent } from './login/login.component';
+import {MemberService} from './member.service';
+import { MiniBlockComponent } from './blocks/mini-block/mini-block.component';
 
 
 const routes: Routes = [
@@ -27,12 +30,17 @@ const routes: Routes = [
     children: []
   },
   {
+    path: 'login',
+    component: LoginComponent,
+    children: []
+  },
+  {
     path: 'topics/:id',
     component: TopicDetailComponent,
   },
   {
     path: '',
-    redirectTo: '/topics',
+    redirectTo: '/topics', //'login', //'/topics',
     pathMatch: 'full'
   }
 ];
@@ -46,7 +54,9 @@ const routes: Routes = [
     PollComponent,
     TopicDetailComponent,
     EventComponent,
-    TypeSelectorComponent
+    TypeSelectorComponent,
+    LoginComponent,
+    MiniBlockComponent
   ],
   imports: [
     RouterModule.forRoot(routes),
@@ -73,7 +83,7 @@ const routes: Routes = [
     MdSlideToggleModule,
     MdMenuModule
   ],
-  providers: [],
+  providers: [MemberService],
   bootstrap: [AppComponent],
   entryComponents: [TypeSelectorComponent]
 })

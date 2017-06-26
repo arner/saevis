@@ -1,6 +1,5 @@
 /* tslint:disable */
 import {
-  Topic,
   GeoPoint
 } from '../index';
 
@@ -13,10 +12,6 @@ export interface EventInterface {
   "id"?: number;
   "createdAt"?: Date;
   "updatedAt"?: Date;
-  "blockContentId"?: number;
-  "blockContentType"?: string;
-  block?: any;
-  topic?: Topic;
 }
 
 export class Event implements EventInterface {
@@ -27,10 +22,6 @@ export class Event implements EventInterface {
   "id": number;
   "createdAt": Date;
   "updatedAt": Date;
-  "blockContentId": number;
-  "blockContentType": string;
-  block: any;
-  topic: Topic;
   constructor(data?: EventInterface) {
     Object.assign(this, data);
   }
@@ -90,26 +81,8 @@ export class Event implements EventInterface {
           name: 'updatedAt',
           type: 'Date'
         },
-        "blockContentId": {
-          name: 'blockContentId',
-          type: 'number'
-        },
-        "blockContentType": {
-          name: 'blockContentType',
-          type: 'string'
-        },
       },
       relations: {
-        block: {
-          name: 'block',
-          type: 'any',
-          model: ''
-        },
-        topic: {
-          name: 'topic',
-          type: 'Topic',
-          model: 'Topic'
-        },
       }
     }
   }

@@ -1,9 +1,18 @@
+//.add-block-button {
+//  margin: -48px auto -28px;
+//  display: block;
+//  z-index: 1;
+//}
+
 .add-block-button {
-  margin-right: auto;
-  margin-left: auto;
-  margin-top: -48px;
-  margin-bottom: -28px;
-  display: block;
-  z-index: 1;
+  position: absolute;
+  right: 24px;
+  bottom: 24px;
 }
 
+.menu-button {
+  float: right;
+  md-icon {
+    vertical-align: inherit;
+  }
+}

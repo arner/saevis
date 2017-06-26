@@ -1,5 +1,5 @@
 <md-toolbar color="primary">
   <span>Saevis</span>
   <span class="fill-remaining-space"></span>
-  <md-icon>face</md-icon>
+  <md-icon (click)="login()">face</md-icon>{{(currentUser | async)?.email}}
 </md-toolbar>

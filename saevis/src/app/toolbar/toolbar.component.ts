@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import {MemberApi, Member} from '../shared/sdk';
+import {MemberService} from '../member.service';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'saevis-toolbar',
@@ -6,10 +9,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./toolbar.component.scss']
 })
 export class ToolbarComponent implements OnInit {
-
-  constructor() { }
+  public currentUser: Observable<Member>;
+  constructor(private memberService: MemberService) { }
 
   ngOnInit() {
+    this.currentUser = this.memberService.currentUser;
   }
 
+  login() {
+    this.memberService.login({email: 'arne@example.com', password: 'password'})
+  }
 }

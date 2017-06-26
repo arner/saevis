@@ -41,12 +41,17 @@ class Poll {
   async beforeVote(ctx: any, user: any, next: Function): Promise<any> {
     const userId = ctx.req.accessToken.userId;
 
-    // Check if this user hasn't voted. TODO: loopback way?
+    // Check if this user hasn't voted.
     const existingVote = await this.model.app.models.Vote.findOne({where: {pollId: ctx.instance.id, voterId: userId}});
     if (!!existingVote) {
       ctx.res.statusCode = 403;
-      return next({message: 'Already voted!'});
+      return next({message: 'Already voted!', statusCode: 403});
     }
+
+    // Validate
+     if (!ctx.instance.settings.multipleChoice && ctx.args.data.value.length > 1) {
+       return next({message: 'Pick one.', statusCode: 422});
+     }
 
     ctx.args.data.voterId = userId;
     next();

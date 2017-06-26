@@ -6,25 +6,25 @@ import {
 
 declare var Object: any;
 export interface TopicInterface {
+  "published"?: boolean;
   "title"?: string;
   "text"?: string;
   "id"?: number;
   "createdAt"?: Date;
   "updatedAt"?: Date;
   "creatorId"?: number;
-  "topicId"?: number;
   blocks?: Block[];
   creator?: Member;
 }
 
 export class Topic implements TopicInterface {
+  "published": boolean;
   "title": string;
   "text": string;
   "id": number;
   "createdAt": Date;
   "updatedAt": Date;
   "creatorId": number;
-  "topicId": number;
   blocks: Block[];
   creator: Member;
   constructor(data?: TopicInterface) {
@@ -58,6 +58,11 @@ export class Topic implements TopicInterface {
       name: 'Topic',
       plural: 'Topics',
       properties: {
+        "published": {
+          name: 'published',
+          type: 'boolean',
+          default: true
+        },
         "title": {
           name: 'title',
           type: 'string'
@@ -80,10 +85,6 @@ export class Topic implements TopicInterface {
         },
         "creatorId": {
           name: 'creatorId',
-          type: 'number'
-        },
-        "topicId": {
-          name: 'topicId',
           type: 'number'
         },
       },

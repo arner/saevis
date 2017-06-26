@@ -1,6 +1,9 @@
-<md-card *ngFor="let t of topics | async" [routerLink]="t.id">
-  <md-card-title>{{t.title}}</md-card-title>
+<md-card *ngFor="let topic of topics | async" [routerLink]="topic.id">
+  <md-card-title>{{topic.title}}</md-card-title>
   <md-card-content>
+    <ng-container *ngFor="let block of topic.blocks">
+      <saevis-mini-block [block]="block"></saevis-mini-block>
+    </ng-container>
   </md-card-content>
 </md-card>
 <a md-fab color="secondary" (click)="create()" class="add-topic-button"><md-icon>add</md-icon></a>

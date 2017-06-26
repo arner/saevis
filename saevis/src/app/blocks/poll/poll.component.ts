@@ -32,7 +32,12 @@ export class PollComponent implements OnInit {
   }
 
   public vote() {
-    this.pollApi.createVotes(this.poll.id, {value: [this.option]}).subscribe(() => {
+    const value = this.poll.settings.multipleChoice
+      ? this.poll.options
+          .filter((o: any) => o.checked)
+          .map((o: any) => o.id)
+      : [this.option];
+    this.pollApi.createVotes(this.poll.id, {value}).subscribe(() => {
       this.pollApi.findById(this.poll.id).subscribe((poll: Poll) => this.poll = poll);
     });
   }

@@ -1,11 +1,33 @@
 <ng-container *ngIf="topic">
   <md-card>
-    <md-card-title>{{topic.title}}</md-card-title>
+    <button md-icon-button [mdMenuTriggerFor]="menu" *ngIf="mode === topicMode.NORMAL" class="menu-button">
+      <md-icon>more_vert</md-icon>
+    </button>
+    <md-menu #menu="mdMenu">
+      <button md-menu-item (click)="edit()">
+        <md-icon>edit</md-icon>
+        <span>Edit</span>
+      </button>
+      <!--<button md-menu-item (click)="delete()">-->
+        <!--<md-icon>delete</md-icon>-->
+        <!--<span>Delete</span>-->
+      <!--</button>-->
+    </md-menu>
+      <md-card-title>
+        <span *ngIf="mode === topicMode.NORMAL">{{topic.title}}</span>
+        <md-input-container class="full-width" *ngIf="mode === topicMode.EDIT">
+          <input mdInput placeholder="Title" [(ngModel)]="topic.title">
+        </md-input-container>
+      </md-card-title>
     <md-card-content>
-      {{topic.text}}
+      <span *ngIf="mode === topicMode.NORMAL">{{topic.text}}</span>
+      <md-input-container class="full-width" *ngIf="mode === topicMode.EDIT">
+        <textarea mdInput placeholder="Description" [(ngModel)]="topic.text"></textarea>
+      </md-input-container>
     </md-card-content>
-    <md-card-actions>
-
+    <md-card-actions *ngIf="mode === topicMode.EDIT">
+      <a md-button (click)="save()">Opslaan</a>
+      <a md-button (click)="cancel()">Annuleren</a>
     </md-card-actions>
   </md-card>
 
