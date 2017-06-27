@@ -12,6 +12,7 @@ import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Rx';
 import { Event } from '../../models/Event';
 import { SocketConnection } from '../../sockets/socket.connections';
+import { Member } from '../../models/Member';
 
 
 /**
@@ -32,11 +33,11 @@ export class EventApi extends BaseLoopBackApi {
   }
 
   /**
-   * Patch an existing model instance or insert a new one into the data source.
+   * Find a related item by id for participants.
    *
-   * @param {object} data Request data.
+   * @param {any} id Event id
    *
-   *  - `data` – `{object}` - Model instance data
+   * @param {any} fk Foreign key for participants
    *
    * @returns {object} An empty reference that will be
    *   populated with the actual data once the response is returned
@@ -47,11 +48,75 @@ export class EventApi extends BaseLoopBackApi {
    * This usually means the response is a `Event` object.)
    * </em>
    */
-  public patchOrCreate(data: any = {}, customHeaders?: Function): Observable<any> {
-    let _method: string = "PATCH";
+  public findByIdParticipants(id: any, fk: any, customHeaders?: Function): Observable<any> {
+    let _method: string = "GET";
     let _url: string = LoopBackConfig.getPath() + "/" + LoopBackConfig.getApiVersion() +
-    "/Events";
-    let _routeParams: any = {};
+    "/Events/:id/participants/:fk";
+    let _routeParams: any = {
+      id: id,
+      fk: fk
+    };
+    let _postBody: any = {};
+    let _urlParams: any = {};
+    let result = this.request(_method, _url, _routeParams, _urlParams, _postBody, null, customHeaders);
+    return result;
+  }
+
+  /**
+   * Delete a related item by id for participants.
+   *
+   * @param {any} id Event id
+   *
+   * @param {any} fk Foreign key for participants
+   *
+   * @returns {object} An empty reference that will be
+   *   populated with the actual data once the response is returned
+   *   from the server.
+   *
+   * This method returns no data.
+   */
+  public destroyByIdParticipants(id: any, fk: any, customHeaders?: Function): Observable<any> {
+    let _method: string = "DELETE";
+    let _url: string = LoopBackConfig.getPath() + "/" + LoopBackConfig.getApiVersion() +
+    "/Events/:id/participants/:fk";
+    let _routeParams: any = {
+      id: id,
+      fk: fk
+    };
+    let _postBody: any = {};
+    let _urlParams: any = {};
+    let result = this.request(_method, _url, _routeParams, _urlParams, _postBody, null, customHeaders);
+    return result;
+  }
+
+  /**
+   * Update a related item by id for participants.
+   *
+   * @param {any} id Event id
+   *
+   * @param {any} fk Foreign key for participants
+   *
+   * @param {object} data Request data.
+   *
+   * This method expects a subset of model properties as request parameters.
+   *
+   * @returns {object} An empty reference that will be
+   *   populated with the actual data once the response is returned
+   *   from the server.
+   *
+   * <em>
+   * (The remote method definition does not provide any description.
+   * This usually means the response is a `Event` object.)
+   * </em>
+   */
+  public updateByIdParticipants(id: any, fk: any, data: any = {}, customHeaders?: Function): Observable<any> {
+    let _method: string = "PUT";
+    let _url: string = LoopBackConfig.getPath() + "/" + LoopBackConfig.getApiVersion() +
+    "/Events/:id/participants/:fk";
+    let _routeParams: any = {
+      id: id,
+      fk: fk
+    };
     let _postBody: any = {
       data: data
     };
@@ -61,38 +126,15 @@ export class EventApi extends BaseLoopBackApi {
   }
 
   /**
-   * Delete all matching records.
-   *
-   * @param {object} where filter.where object
-   *
-   * @param {object} options 
-   *
-   * @returns {object} An empty reference that will be
-   *   populated with the actual data once the response is returned
-   *   from the server.
-   *
-   * The number of instances deleted
-   */
-  public destroyAll(where: any = {}, customHeaders?: Function): Observable<any> {
-    let _method: string = "DELETE";
-    let _url: string = LoopBackConfig.getPath() + "/" + LoopBackConfig.getApiVersion() +
-    "/Events";
-    let _routeParams: any = {};
-    let _postBody: any = {};
-    let _urlParams: any = {};
-    if (typeof where !== 'undefined' && where !== null) _urlParams.where = where;
-    let result = this.request(_method, _url, _routeParams, _urlParams, _postBody, null, customHeaders);
-    return result;
-  }
-
-  /**
-   * Patch attributes for a model instance and persist it into the data source.
+   * Add a related item by id for participants.
    *
    * @param {any} id Event id
    *
+   * @param {any} fk Foreign key for participants
+   *
    * @param {object} data Request data.
    *
-   *  - `data` – `{object}` - An object of model property name/value pairs
+   * This method expects a subset of model properties as request parameters.
    *
    * @returns {object} An empty reference that will be
    *   populated with the actual data once the response is returned
@@ -103,10 +145,161 @@ export class EventApi extends BaseLoopBackApi {
    * This usually means the response is a `Event` object.)
    * </em>
    */
-  public patchAttributes(id: any, data: any = {}, customHeaders?: Function): Observable<any> {
-    let _method: string = "PATCH";
+  public linkParticipants(id: any, fk: any, data: any = {}, customHeaders?: Function): Observable<any> {
+    let _method: string = "PUT";
     let _url: string = LoopBackConfig.getPath() + "/" + LoopBackConfig.getApiVersion() +
-    "/Events/:id";
+    "/Events/:id/participants/rel/:fk";
+    let _routeParams: any = {
+      id: id,
+      fk: fk
+    };
+    let _postBody: any = {
+      data: data
+    };
+    let _urlParams: any = {};
+    let result = this.request(_method, _url, _routeParams, _urlParams, _postBody, null, customHeaders);
+    return result;
+  }
+
+  /**
+   * Remove the participants relation to an item by id.
+   *
+   * @param {any} id Event id
+   *
+   * @param {any} fk Foreign key for participants
+   *
+   * @returns {object} An empty reference that will be
+   *   populated with the actual data once the response is returned
+   *   from the server.
+   *
+   * This method returns no data.
+   */
+  public unlinkParticipants(id: any, fk: any, customHeaders?: Function): Observable<any> {
+    let _method: string = "DELETE";
+    let _url: string = LoopBackConfig.getPath() + "/" + LoopBackConfig.getApiVersion() +
+    "/Events/:id/participants/rel/:fk";
+    let _routeParams: any = {
+      id: id,
+      fk: fk
+    };
+    let _postBody: any = {};
+    let _urlParams: any = {};
+    let result = this.request(_method, _url, _routeParams, _urlParams, _postBody, null, customHeaders);
+    return result;
+  }
+
+  /**
+   * Check the existence of participants relation to an item by id.
+   *
+   * @param {any} id Event id
+   *
+   * @param {any} fk Foreign key for participants
+   *
+   * @returns {object} An empty reference that will be
+   *   populated with the actual data once the response is returned
+   *   from the server.
+   *
+   * <em>
+   * (The remote method definition does not provide any description.
+   * This usually means the response is a `Event` object.)
+   * </em>
+   */
+  public existsParticipants(id: any, fk: any, customHeaders?: Function): Observable<any> {
+    let _method: string = "HEAD";
+    let _url: string = LoopBackConfig.getPath() + "/" + LoopBackConfig.getApiVersion() +
+    "/Events/:id/participants/rel/:fk";
+    let _routeParams: any = {
+      id: id,
+      fk: fk
+    };
+    let _postBody: any = {};
+    let _urlParams: any = {};
+    let result = this.request(_method, _url, _routeParams, _urlParams, _postBody, null, customHeaders);
+    return result;
+  }
+
+  /**
+   * Fetches belongsTo relation Member.
+   *
+   * @param {any} id Event id
+   *
+   * @param {boolean} refresh 
+   *
+   * @returns {object} An empty reference that will be
+   *   populated with the actual data once the response is returned
+   *   from the server.
+   *
+   * <em>
+   * (The remote method definition does not provide any description.
+   * This usually means the response is a `Event` object.)
+   * </em>
+   */
+  public getMember(id: any, refresh: any = {}, customHeaders?: Function): Observable<any> {
+    let _method: string = "GET";
+    let _url: string = LoopBackConfig.getPath() + "/" + LoopBackConfig.getApiVersion() +
+    "/Events/:id/Member";
+    let _routeParams: any = {
+      id: id
+    };
+    let _postBody: any = {};
+    let _urlParams: any = {};
+    if (typeof refresh !== 'undefined' && refresh !== null) _urlParams.refresh = refresh;
+    let result = this.request(_method, _url, _routeParams, _urlParams, _postBody, null, customHeaders);
+    return result;
+  }
+
+  /**
+   * Queries participants of Event.
+   *
+   * @param {any} id Event id
+   *
+   * @param {object} filter 
+   *
+   * @returns {object[]} An empty reference that will be
+   *   populated with the actual data once the response is returned
+   *   from the server.
+   *
+   * <em>
+   * (The remote method definition does not provide any description.
+   * This usually means the response is a `Event` object.)
+   * </em>
+   */
+  public getParticipants(id: any, filter: LoopBackFilter = {}, customHeaders?: Function): Observable<any> {
+    let _method: string = "GET";
+    let _url: string = LoopBackConfig.getPath() + "/" + LoopBackConfig.getApiVersion() +
+    "/Events/:id/participants";
+    let _routeParams: any = {
+      id: id
+    };
+    let _postBody: any = {};
+    let _urlParams: any = {};
+    if (typeof filter !== 'undefined' && filter !== null) _urlParams.filter = filter;
+    let result = this.request(_method, _url, _routeParams, _urlParams, _postBody, null, customHeaders);
+    return result;
+  }
+
+  /**
+   * Creates a new instance in participants of this model.
+   *
+   * @param {any} id Event id
+   *
+   * @param {object} data Request data.
+   *
+   * This method expects a subset of model properties as request parameters.
+   *
+   * @returns {object} An empty reference that will be
+   *   populated with the actual data once the response is returned
+   *   from the server.
+   *
+   * <em>
+   * (The remote method definition does not provide any description.
+   * This usually means the response is a `Event` object.)
+   * </em>
+   */
+  public createParticipants(id: any, data: any = {}, customHeaders?: Function): Observable<any> {
+    let _method: string = "POST";
+    let _url: string = LoopBackConfig.getPath() + "/" + LoopBackConfig.getApiVersion() +
+    "/Events/:id/participants";
     let _routeParams: any = {
       id: id
     };
@@ -119,9 +312,35 @@ export class EventApi extends BaseLoopBackApi {
   }
 
   /**
-   * <em>
-         * (The remote method definition does not provide any description.)
-         * </em>
+   * Deletes all participants of this model.
+   *
+   * @param {any} id Event id
+   *
+   * @returns {object} An empty reference that will be
+   *   populated with the actual data once the response is returned
+   *   from the server.
+   *
+   * This method returns no data.
+   */
+  public deleteParticipants(id: any, customHeaders?: Function): Observable<any> {
+    let _method: string = "DELETE";
+    let _url: string = LoopBackConfig.getPath() + "/" + LoopBackConfig.getApiVersion() +
+    "/Events/:id/participants";
+    let _routeParams: any = {
+      id: id
+    };
+    let _postBody: any = {};
+    let _urlParams: any = {};
+    let result = this.request(_method, _url, _routeParams, _urlParams, _postBody, null, customHeaders);
+    return result;
+  }
+
+  /**
+   * Counts participants of Event.
+   *
+   * @param {any} id Event id
+   *
+   * @param {object} where Criteria to match model instances
    *
    * @returns {object} An empty reference that will be
    *   populated with the actual data once the response is returned
@@ -129,13 +348,78 @@ export class EventApi extends BaseLoopBackApi {
    *
    * Data properties:
    *
-   *  - `result` – `{any}` - 
+   *  - `count` – `{number}` - 
    */
-  public myRemote(customHeaders?: Function): Observable<any> {
+  public countParticipants(id: any, where: any = {}, customHeaders?: Function): Observable<any> {
     let _method: string = "GET";
     let _url: string = LoopBackConfig.getPath() + "/" + LoopBackConfig.getApiVersion() +
-    "/Events/my-remote";
-    let _routeParams: any = {};
+    "/Events/:id/participants/count";
+    let _routeParams: any = {
+      id: id
+    };
+    let _postBody: any = {};
+    let _urlParams: any = {};
+    if (typeof where !== 'undefined' && where !== null) _urlParams.where = where;
+    let result = this.request(_method, _url, _routeParams, _urlParams, _postBody, null, customHeaders);
+    return result;
+  }
+
+  /**
+   * <em>
+         * (The remote method definition does not provide any description.)
+         * </em>
+   *
+   * @param {object} data Request data.
+   *
+   *  - `id` – `{number}` - 
+   *
+   * @returns {object} An empty reference that will be
+   *   populated with the actual data once the response is returned
+   *   from the server.
+   *
+   * <em>
+   * (The remote method definition does not provide any description.
+   * This usually means the response is a `Event` object.)
+   * </em>
+   */
+  public participate(id: any, customHeaders?: Function): Observable<any> {
+    let _method: string = "POST";
+    let _url: string = LoopBackConfig.getPath() + "/" + LoopBackConfig.getApiVersion() +
+    "/Events/:id/participate";
+    let _routeParams: any = {
+      id: id
+    };
+    let _postBody: any = {};
+    let _urlParams: any = {};
+    let result = this.request(_method, _url, _routeParams, _urlParams, _postBody, null, customHeaders);
+    return result;
+  }
+
+  /**
+   * <em>
+         * (The remote method definition does not provide any description.)
+         * </em>
+   *
+   * @param {object} data Request data.
+   *
+   *  - `id` – `{number}` - 
+   *
+   * @returns {object} An empty reference that will be
+   *   populated with the actual data once the response is returned
+   *   from the server.
+   *
+   * <em>
+   * (The remote method definition does not provide any description.
+   * This usually means the response is a `Event` object.)
+   * </em>
+   */
+  public unparticipate(id: any, customHeaders?: Function): Observable<any> {
+    let _method: string = "POST";
+    let _url: string = LoopBackConfig.getPath() + "/" + LoopBackConfig.getApiVersion() +
+    "/Events/:id/unparticipate";
+    let _routeParams: any = {
+      id: id
+    };
     let _postBody: any = {};
     let _urlParams: any = {};
     let result = this.request(_method, _url, _routeParams, _urlParams, _postBody, null, customHeaders);
@@ -173,6 +457,39 @@ export class EventApi extends BaseLoopBackApi {
     if (typeof custom !== 'undefined' && custom !== null) _urlParams.custom = custom;
     if (typeof where !== 'undefined' && where !== null) _urlParams.where = where;
     if (typeof groupBy !== 'undefined' && groupBy !== null) _urlParams.groupBy = groupBy;
+    let result = this.request(_method, _url, _routeParams, _urlParams, _postBody, null, customHeaders);
+    return result;
+  }
+
+  /**
+   * Creates a new instance in participants of this model.
+   *
+   * @param {any} id Event id
+   *
+   * @param {object} data Request data.
+   *
+   * This method expects a subset of model properties as request parameters.
+   *
+   * @returns {object[]} An empty reference that will be
+   *   populated with the actual data once the response is returned
+   *   from the server.
+   *
+   * <em>
+   * (The remote method definition does not provide any description.
+   * This usually means the response is a `Event` object.)
+   * </em>
+   */
+  public createManyParticipants(id: any, data: any[] = [], customHeaders?: Function): Observable<any> {
+    let _method: string = "POST";
+    let _url: string = LoopBackConfig.getPath() + "/" + LoopBackConfig.getApiVersion() +
+    "/Events/:id/participants";
+    let _routeParams: any = {
+      id: id
+    };
+    let _postBody: any = {
+      data: data
+    };
+    let _urlParams: any = {};
     let result = this.request(_method, _url, _routeParams, _urlParams, _postBody, null, customHeaders);
     return result;
   }

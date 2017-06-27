@@ -15,11 +15,7 @@ export default (Model: any, bootOptions = {}) => {
   //     discriminator: 'blockContentType'
   //   }
   // });
-
-  // Has one topic
-  // Model.hasOne('Topic', {
-  //   topic: {type: 'belongsTo', required: true}
-  // });
+  Model.belongsTo('Member', {name: 'creator', foreignKey: 'creatorId'});
 
   // let rel: any = {};
   // rel[Model.modelName.toLowerCase()] = {
@@ -28,6 +24,15 @@ export default (Model: any, bootOptions = {}) => {
   //   foreignKey: 'pollId'
   // };
   // Model.registry.modelBuilder.definitions.Topic.relations.push(rel);
+  Model.observe('before save', (ctx: any, next: Function) => {
+    if (!ctx.isNewInstance) { return next(); }
+    console.log(ctx.options.accessToken);
+    if (ctx.options.accessToken && ctx.options.accessToken.userId) {
+      console.log('creator', ctx.options.accessToken.userId);
+      ctx.instance.creatorId = ctx.options.accessToken.userId;
+    }
+    next();
+   });
 
   // Create block on create
   Model.observe('after save', (ctx: any, next: Function) => {

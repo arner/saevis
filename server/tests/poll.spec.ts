@@ -5,23 +5,7 @@ const api       = supertest('http://localhost:3000/api');
 
 describe('Poll tests:', () => {
   const validPoll = {topicId: 1, options: [{text: 'Option 1'}, {text: 'Option 2'}], settings: {multipleChoice: false}};
-  const multipleChoicePoll = {topicId: 1, options: [{text: 'Option 1'}, {text: 'Option 2'}], settings: {multipleChoice: false}};
-
-  it('Should create a Poll instance', (done: Function) => {
-      api.post('/polls').send(validPoll).expect(200, done);
-  });
-
-  it('Cannot create a Poll with only one option', (done: Function) => {
-      api.post('/polls').send({topicId: 1, options: [{text: 'Option 1'}]}).expect(422, done);
-  });
-
-  it('Cannot create a Poll with no text in one of the options', (done: Function) => {
-    api.post('/polls').send({topicId: 1, options: [{text: 'Option 1'}, {}]}).expect(422, done);
-  });
-
-  it('Cannot create a Poll with empty text in one of the options', (done: Function) => {
-    api.post('/polls').send({topicId: 1, options: [{text: 'Option 1'}, {text: ''}]}).expect(422, done);
-  });
+  const multipleChoicePoll = {topicId: 1, options: [{text: 'Option 1'}, {text: 'Option 2'}], settings: {multipleChoice: true}};
 
   describe('An authorized user', () => {
     let token: string;
@@ -34,6 +18,32 @@ describe('Poll tests:', () => {
         done();
       });
     });
+
+    describe('creating a poll', () => {
+      it('Should create a Poll instance', (done: Function) => {
+        api.post('/polls').set('Authorization', token).send(validPoll).expect(200, (err: Error, res: any) => {
+          if (err) {
+            return done(err);
+          }
+          res.body.creatorId.should.equal(1);
+          done();
+        });
+      });
+
+      it('Cannot create a Poll with only one option', (done: Function) => {
+        api.post('/polls').set('Authorization', token).send({topicId: 1, options: [{text: 'Option 1'}]}).expect(422, done);
+      });
+
+      it('Cannot create a Poll with no text in one of the options', (done: Function) => {
+        api.post('/polls').set('Authorization', token).send({topicId: 1, options: [{text: 'Option 1'}, {}]}).expect(422, done);
+      });
+
+      it('Cannot create a Poll with empty text in one of the options', (done: Function) => {
+        api.post('/polls').set('Authorization', token).send({topicId: 1, options: [{text: 'Option 1'}, {text: ''}]}).expect(422, done);
+      });
+
+    });
+
 
     describe('On an existing poll', () => {
       let polls: any[] = [];

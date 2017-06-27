@@ -1,5 +1,6 @@
 /* tslint:disable */
 import {
+  Member,
   GeoPoint
 } from '../index';
 
@@ -12,6 +13,9 @@ export interface EventInterface {
   "id"?: number;
   "createdAt"?: Date;
   "updatedAt"?: Date;
+  "creatorId"?: number;
+  participants?: Member[];
+  Member?: Member;
 }
 
 export class Event implements EventInterface {
@@ -22,6 +26,9 @@ export class Event implements EventInterface {
   "id": number;
   "createdAt": Date;
   "updatedAt": Date;
+  "creatorId": number;
+  participants: Member[];
+  Member: Member;
   constructor(data?: EventInterface) {
     Object.assign(this, data);
   }
@@ -81,8 +88,22 @@ export class Event implements EventInterface {
           name: 'updatedAt',
           type: 'Date'
         },
+        "creatorId": {
+          name: 'creatorId',
+          type: 'number'
+        },
       },
       relations: {
+        participants: {
+          name: 'participants',
+          type: 'Member[]',
+          model: 'Member'
+        },
+        Member: {
+          name: 'Member',
+          type: 'Member',
+          model: 'Member'
+        },
       }
     }
   }

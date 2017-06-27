@@ -49,9 +49,9 @@ class Poll {
     }
 
     // Validate
-     if (!ctx.instance.settings.multipleChoice && ctx.args.data.value.length > 1) {
-       return next({message: 'Pick one.', statusCode: 422});
-     }
+    if (!ctx.instance.settings.multipleChoice && ctx.args.data.value.length > 1) {
+     return next({message: 'Pick one.', statusCode: 422});
+    }
 
     ctx.args.data.voterId = userId;
     next();

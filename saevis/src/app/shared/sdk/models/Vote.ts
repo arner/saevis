@@ -2,7 +2,7 @@
 
 declare var Object: any;
 export interface VoteInterface {
-  "value": Array<any>;
+  "value"?: Array<any>;
   "id"?: number;
   "pollId"?: number;
   "voterId"?: number;

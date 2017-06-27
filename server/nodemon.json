@@ -2,7 +2,7 @@
   "verbose": true,
   "ext": "js,ts,json",
   "env": {
-    "DEBUG": "strong-remoting:*"
+    "DEBUG": ""
   },
   "watch": ["common", "server"]
 }

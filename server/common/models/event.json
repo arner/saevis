@@ -41,7 +41,12 @@
     }
   },
   "validations": [],
-  "relations": {},
+  "relations": {
+    "participants": {
+      "type": "hasAndBelongsToMany",
+      "model": "Member"
+    }
+  },
   "acls": [],
   "methods": {}
 }

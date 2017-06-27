@@ -1,5 +1,6 @@
 /* tslint:disable */
 import {
+  Member,
   Vote
 } from '../index';
 
@@ -12,6 +13,8 @@ export interface PollInterface {
   "id"?: number;
   "createdAt"?: Date;
   "updatedAt"?: Date;
+  "creatorId"?: number;
+  Member?: Member;
   votes?: Vote[];
 }
 
@@ -23,6 +26,8 @@ export class Poll implements PollInterface {
   "id": number;
   "createdAt": Date;
   "updatedAt": Date;
+  "creatorId": number;
+  Member: Member;
   votes: Vote[];
   constructor(data?: PollInterface) {
     Object.assign(this, data);
@@ -84,8 +89,17 @@ export class Poll implements PollInterface {
           name: 'updatedAt',
           type: 'Date'
         },
+        "creatorId": {
+          name: 'creatorId',
+          type: 'number'
+        },
       },
       relations: {
+        Member: {
+          name: 'Member',
+          type: 'Member',
+          model: 'Member'
+        },
         votes: {
           name: 'votes',
           type: 'Vote[]',

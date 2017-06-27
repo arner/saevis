@@ -23,8 +23,7 @@
     },
     "topic": {
       "type": "belongsTo",
-      "model": "Topic",
-      "foreignKey": ""
+      "model": "Topic"
     }
   },
   "acls": [],

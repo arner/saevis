@@ -11,10 +11,14 @@ import { Model } from '@mean-expert/model';
     beforeSave: { name: 'before save', type: 'operation' }
   },
   remotes: {
-    myRemote: {
-      returns : { arg: 'result', type: 'array' },
-      http    : { path: '/my-remote', verb: 'get' }
-    }
+    // participate: {
+    //   accepts: [
+    //     {arg: 'ctx', type: 'object', http: { source: 'context' }},
+    //     {arg: 'id', type: 'number', required: true}
+    //   ],
+    //   returns : { arg: 'result', type: 'event', root: true },
+    //   http    : { path: '/:id/participate', verb: 'post' }
+    // }
   }
 })
 
@@ -25,12 +29,7 @@ class Event {
   // Example Operation Hook
   beforeSave(ctx: any, next: Function): void {
     console.log('Event: Before Save');
-    console.log(ctx.instance);
     next();
-  }
-  // Example Remote Method
-  myRemote(next: Function): void {
-    this.model.find(next);
   }
 }
 
