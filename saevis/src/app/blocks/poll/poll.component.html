@@ -18,7 +18,10 @@
 <section class="has-voted" *ngIf="content.userVoted && mode === blockMode.NORMAL">
   <p>{{content.text}}</p>
   <div *ngFor="let option of content.options">
-    <span>{{option.text}}</span> - <span>{{option.votes}}</span>
+    <div class="description">{{option.text}} ({{option.votes}})</div>
+    <div>
+      <md-progress-bar [value]="(option.votes / content.votes.length) * 100"></md-progress-bar>
+    </div>
   </div>
 </section>
 

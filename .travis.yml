@@ -19,7 +19,7 @@ before_install:
   - npm install -g angular-cli@latest
 
 before_script:
-  - cd $TRAVIS_BUILD_DIR/saevis && npm install --logLevel=error && ls -la && pwd && ng build --env=prod
+  - cd $TRAVIS_BUILD_DIR/saevis && npm install --loglevel error && pwd && ng --version && ng build --env=prod
 
 script:
   - docker build server --tag ${REGISTRY}/${SERVER}

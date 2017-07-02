@@ -9,7 +9,7 @@ import { Routes, RouterModule } from '@angular/router';
 import {
   MdCardModule, MdButtonModule, MdCheckboxModule, MdToolbarModule, MdSidenavModule,
   MdIconModule, MdRadioModule, MdListModule, MdNativeDateModule, MdDatepickerModule, MdInputModule,
-  MdSelectModule, MdDialogModule, MdSlideToggleModule, MdMenuModule, MdChipsModule
+  MdSelectModule, MdDialogModule, MdSlideToggleModule, MdMenuModule, MdChipsModule, MdProgressBarModule
 } from '@angular/material';
 import { TopicsComponent } from './topics/topics.component';
 import { ToolbarComponent } from './toolbar/toolbar.component';
@@ -80,7 +80,8 @@ const routes: Routes = [
     MdDialogModule,
     MdSlideToggleModule,
     MdMenuModule,
-    MdChipsModule
+    MdChipsModule,
+    MdProgressBarModule
   ],
   providers: [MemberService],
   bootstrap: [AppComponent],
