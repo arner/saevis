@@ -27,5 +27,7 @@
     {{isParticipating ? 'Bij' : 'Niet bij'}}
   </md-slide-toggle>
   <br />
-  <span *ngFor="let participant of content.participants">{{participant.email}}</span>
+  <md-chip-list>
+    <md-chip *ngFor="let participant of content.participants">{{participant.email}}</md-chip>
+  </md-chip-list>
 </ng-container>

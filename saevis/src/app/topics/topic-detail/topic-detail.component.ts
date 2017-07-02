@@ -40,7 +40,7 @@ export class TopicDetailComponent implements OnInit {
   }
 
   public save(): void {
-    this.topicApi.updateAttributes(this.topic.id, {title: this.topic.title, text: this.topic.text}).subscribe((topic: Topic) => {
+    this.topicApi.updateAttributes(this.topic.id, this.topic).subscribe((topic: Topic) => {
       console.log('Saved topic.', topic);
       this.mode = TopicMode.NORMAL;
     }, (err: Error) => {
@@ -48,13 +48,25 @@ export class TopicDetailComponent implements OnInit {
     });
   }
 
-  public edit() {
+  public publish(): void {
+    this.topic.published = true; return;
+    // this.topicApi.updateAttributes(this.topic.id, this.topic).subscribe((topic: Topic) => {
+    //   console.log('Saved topic.', topic);
+    //   // this.mode = TopicMode.NORMAL;
+    // }, (err: Error) => {
+    //   console.warn(err.message);
+    // });
+  }
+
+  public edit(): void {
     this.mode = TopicMode.EDIT;
     this.previousState = Object.assign({}, this.topic);
   }
 
-  public cancel() {
-    this.topic = Object.assign({}, this.previousState);
+  public cancel(): void {
+    if (this.previousState) {
+      this.topic = Object.assign({}, this.previousState);
+    }
     this.mode = TopicMode.NORMAL;
   }
 }

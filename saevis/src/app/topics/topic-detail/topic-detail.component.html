@@ -1,5 +1,5 @@
 <ng-container *ngIf="topic">
-  <md-card>
+  <md-card class="{{topic.published ? 'published' : 'draft'}}">
     <button md-icon-button [mdMenuTriggerFor]="menu" *ngIf="mode === topicMode.NORMAL" class="menu-button">
       <md-icon>more_vert</md-icon>
     </button>
@@ -7,6 +7,10 @@
       <button md-menu-item (click)="edit()">
         <md-icon>edit</md-icon>
         <span>Edit</span>
+      </button>
+      <button md-menu-item (click)="publish()">
+        <md-icon>publish</md-icon>
+        <span>Publish</span>
       </button>
       <!--<button md-menu-item (click)="delete()">-->
         <!--<md-icon>delete</md-icon>-->

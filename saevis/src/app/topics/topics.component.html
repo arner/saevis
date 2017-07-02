@@ -1,9 +1,20 @@
-<md-card *ngFor="let topic of topics | async" [routerLink]="topic.id">
-  <md-card-title>{{topic.title}}</md-card-title>
+<md-card *ngFor="let topic of topics | async" [routerLink]="topic.id" class="{{topic.published ? 'published' : 'draft'}}">
+  <!--<md-card-header>-->
+    <md-card-title>{{topic.title}}</md-card-title>
+    <!--<md-card-subtitle>Dog Breed</md-card-subtitle>-->
+  <!--</md-card-header>-->
   <md-card-content>
-    <ng-container *ngFor="let block of topic.blocks">
-      <saevis-mini-block [block]="block"></saevis-mini-block>
-    </ng-container>
+
   </md-card-content>
+  <md-card-actions>
+      <md-chip-list [selectable]="false">
+        <md-chip [color]="block.blockContent.hasDone(options) ? 'accent' : 'secondary'" *ngFor="let block of topic.blocks">
+          <md-icon style="font-size:12px; width: 12px; height:12px;">
+            {{block.blockContent.icon}}
+          </md-icon>
+          {{block.blockContent.value}} | {{block.blockContent.getText(options)}}
+        </md-chip>
+      </md-chip-list>
+  </md-card-actions>
 </md-card>
 <a md-fab color="secondary" (click)="create()" class="add-topic-button"><md-icon>add</md-icon></a>

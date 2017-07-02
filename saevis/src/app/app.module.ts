@@ -8,8 +8,8 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { Routes, RouterModule } from '@angular/router';
 import {
   MdCardModule, MdButtonModule, MdCheckboxModule, MdToolbarModule, MdSidenavModule,
-  MdIcon, MdIconModule, MdRadioModule, MdListModule, MdNativeDateModule, MdDatepickerModule, MdInputModule,
-  MdSelectModule, MdDialogModule, MdSlideToggleModule, MdMenuModule
+  MdIconModule, MdRadioModule, MdListModule, MdNativeDateModule, MdDatepickerModule, MdInputModule,
+  MdSelectModule, MdDialogModule, MdSlideToggleModule, MdMenuModule, MdChipsModule
 } from '@angular/material';
 import { TopicsComponent } from './topics/topics.component';
 import { ToolbarComponent } from './toolbar/toolbar.component';
@@ -20,7 +20,6 @@ import { EventComponent } from './blocks/event/event.component';
 import { TypeSelectorComponent } from './blocks/type-selector/type-selector.component';
 import { LoginComponent } from './login/login.component';
 import {MemberService} from './member.service';
-import { MiniBlockComponent } from './blocks/mini-block/mini-block.component';
 
 
 const routes: Routes = [
@@ -55,8 +54,7 @@ const routes: Routes = [
     TopicDetailComponent,
     EventComponent,
     TypeSelectorComponent,
-    LoginComponent,
-    MiniBlockComponent
+    LoginComponent
   ],
   imports: [
     RouterModule.forRoot(routes),
@@ -81,7 +79,8 @@ const routes: Routes = [
     MdSelectModule,
     MdDialogModule,
     MdSlideToggleModule,
-    MdMenuModule
+    MdMenuModule,
+    MdChipsModule
   ],
   providers: [MemberService],
   bootstrap: [AppComponent],
