@@ -1,21 +1,18 @@
-#!/usr/bin/env bash
+#!/usr/bin/env bash -ex
 
+bx login
+bx ic init
 
-installDependencies() {
-    if ! hash bx; then
-        curl -sL "https://public.dhe.ibm.com/cloud/bluemix/cli/bluemix-cli/Bluemix_CLI_0.5.4_amd64.tar.gz" | tar -zx
-        mv Bluemix_CLI/bin/bluemix bx
-        chmod +x bx
-        export PATH=$PATH:$(pwd)
-    fi
+docker build saevis --tag ${REGISTRY}/${CLIENT}
+docker build server --tag ${REGISTRY}/${SERVER}
 
-    bx ic version || bx plugin install IBM-containers -r Bluemix
-}
+docker push ${REGISTRY}/${CLIENT}
+docker push ${REGISTRY}/${SERVER}
 
-build() {
-    cd saevis
-    ng build --env=prod
-    docker build --tag saevis
-}
+bx ic group-remove ${SERVER}
+bx ic group-remove ${CLIENT}
 
-installDependencies
+sleep 30
+
+bx ic group-create -domain ${DOMAIN} --name ${CLIENT} -hostname ${CLIENT} -p 80 -e SERVER_URL=${SERVER}.${DOMAIN}:3000 ${REGISTRY}/${CLIENT}
+bx ic group-create -domain ${DOMAIN} --name ${SERVER} -hostname ${SERVER} -p 3000 ${REGISTRY}/${SERVER}
