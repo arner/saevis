@@ -17,10 +17,11 @@ before_install:
   - curl -sL "https://public.dhe.ibm.com/cloud/bluemix/cli/bluemix-cli/Bluemix_CLI_0.5.4_amd64.tar.gz" | tar -zx
   - sudo bash Bluemix_CLI/install_bluemix_cli
   - rm -rf Bluemix_CLI
+  - bx plugin install IBM-containers -r Bluemix
   - npm install -g @angular/cli@1.0.0
 
 before_script:
-  - cd $TRAVIS_BUILD_DIR/saevis && npm install --loglevel error && ls -la && ng --version && ng build --env=prod
+  - cd $TRAVIS_BUILD_DIR/saevis && npm install --loglevel error && ng build --env=prod
 
 script:
   - cd $TRAVIS_BUILD_DIR
