@@ -3,6 +3,7 @@ import {Poll} from '../../shared/sdk/models/Poll';
 import {MemberApi} from '../../shared/sdk/services/custom/Member';
 import {PollApi} from '../../shared/sdk/services/custom/Poll';
 import {BlockMode} from '../../shared/BlockExtended';
+import {PollExtended} from '../../shared/PollExtended';
 
 @Component({
   selector: 'saevis-poll',
@@ -10,51 +11,43 @@ import {BlockMode} from '../../shared/BlockExtended';
   styleUrls: ['./poll.component.scss']
 })
 export class PollComponent implements OnInit {
-  private poll: Poll;
   private option: string;
 
   @Input()
   private mode: BlockMode;
   private blockMode = BlockMode;
 
-  @Input() set content(poll: Poll) {
-    this.poll = poll;
-    this.poll.settings = this.poll.settings || {};
-    if (this.mode === BlockMode.NEW) {
-      this.poll.options = [{text: ''}, {text: ''}];
-    }
-  }
+  @Input()
+  public content: PollExtended;
 
-  constructor(private memberApi: MemberApi, private pollApi: PollApi) { }
+  constructor(private pollApi: PollApi) { }
 
   ngOnInit() {
-    console.log(this.poll);
   }
 
   public vote() {
-    const value = this.poll.settings.multipleChoice
-      ? this.poll.options
+    const value = this.content.settings.multipleChoice
+      ? this.content.options
           .filter((o: any) => o.checked)
           .map((o: any) => o.id)
       : [this.option];
-    this.pollApi.createVotes(this.poll.id, {value}).subscribe(() => {
-      this.pollApi.findById(this.poll.id).subscribe((poll: Poll) => this.poll = poll);
+    this.pollApi.createVotes(this.content.id, {value}).subscribe(() => {
+      this.pollApi.findById(this.content.id).subscribe((poll: Poll) => this.content = new PollExtended(poll));
     });
   }
 
   public save() {
-    delete this.poll.id;
-    console.log('create', this.poll);
-    this.pollApi.create(this.poll).subscribe((poll: Poll) => {
-      this.poll = poll;
+    delete this.content.id;
+    this.pollApi.create(this.content).subscribe((poll: Poll) => {
+      this.content = new PollExtended(poll);
       this.mode = BlockMode.NORMAL;
     });
   }
 
   public removeOption(optionIndex: number) {
-    this.poll.options.splice(optionIndex, 1);
+    this.content.options.splice(optionIndex, 1);
   }
   public addOption() {
-    this.poll.options.push({text: ''});
+    this.content.options.push({text: ''});
   }
 }

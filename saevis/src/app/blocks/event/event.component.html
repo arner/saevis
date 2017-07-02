@@ -1,18 +1,18 @@
 <ng-container *ngIf="mode === blockMode.EDIT || mode === blockMode.NEW">
   <md-input-container>
-    <input mdInput [mdDatepicker]="startDatepicker" [min]="minDate" placeholder="Start" [(ngModel)]="event.startTime" (change)="onChangeStartTime()">
+    <input mdInput [mdDatepicker]="startDatepicker" [min]="minDate" placeholder="Start" [(ngModel)]="content.startTime" (change)="onChangeStartTime()">
     <button mdSuffix [mdDatepickerToggle]="startDatepicker"></button>
   </md-input-container>
   <md-datepicker #startDatepicker [touchUi]="true"></md-datepicker>
   <br>
   <md-input-container>
-    <input mdInput [mdDatepicker]="endDatepicker" [min]="minDate" placeholder="Eind" [(ngModel)]="event.endTime">
+    <input mdInput [mdDatepicker]="endDatepicker" [min]="minDate" placeholder="Eind" [(ngModel)]="content.endTime">
     <button mdSuffix [mdDatepickerToggle]="endDatepicker"></button>
   </md-input-container>
   <md-datepicker #endDatepicker [touchUi]="true"></md-datepicker>
   <br>
   <md-input-container>
-    <input mdInput type="text" placeholder="Locatie" [(ngModel)]="event.locationText"/>
+    <input mdInput type="text" placeholder="Locatie" [(ngModel)]="content.locationText"/>
   </md-input-container>
   <br>
   <!--<md-card-actions>-->
@@ -22,10 +22,10 @@
 </ng-container>
 
 <ng-container *ngIf="mode === blockMode.NORMAL">
-  <p>Bij {{event.locationText}} van {{event.startTime | date}} tot {{event.endTime | date}}.</p>
+  <p>Bij {{content.locationText}} van {{content.startTime | date}} tot {{content.endTime | date}}.</p>
   <md-slide-toggle (change)="toggleParticipating()" [checked]="isParticipating">
     {{isParticipating ? 'Bij' : 'Niet bij'}}
   </md-slide-toggle>
   <br />
-  <span *ngFor="let participant of event.participants">{{participant.email}}</span>
+  <span *ngFor="let participant of content.participants">{{participant.email}}</span>
 </ng-container>

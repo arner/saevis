@@ -121,7 +121,6 @@ class Poll {
       return;
     }
     result.userVoted = !!result.votes.find((v: any) => v.voterId === userId);
-    console.log(`user ${userId} voted on ${result.id}: ${result.userVoted}`);
   }
 }
 

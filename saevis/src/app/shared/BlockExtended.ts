@@ -1,70 +1,58 @@
-import {SDKModels, Poll, PollApi, Event, EventApi, Block, BlockInterface} from './sdk';
+import {Poll, Event, Block, BlockInterface} from './sdk';
+import {EventExtended} from './EventExtended';
+import {PollExtended} from './PollExtended';
 
 export class BlockExtended extends Block {
 
-    public constructor(data?: BlockInterface) {
-        super(data);
+  public constructor(data?: BlockInterface) {
+    super(data);
+    this.validate(data);
 
-        if (!data.blockContentType) {
-          throw 'Specify the type.';
-        }
-        if (!data.topicId) {
-          throw 'Specify a topic';
-        }
-        const type = new SDKModels().get(data.blockContentType);
-
-        data.blockContent = data.blockContent || {};
-        if (!data.blockContent.topicId) {
-          data.blockContent.topicId = data.topicId;
-        }
-        this.blockContent = new type(data.blockContent);
-        console.log(this.blockContent.id);
-        if (!this.blockContent.id) {
-          this._mode = BlockMode.NEW;
-        } else {
-          this._mode = BlockMode.NORMAL;
-        }
+    // Set default
+    data.blockContent = data.blockContent || {};
+    if (!data.blockContent.topicId) {
+      data.blockContent.topicId = data.topicId;
     }
 
-    private _mode: BlockMode;
-    public get mode(): BlockMode {
-      return this._mode;
+    // Create the methods
+    switch (this.blockContentType) {
+      case 'Poll':
+        this.blockContent = new PollExtended(data.blockContent);
+        break;
+      case 'Event':
+        this.blockContent = new EventExtended(data.blockContent);
+        break;
     }
 
-    public edit() {
-      if (this.canEdit) {
-        this._mode = BlockMode.EDIT;
-      } else {
-        console.error('Can not edit this type.');
-      }
+    // Set mode
+    if (!this.blockContent.id) {
+      this._mode = BlockMode.NEW;
+    } else {
+      this._mode = BlockMode.NORMAL;
     }
+  }
 
-    public get icon(): string {
-      return this.mapping[this.blockContentType].icon;
+  private validate(data: BlockInterface) {
+    if (!data.blockContentType) {
+      throw 'Specify the type.';
     }
-    public get canEdit(): string {
-      return this.mapping[this.blockContentType].canEdit;
+    if (!data.topicId) {
+      throw 'Specify a topic';
     }
-    public get canDelete(): string {
-      return this.mapping[this.blockContentType].canDelete;
-    }
+  }
 
-    private mapping: any = {
-      Poll: {
-        icon: 'poll',
-        clas: Poll,
-        api: PollApi,
-        canEdit: false,
-        canDelete: false
-      },
-      Event: {
-        icon: 'event',
-        clas: Event,
-        api: EventApi,
-        canEdit: true,
-        canDelete: false
-      }
-    };
+  private _mode: BlockMode;
+  public get mode(): BlockMode {
+    return this._mode;
+  }
+
+  public edit() {
+    if (this.blockContent.canEdit) {
+      this._mode = BlockMode.EDIT;
+    } else {
+      console.error('Can not edit this type.');
+    }
+  }
 }
 
 export enum BlockMode {

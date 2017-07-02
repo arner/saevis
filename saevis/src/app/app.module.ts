@@ -40,7 +40,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: '/topics', //'login', //'/topics',
+    redirectTo: '/login', //'login', //'/topics',
     pathMatch: 'full'
   }
 ];

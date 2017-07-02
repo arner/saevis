@@ -1,9 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Event, EventApi} from '../../shared/sdk';
+import {Event, EventApi, Member, LoopBackAuth} from '../../shared/sdk';
 import {BlockMode} from "../../shared/BlockExtended";
-import {MemberApi} from '../../shared/sdk/services/custom/Member';
-import {LoopBackAuth} from '../../shared/sdk/services/core/auth.service';
-import {Member} from '../../shared/sdk/models/Member';
+import {EventExtended} from '../../shared/EventExtended';
 
 @Component({
   selector: 'saevis-event',
@@ -11,28 +9,19 @@ import {Member} from '../../shared/sdk/models/Member';
   styleUrls: ['./event.component.scss']
 })
 export class EventComponent implements OnInit {
-
-  @Input()
-  public set content(event: Event) {
-    if (event.startTime) {
-      event.startTime = new Date(Date.parse(event.startTime.toString()));
-    }
-    if (event.endTime) {
-      event.endTime = new Date(Date.parse(event.endTime.toString()));
-    }
-    console.log(event);
-
-    this.event = event;
-  }
-  public event: Event;
-  public minDate: Date;
-
   @Input()
   private mode: BlockMode;
   private blockMode = BlockMode;
+  public minDate: Date;
 
+  @Input()
+  public content: EventExtended;
+
+  public get userId(): number {
+    return this.auth.getCurrentUserId();
+  };
   public get isParticipating() {
-    return !!this.event.participants.find((member: Member) => member.id === this.auth.getCurrentUserId());
+    return this.content.hasDone({userId: this.userId});
   }
 
   constructor(private eventApi: EventApi, private auth: LoopBackAuth) { }
@@ -42,36 +31,37 @@ export class EventComponent implements OnInit {
   }
 
   public toggleParticipating() {
-    const currentMemberId = this.auth.getCurrentUserId();
     if (this.isParticipating) {
-      this.eventApi.unlinkParticipants(this.event.id, currentMemberId).subscribe(r => {
-        this.event.participants = this.event.participants.filter((member: Member) => member.id !== currentMemberId);
+      this.eventApi.unlinkParticipants(this.content.id, this.userId).subscribe(r => {
+        this.content.participants = this.content.participants.filter((member: Member) => member.id !== this.userId);
       });
     } else {
-      this.eventApi.linkParticipants(this.event.id, currentMemberId).subscribe(r => {
-        this.event.participants.push(this.auth.getCurrentUserData());
+      this.eventApi.linkParticipants(this.content.id, this.userId).subscribe(r => {
+        this.content.participants.push(this.auth.getCurrentUserData());
       });
     }
   }
 
   public onChangeStartTime() {
-    if (this.event && this.event.startTime && !this.event.endTime) {
-      this.event.endTime = this.event.startTime;
+    if (this.content && this.content.startTime && !this.content.endTime) {
+      this.content.endTime = this.content.startTime;
     }
   }
 
   public save() {
-    // delete this.event.id;
-    console.log(this.mode);
+    // CREATE
     if (this.mode === BlockMode.NEW) {
-      delete this.event.id;
-      this.eventApi.create(this.event).subscribe((event: Event) => {
+      delete this.content.id;
+      this.eventApi.create(this.content).subscribe((event: Event) => {
         this.mode = BlockMode.NORMAL;
+        this.content = new EventExtended(event);
       }, (err: Error) => {
         console.warn('c', err.message);
       });
+
+    // UPDATE
     } else {
-      this.eventApi.updateAttributes(this.event.id, this.event).subscribe((event: Event) => {
+      this.eventApi.updateAttributes(this.content.id, this.content).subscribe((event: Event) => {
         this.mode = BlockMode.NORMAL;
       }, (err: Error) => {
         console.warn('u', err.message);

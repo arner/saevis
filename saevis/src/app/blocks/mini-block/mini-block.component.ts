@@ -1,5 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {BlockExtended} from '../../shared/BlockExtended';
+import {LoopBackAuth} from '../../shared/sdk/services/core/auth.service';
+import {BlockTextOptions} from '../../shared/BlockProperties';
 
 @Component({
   selector: 'saevis-mini-block',
@@ -11,10 +13,14 @@ export class MiniBlockComponent implements OnInit {
   @Input()
   public block: BlockExtended;
 
-  constructor() { }
+  public options: BlockTextOptions;
+
+  constructor(private auth: LoopBackAuth) { }
 
   ngOnInit() {
-    console.log(this.block);
+    this.options = {
+      userId: this.auth.getCurrentUserId()
+    };
   }
 
 }

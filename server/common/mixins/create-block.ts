@@ -26,7 +26,6 @@ export default (Model: any, bootOptions = {}) => {
   // Model.registry.modelBuilder.definitions.Topic.relations.push(rel);
   Model.observe('before save', (ctx: any, next: Function) => {
     if (!ctx.isNewInstance) { return next(); }
-    console.log(ctx.options.accessToken);
     if (ctx.options.accessToken && ctx.options.accessToken.userId) {
       console.log('creator', ctx.options.accessToken.userId);
       ctx.instance.creatorId = ctx.options.accessToken.userId;
