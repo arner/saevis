@@ -1,12 +1,12 @@
 {
   "name": "saevis",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Site for friends",
+  "main": "server/server/app.js",
   "scripts": {
-    "setup": "cd fireloop/ && npm install && node server/server.js"
+    "setup": "cd server && npm install && cd ../saevis && npm install"
   },
   "keywords": [],
-  "author": "",
-  "license": "MIT"
+  "author": "Arne Rutjes",
+  "license": "UNLICENSED"
 }

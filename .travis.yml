@@ -9,7 +9,6 @@ services:
 
 env:
   global:
-    - "REGISTRY=registry.eu-gb.bluemix.net/cicbc"
     - "DOMAIN=eu-gb.mybluemix.net"
     - "SERVER=saevis-api"
     - "CLIENT=saevis"
