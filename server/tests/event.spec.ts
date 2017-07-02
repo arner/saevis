@@ -50,6 +50,10 @@ describe('Event unit tests:', () => {
         });
       });
 
+      it('cannot let someone else participate', (done: Function) => {
+        api.put(`/events/${events.pop().id}/participants/rel/2`).set('Authorization', token).send().expect(403, done);
+      });
+
       describe('after participating', () => {
         let participating: any[] = [];
         beforeEach((done: Function) => {
@@ -66,10 +70,6 @@ describe('Event unit tests:', () => {
 
         it('should unparticipate', (done: Function) => {
           api.delete(`/events/${participating.pop().id}/participants/rel/${userId}`).set('Authorization', token).send().expect(204, done);
-        });
-
-        it('cannot participate again', (done: Function) => {
-          api.put(`/events/${participating.pop().id}/participants/rel/${userId}`).set('Authorization', token).send().expect(403, done);
         });
       });
     });

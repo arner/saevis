@@ -15,8 +15,7 @@
     },
     "promptValues": {
       "sdkFeatures": [
-        "Enable PubSub + IO + FireLoop functionality",
-        "Generate ONLY FireLoop SDK + Auth Services"
+        "Enable PubSub + IO + FireLoop functionality"
       ]
     }
   }

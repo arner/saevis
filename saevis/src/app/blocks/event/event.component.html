@@ -22,5 +22,10 @@
 </ng-container>
 
 <ng-container *ngIf="mode === blockMode.NORMAL">
-  Bij {{event.locationText}} van {{event.startTime | date}} tot {{event.endTime | date}}.
+  <p>Bij {{event.locationText}} van {{event.startTime | date}} tot {{event.endTime | date}}.</p>
+  <md-slide-toggle (change)="toggleParticipating()" [checked]="isParticipating">
+    {{isParticipating ? 'Bij' : 'Niet bij'}}
+  </md-slide-toggle>
+  <br />
+  <span *ngFor="let participant of event.participants">{{participant.email}}</span>
 </ng-container>

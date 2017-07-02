@@ -48,5 +48,8 @@
     }
   },
   "acls": [],
-  "methods": {}
+  "methods": {},
+  "scope": {
+    "include": "participants"
+  }
 }

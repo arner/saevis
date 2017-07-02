@@ -8,7 +8,8 @@ import { Model } from '@mean-expert/model';
  **/
 @Model({
   hooks: {
-    beforeSave: { name: 'before save', type: 'operation' }
+    beforeParticipate: { name: 'prototype.__link__participants', type: 'beforeRemote' },
+    beforeUnParticipate: { name: 'prototype.__unlink__participants', type: 'beforeRemote' }
   },
   remotes: {
     // participate: {
@@ -26,10 +27,19 @@ class Event {
   // LoopBack model instance is injected in constructor
   constructor(public model: any) {}
 
-  // Example Operation Hook
-  beforeSave(ctx: any, next: Function): void {
-    console.log('Event: Before Save');
-    next();
+  beforeParticipate(ctx: any, user: any, next: Function) {
+    const userId = ctx.req.accessToken.userId;
+    if (ctx.req.params.fk != userId) {
+      let error: any;
+      error = new  Error('Forbidden.');
+      error.status = 403;
+      return next(error);
+    }
+    return next();
+  }
+
+  beforeUnParticipate(ctx: any, user: any, next: Function) {
+    return this.beforeParticipate(ctx, user, next);
   }
 }
 

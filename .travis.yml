@@ -1,0 +1,48 @@
+sudo: required
+dist: trusty
+language: node_js
+node_js:
+  - '4.2'
+
+services:
+  - docker
+
+env:
+  global:
+    - "REGISTRY=registry.eu-gb.bluemix.net/cicbc"
+    - "DOMAIN=eu-gb.mybluemix.net"
+    - "SERVER=saevis-api"
+    - "CLIENT=saevis"
+
+before_install:
+  - curl -sL "https://public.dhe.ibm.com/cloud/bluemix/cli/bluemix-cli/Bluemix_CLI_0.5.4_amd64.tar.gz" | tar -zx
+  - sudo bash Bluemix_CLI/install_bluemix_cli
+  - npm install -g angular-cli
+
+before_script:
+  - cd saevis && npm install && ng build --env=prod
+
+script:
+  - docker build server --tag ${REGISTRY}/${SERVER}
+  - docker run ${REGISTRY}/${SERVER} bash -c "npm run test"
+
+after_success:
+  - if [ "$TRAVIS_BRANCH" == "master" ]; then
+    bx login
+    bx ic init
+
+    docker build saevis --tag ${REGISTRY}/${CLIENT}
+    # docker build server --tag ${REGISTRY}/${SERVER}
+
+    docker push ${REGISTRY}/${CLIENT}
+    docker push ${REGISTRY}/${SERVER}
+
+    bx ic group-remove ${SERVER}
+    bx ic group-remove ${CLIENT}
+
+    sleep 30
+
+    bx ic group-create -domain ${DOMAIN} --name ${CLIENT} -hostname ${CLIENT} -p 80 -e SERVER_URL=${SERVER}.${DOMAIN}:3000 ${REGISTRY}/${CLIENT}
+    bx ic group-create -domain ${DOMAIN} --name ${SERVER} -hostname ${SERVER} -p 3000 ${REGISTRY}/${SERVER}
+    fi
+
