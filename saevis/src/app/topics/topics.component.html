@@ -9,7 +9,7 @@
   <md-card-actions>
       <md-chip-list [selectable]="false">
         <md-chip [color]="block.blockContent.hasDone(options) ? 'accent' : 'secondary'" *ngFor="let block of topic.blocks">
-          <md-icon style="font-size:12px; width: 12px; height:12px;">
+          <md-icon>
             {{block.blockContent.icon}}
           </md-icon>
           {{block.blockContent.value}} | {{block.blockContent.getText(options)}}
