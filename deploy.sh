@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 set -ex
 
-bx login -a "${BLUEMIX_API_URL}" -o "${BLUEMIX_ORGANIZATION}" -c "${BLUEMIX_USER}" -s "${BLUEMIX_SPACE}"
+bx login -a "${BLUEMIX_API_URL}" -o "${BLUEMIX_ORGANIZATION}" -s "${BLUEMIX_SPACE}"
 bx ic init
 
 docker build saevis --tag ${REGISTRY}/${CLIENT}
