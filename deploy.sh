@@ -15,5 +15,5 @@ bx ic group-remove ${CLIENT} || true
 
 sleep 30
 
-bx ic group-create -domain ${DOMAIN} --name ${CLIENT} -hostname ${CLIENT} -p 80 -e SERVER_URL=${SERVER}.${DOMAIN}:3000 ${REGISTRY}/${CLIENT}
+bx ic group-create -domain ${DOMAIN} --name ${CLIENT} -hostname ${CLIENT} -p 80 -e SERVER_URL="${SERVER}.${DOMAIN}:3000" ${REGISTRY}/${CLIENT}
 bx ic group-create -domain ${DOMAIN} --name ${SERVER} -hostname ${SERVER} -p 3000 ${REGISTRY}/${SERVER}
