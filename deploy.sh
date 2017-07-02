@@ -10,8 +10,8 @@ docker build server --tag ${REGISTRY}/${SERVER}
 docker push ${REGISTRY}/${CLIENT}
 docker push ${REGISTRY}/${SERVER}
 
-bx ic group-remove ${SERVER}
-bx ic group-remove ${CLIENT}
+bx ic group-remove ${SERVER} || true
+bx ic group-remove ${CLIENT} || true
 
 sleep 30
 
