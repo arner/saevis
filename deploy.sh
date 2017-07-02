@@ -1,4 +1,5 @@
-#!/usr/bin/env bash -ex
+#!/usr/bin/env sh
+set -ex
 
 bx login
 bx ic init
