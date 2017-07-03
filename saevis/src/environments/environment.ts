@@ -5,5 +5,5 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'TODO (not used)'
+  apiUrl: 'http://0.0.0.0'
 };
