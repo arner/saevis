@@ -1,6 +1,7 @@
 #!/usr/bin/env sh
 set -ex
 
+bx update
 bx login -a "${BLUEMIX_API_URL}" -o "${BLUEMIX_ORGANIZATION}" -s "${BLUEMIX_SPACE}"
 bx ic init
 

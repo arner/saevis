@@ -14,11 +14,7 @@ env:
     - "CLIENT=saevis"
 
 before_install:
-  - curl -sL "https://public.dhe.ibm.com/cloud/bluemix/cli/bluemix-cli/Bluemix_CLI_0.5.4_amd64.tar.gz" | tar -zx
-  - sudo bash Bluemix_CLI/install_bluemix_cli
-  - rm -rf Bluemix_CLI
-  - bx plugin install IBM-containers -r Bluemix
-  - npm install -g @angular/cli@1.0.0
+  - npm install -g @angular/cli@1.0.0 --loglevel error
 
 before_script:
   - cd $TRAVIS_BUILD_DIR/saevis && npm install --loglevel error && ng build --env=prod
@@ -26,7 +22,15 @@ before_script:
 script:
   - cd $TRAVIS_BUILD_DIR
   - docker build server --tag ${REGISTRY}/${SERVER}
+  - docker build saevis --tag ${REGISTRY}/${CLIENT}
   - docker run ${REGISTRY}/${SERVER} bash -c "npm run test"
+
+before-deploy:
+  - curl -sL "https://public.dhe.ibm.com/cloud/bluemix/cli/bluemix-cli/Bluemix_CLI_0.5.4_amd64.tar.gz" | tar -zx
+  - sudo bash Bluemix_CLI/install_bluemix_cli
+  - rm -rf Bluemix_CLI
+  - bx config --check-version=false
+  - bx plugin install IBM-containers -r Bluemix
 
 deploy:
   provider: script
