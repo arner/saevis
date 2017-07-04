@@ -7,7 +7,6 @@ rm -rf Bluemix_CLI
 bx config --check-version=false
 bx plugin install IBM-containers -r Bluemix
 
-bx update
 bx login -a "${BLUEMIX_API_URL}" -o "${BLUEMIX_ORGANIZATION}" -s "${BLUEMIX_SPACE}"
 bx ic init
 
