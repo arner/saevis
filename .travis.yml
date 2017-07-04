@@ -25,13 +25,6 @@ script:
   - docker build saevis --tag ${REGISTRY}/${CLIENT}
   - docker run ${REGISTRY}/${SERVER} bash -c "npm run test"
 
-before-deploy:
-  - curl -sL "https://public.dhe.ibm.com/cloud/bluemix/cli/bluemix-cli/Bluemix_CLI_0.5.4_amd64.tar.gz" | tar -zx
-  - sudo bash Bluemix_CLI/install_bluemix_cli
-  - rm -rf Bluemix_CLI
-  - bx config --check-version=false
-  - bx plugin install IBM-containers -r Bluemix
-
 deploy:
   provider: script
   script: "sh $TRAVIS_BUILD_DIR/deploy.sh"

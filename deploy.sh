@@ -1,6 +1,12 @@
 #!/usr/bin/env sh
 set -ex
 
+curl -sL "https://public.dhe.ibm.com/cloud/bluemix/cli/bluemix-cli/Bluemix_CLI_0.5.4_amd64.tar.gz" | tar -zx
+sudo bash Bluemix_CLI/install_bluemix_cli
+rm -rf Bluemix_CLI
+bx config --check-version=false
+bx plugin install IBM-containers -r Bluemix
+
 bx update
 bx login -a "${BLUEMIX_API_URL}" -o "${BLUEMIX_ORGANIZATION}" -s "${BLUEMIX_SPACE}"
 bx ic init
