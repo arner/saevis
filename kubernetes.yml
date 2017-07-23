@@ -1,0 +1,64 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: saevis-server
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: pod-saevis-server
+        run: saevis-server
+    spec:
+      containers:
+      - name: server
+        image: registry.eu-de.bluemix.net/arne/saevis-server:latest
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: saevis-client
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: pod-saevis-client
+        run: saevis-client
+    spec:
+      containers:
+      - name: client
+        image: registry.eu-de.bluemix.net/arne/saevis-client:latest
+        env:
+         - name: SERVER_URL
+           value: http:\/\/169.51.8.10:30072
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: saevis-server-service
+  labels:
+    run: saevis-server
+spec:
+  selector:
+    run: saevis-server
+  type: NodePort
+  ports:
+   - protocol: TCP
+     port: 3000
+     nodePort: 30072
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: saevis-client-service
+  labels:
+    run: saevis-client
+spec:
+  selector:
+    run: saevis-client
+  type: NodePort
+  ports:
+   - protocol: TCP
+     port: 80
+     nodePort: 30073

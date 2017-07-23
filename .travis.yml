@@ -9,25 +9,26 @@ services:
 
 env:
   global:
-    - "DOMAIN=eu-gb.mybluemix.net"
-    - "SERVER=saevis-api"
-    - "CLIENT=saevis"
+     CF_TARGET_URL="https://api.eu-de.bluemix.net"
 
 before_install:
   - npm install -g @angular/cli@1.0.0 --loglevel error
 
 before_script:
-  - cd $TRAVIS_BUILD_DIR/saevis && npm install --loglevel error && ng build --env=prod
+  - provider: script
+    skip_cleanup: true
+    script: ./install-bx.sh
+    on:
+      branch: master
+  - provider: script
+    skip_cleanup: true
+    script: ./bx-login.sh
+    on:
+      branch: master
 
 script:
-  - cd $TRAVIS_BUILD_DIR
-  - docker build server --tag ${REGISTRY}/${SERVER}
-  - docker build saevis --tag ${REGISTRY}/${CLIENT}
-  - docker run ${REGISTRY}/${SERVER} bash -c "npm run test"
-
-deploy:
-  provider: script
-  script: "sh $TRAVIS_BUILD_DIR/deploy.sh"
-  skip_cleanup: true
-  on:
-    branch: master
+  - npm run setup
+  - npm run build
+  - npm run push
+  - kubectl delete --ignore-not-found=true -f kubernetes.yml
+  - kubectl create -f kubernetes.yml

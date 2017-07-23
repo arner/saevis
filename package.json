@@ -3,9 +3,18 @@
   "version": "1.0.0",
   "description": "Site for friends",
   "main": "server/server/app.js",
-  "scripts": {
-    "setup": "cd server && npm install && cd ../saevis && npm install"
+  "config": {
+    "client": "registry.eu-de.bluemix.net/arne/saevis-client",
+    "server": "registry.eu-de.bluemix.net/arne/saevis-server"
   },
+  "scripts": {
+    "setup": "cd server && npm install && cd ../saevis && npm install",
+    "prepublish": "cd saevis && ng build --env=prod",
+    "publish": "npm run build && npm run push",
+    "build": "docker build -t $npm_package_config_client:latest saevis & docker build -t $npm_package_config_server:latest server",
+    "push": "docker push $npm_package_config_client:latest && docker push $npm_package_config_server:latest"
+  },
+  "public": false,
   "keywords": [],
   "author": "Arne Rutjes",
   "license": "UNLICENSED"
