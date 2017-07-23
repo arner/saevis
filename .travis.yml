@@ -16,9 +16,11 @@ before_install:
   - ./install-bx.sh
 
 before_script:
-  - ./bx-login.sh
+
 
 script:
+  skip_cleanup: true
+  - ./bx-login.sh
   - npm run build
   - npm run push
   - kubectl delete --ignore-not-found=true -f kubernetes.yml
