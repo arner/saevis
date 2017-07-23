@@ -13,21 +13,12 @@ env:
 
 before_install:
   - npm install -g @angular/cli@1.0.0 --loglevel error
+  - ./install-bx.sh
 
 before_script:
-  - provider: script
-    skip_cleanup: true
-    script: ./install-bx.sh
-    on:
-      branch: master
-  - provider: script
-    skip_cleanup: true
-    script: ./bx-login.sh
-    on:
-      branch: master
+  - ./bx-login.sh
 
 script:
-  - npm run setup
   - npm run build
   - npm run push
   - kubectl delete --ignore-not-found=true -f kubernetes.yml

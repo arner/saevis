@@ -28,3 +28,11 @@ if [ $? -ne 0 ]; then
   echo "Failed to initialize to Bluemix Container Service"
   exit 1
 fi
+
+echo -e "Configuring vars"
+exp=$(bx cs cluster-config $CLUSTER_NAME | grep export)
+if [ $? -ne 0 ]; then
+  echo "Cluster $CLUSTER_NAME not created or not ready."
+  exit 1
+fi
+eval "$exp"
