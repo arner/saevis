@@ -9,9 +9,7 @@ echo "#!/bin/sh" >/tmp/Bluemix_CLI/bin/bx
 echo "/tmp/Bluemix_CLI/bin/bluemix \"\$@\" " >>/tmp/Bluemix_CLI/bin/bx
 chmod +x /tmp/Bluemix_CLI/bin/*
 
-export PATH="/tmp/Bluemix_CLI/bin:$PATH"
-
-# Install Armada CS plugin
+# Install plugin
 echo "Install the Bluemix container-service plugin"
 bx plugin install container-service -r Bluemix
 

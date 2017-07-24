@@ -11,7 +11,7 @@
     "install": "cd server && npm install && cd ../saevis && npm install",
     "prepublishOnly": "cd saevis && ng build --env=prod",
     "publish": "npm run build && npm run push",
-    "build": "docker build -t $npm_package_config_client:latest saevis & docker build -t $npm_package_config_server:latest server",
+    "build": "docker build -t $npm_package_config_client:latest saevis && docker build -t $npm_package_config_server:latest server",
     "push": "docker push $npm_package_config_client:latest && docker push $npm_package_config_server:latest"
   },
   "public": false,

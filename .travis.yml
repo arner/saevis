@@ -9,19 +9,15 @@ services:
 
 env:
   global:
-     CF_TARGET_URL="https://api.eu-de.bluemix.net"
+     BLUEMIX_TARGET_URL="https://api.eu-de.bluemix.net"
 
 before_install:
   - npm install -g @angular/cli@1.0.0 --loglevel error
-  - ./install-bx.sh
 
-before_script:
-
-
-script:
+deploy:
+  provider: script
   skip_cleanup: true
-  - ./bx-login.sh
-  - npm run build
-  - npm run push
-  - kubectl delete --ignore-not-found=true -f kubernetes.yml
-  - kubectl create -f kubernetes.yml
+  script: "bash $TRAVIS_BUILD_DIR/deploy.sh"
+  on:
+    branch: master
+

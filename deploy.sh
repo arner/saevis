@@ -1,25 +1,30 @@
-#!/usr/bin/env sh
-set -ex
+#!/bin/bash
+set -ue
 
-curl -sL "https://public.dhe.ibm.com/cloud/bluemix/cli/bluemix-cli/Bluemix_CLI_0.5.4_amd64.tar.gz" | tar -zx
-sudo bash Bluemix_CLI/install_bluemix_cli
-rm -rf Bluemix_CLI
-bx config --check-version=false
-bx plugin install IBM-containers -r Bluemix
+die() {
+    echo $1
+    exit 1
+}
 
-bx login -a "${BLUEMIX_API_URL}" -o "${BLUEMIX_ORGANIZATION}" -s "${BLUEMIX_SPACE}"
-bx ic init
+### Install
+export PATH="/tmp/Bluemix_CLI/bin:$PATH"
 
-docker build saevis --tag ${REGISTRY}/${CLIENT}
-docker build server --tag ${REGISTRY}/${SERVER}
+./install-bx.sh
+hash bx || die "bx not found"
+hash kubectl || die "kubectl not found"
 
-docker push ${REGISTRY}/${CLIENT}
-docker push ${REGISTRY}/${SERVER}
+### Login
+bx login -a "$BLUEMIX_TARGET_URL" -c "$BLUEMIX_ACCOUNT" -o "$BLUEMIX_ORG" -s "$BLUEMIX_SPACE" --apikey "$BLUEMIX_API_KEY" \
+    || die "Failed to authenticate to Bluemix"
 
-bx ic group-remove ${SERVER} || true
-bx ic group-remove ${CLIENT} || true
+# Init container clusters
+bx cs init || die "Failed to initialize to Bluemix Container Service"
+exp=$(bx cs cluster-config $CLUSTER_NAME | grep export) || die "Cluster $CLUSTER_NAME not created or not ready."
+eval "$exp"
 
-sleep 30
+### Deploy
+npm run build
+npm run push
 
-bx ic group-create -domain ${DOMAIN} --name ${CLIENT} -hostname ${CLIENT} -p 80 -e SERVER_URL="https:\/\/${SERVER}.${DOMAIN}" ${REGISTRY}/${CLIENT}
-bx ic group-create -domain ${DOMAIN} --name ${SERVER} -hostname ${SERVER} -p 3000 ${REGISTRY}/${SERVER}
+### Run
+kubectl apply -f kubernetes.yml
