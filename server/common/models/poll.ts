@@ -117,7 +117,7 @@ class Poll {
 
   private addVotesToResult(result: any, userId: number): void {
     if (!result.votes) {
-      console.log('No votes!', result);
+      result.votes = [];
       return;
     }
     result.userVoted = !!result.votes.find((v: any) => v.voterId === userId);

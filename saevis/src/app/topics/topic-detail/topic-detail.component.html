@@ -35,7 +35,7 @@
     </md-card-actions>
   </md-card>
 
-  <saevis-full-block *ngFor="let block of topic.blocks" [block]="block"></saevis-full-block>
+  <saevis-full-block *ngFor="let block of topic.blocks; index as i" [block]="block" (destroy)="topic.blocks.splice(i, 1)"></saevis-full-block>
 
   <a md-fab color="primary" [mdMenuTriggerFor]="newBlockMenu" class="add-block-button" *ngIf="!addingBlock"><md-icon>add</md-icon></a>
   <md-menu #newBlockMenu="mdMenu" [overlapTrigger]="false">

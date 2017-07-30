@@ -13,13 +13,13 @@ import {
 } from '@angular/material';
 import { TopicsComponent } from './topics/topics.component';
 import { ToolbarComponent } from './toolbar/toolbar.component';
-import { FullBlockComponent } from './blocks/full-block/full-block.component';
-import { PollComponent } from './blocks/poll/poll.component';
+import { FullBlockComponent } from './shared/blocks/full-block/full-block.component';
+import { PollComponent } from './shared/blocks/instances/poll/component/poll.component';
 import { TopicDetailComponent } from './topics/topic-detail/topic-detail.component';
-import { EventComponent } from './blocks/event/event.component';
-import { TypeSelectorComponent } from './blocks/type-selector/type-selector.component';
+import { EventComponent } from './shared/blocks/instances/event/component/event.component';
 import { LoginComponent } from './login/login.component';
 import {MemberService} from './member.service';
+import {FlexLayoutModule} from '@angular/flex-layout';
 
 
 const routes: Routes = [
@@ -53,7 +53,6 @@ const routes: Routes = [
     PollComponent,
     TopicDetailComponent,
     EventComponent,
-    TypeSelectorComponent,
     LoginComponent
   ],
   imports: [
@@ -64,6 +63,7 @@ const routes: Routes = [
     HttpModule,
     SDKBrowserModule.forRoot(),
     BrowserAnimationsModule,
+    FlexLayoutModule,
     // Todo make separate module
     MdButtonModule,
     MdCheckboxModule,
@@ -85,7 +85,7 @@ const routes: Routes = [
   ],
   providers: [MemberService],
   bootstrap: [AppComponent],
-  entryComponents: [TypeSelectorComponent]
+  entryComponents: [PollComponent, EventComponent]
 })
 
 export class AppModule { }

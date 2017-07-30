@@ -1,8 +1,9 @@
-import {Event, Member, EventInterface} from './sdk';
-import {BlockProperties, BlockTextOptions} from './BlockProperties';
+import {Event, Member, EventInterface} from '../../../sdk';
+import {BlockContentInterface, ActionButton} from '../..';
 
-export class EventExtended extends Event implements BlockProperties {
-  public constructor(data?: EventInterface) {
+export class EventExtended extends Event implements BlockContentInterface {
+
+  public constructor(data: EventInterface) {
     super(data);
     this.participants = this.participants || [];
     if (this.startTime) {
@@ -11,6 +12,10 @@ export class EventExtended extends Event implements BlockProperties {
     if (this.endTime) {
       this.endTime = new Date(Date.parse(this.endTime.toString()));
     }
+  }
+
+  public getNormalActions(userId: number): ActionButton[] {
+    return [];
   }
 
   public get icon(): string {
@@ -28,11 +33,11 @@ export class EventExtended extends Event implements BlockProperties {
     return this.participants.length;
   }
 
-  public hasDone(options: BlockTextOptions): boolean {
-    return !!this.participants.find((p: Member) => p.id === options.userId);
+  public getHasDone(userId: number): boolean {
+    return !!this.participants.find((p: Member) => p.id === userId);
   };
 
-  public getText(options: BlockTextOptions): string {
+  public getShortText(userId: number): string {
     return this.startTime.getDate() + ' - ' + this.startTime.getMonth() + ' - ' + this.startTime.getFullYear();
   }
 }

@@ -4,9 +4,8 @@ import {Observable} from 'rxjs';
 import {Topic} from '../shared/sdk/models/Topic';
 import {ActivatedRoute, Router} from '@angular/router';
 import {TopicMode} from './topic-detail/topic-detail.component';
-import {BlockExtended} from '../shared/BlockExtended';
 import {Block} from '../shared/sdk/models/Block';
-import {BlockTextOptions} from '../shared/BlockProperties';
+import {BlockFactory} from '../shared/blocks/block-factory';
 import {LoopBackAuth} from '../shared/sdk/services/core/auth.service';
 
 @Component({
@@ -16,7 +15,7 @@ import {LoopBackAuth} from '../shared/sdk/services/core/auth.service';
 })
 export class TopicsComponent implements OnInit {
   private topics: Observable<Topic[]>;
-  private options: BlockTextOptions;
+  private userId: number;
 
   constructor(
     private topicApi: TopicApi,
@@ -30,12 +29,10 @@ export class TopicsComponent implements OnInit {
   }
 
   refresh() {
-    this.options = {
-      userId: this.auth.getCurrentUserId()
-    };
+    this.userId = this.auth.getCurrentUserId();
     this.topics = this.topicApi.find({include: {blocks: 'blockContent'}}).map((topics: Topic[]): Topic[] => {
       return topics.map((topic: Topic) => {
-        topic.blocks = topic.blocks.map((block: Block) => new BlockExtended(block));
+        topic.blocks = topic.blocks.map((block: Block) => BlockFactory.fromBlock(block));
         return topic;
       });
     });

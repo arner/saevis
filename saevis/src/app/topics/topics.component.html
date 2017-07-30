@@ -8,13 +8,13 @@
   </md-card-content>
   <md-card-actions>
       <md-chip-list [selectable]="false">
-        <md-chip [color]="block.blockContent.hasDone(options) ? 'accent' : 'secondary'" *ngFor="let block of topic.blocks">
+        <md-chip [color]="block.blockContent.getHasDone(userId) ? 'accent' : 'primary'" *ngFor="let block of topic.blocks">
           <md-icon>
             {{block.blockContent.icon}}
           </md-icon>
-          {{block.blockContent.value}} | {{block.blockContent.getText(options)}}
+          {{block.blockContent.value}} | {{block.blockContent.getShortText(userId)}}
         </md-chip>
       </md-chip-list>
   </md-card-actions>
 </md-card>
-<a md-fab color="secondary" (click)="create()" class="add-topic-button"><md-icon>add</md-icon></a>
+<a md-fab [color]="'primary'" (click)="create()" class="add-topic-button"><md-icon>add</md-icon></a>

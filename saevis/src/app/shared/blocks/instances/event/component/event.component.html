@@ -1,4 +1,4 @@
-<ng-container *ngIf="mode === blockMode.EDIT || mode === blockMode.NEW">
+<ng-container *ngIf="mode === BlockMode.EDIT || mode === BlockMode.NEW">
   <md-input-container>
     <input mdInput [mdDatepicker]="startDatepicker" [min]="minDate" placeholder="Start" [(ngModel)]="content.startTime" (change)="onChangeStartTime()">
     <button mdSuffix [mdDatepickerToggle]="startDatepicker"></button>
@@ -15,13 +15,9 @@
     <input mdInput type="text" placeholder="Locatie" [(ngModel)]="content.locationText"/>
   </md-input-container>
   <br>
-  <!--<md-card-actions>-->
-    <a md-button (click)="save()">Opslaan</a>
-    <!--<a md-button (click)="discard()" *ngIf="isNew">Annuleren</a>-->
-  <!--</md-card-actions>-->
 </ng-container>
 
-<ng-container *ngIf="mode === blockMode.NORMAL">
+<ng-container *ngIf="mode === BlockMode.NORMAL">
   <p>Bij {{content.locationText}} van {{content.startTime | date}} tot {{content.endTime | date}}.</p>
   <md-slide-toggle (change)="toggleParticipating()" [checked]="isParticipating">
     {{isParticipating ? 'Bij' : 'Niet bij'}}

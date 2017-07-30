@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {TopicApi, Topic} from '../../shared/sdk';
-import {BlockExtended} from "../../shared/BlockExtended";
+import {BlockExtended} from '../../shared/blocks/block-extended';
+import {BlockTextOptions} from '../../shared/blocks/block-content-interface';
+import {Block} from '../../shared/sdk/models/Block';
+import {BlockFactory, ContentTypeString} from '../../shared/blocks/block-factory';
 
 @Component({
   selector: 'saevis-topic-detail',
@@ -12,31 +15,30 @@ export class TopicDetailComponent implements OnInit {
   public topic: Topic;
   public mode: TopicMode;
   public topicMode = TopicMode;
-
+  private options: BlockTextOptions;
   private previousState: Topic;
 
   constructor(
     private route: ActivatedRoute,
-    private topicApi: TopicApi,
+    private topicApi: TopicApi
   ) { }
 
   public get addingBlock() {
-    return !!this.topic.blocks.find((block: BlockExtended) => !block.id);
+    return !!this.topic.blocks.find((block: BlockExtended<any>) => !block.id);
   }
 
   ngOnInit() {
-    this.route.params.map(p => p['id']).subscribe(id => {
-      if (!id) return;
-      this.topicApi.findById(id, {include: {blocks: 'blockContent'}}).subscribe((topic: Topic) => {
-        topic.blocks = topic.blocks.map(b => new BlockExtended(b));
-        this.topic = topic;
-        this.mode = +this.route.snapshot.queryParams['mode'] || TopicMode.NORMAL;
-      });
+    const id = this.route.snapshot.params['id'];
+    this.mode = +this.route.snapshot.queryParams['mode'] || TopicMode.NORMAL;
+
+    this.topicApi.findById(id, {include: {blocks: 'blockContent'}}).subscribe((topic: Topic) => {
+      topic.blocks = topic.blocks.map((block: Block) => BlockFactory.fromBlock(block));
+      this.topic = topic;
     });
   }
 
-  public createBlock(type: string): void {
-      this.topic.blocks.push(new BlockExtended({blockContentType: type, topicId: this.topic.id}));
+  public createBlock(type: ContentTypeString): void {
+      this.topic.blocks.push(BlockFactory.createNew(type, this.topic.id));
   }
 
   public save(): void {
@@ -68,6 +70,10 @@ export class TopicDetailComponent implements OnInit {
       this.topic = Object.assign({}, this.previousState);
     }
     this.mode = TopicMode.NORMAL;
+  }
+
+  public cancelBlock(index: number) {
+    this.topic.blocks.splice(index, 1);
   }
 }
 
