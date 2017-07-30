@@ -1,7 +1,8 @@
 import {Component} from '@angular/core';
-import {BlockComponent, ActionButton} from '../../..';
+import {BlockComponent} from '../../../block.component';
+import {ActionButton} from '../../..';
 import {Member, LoopBackAuth, EventApi} from '../../../../sdk';
-import {EventExtended} from '..';
+import {EventExtended} from '../event-extended';
 
 @Component({
   selector: 'saevis-event',

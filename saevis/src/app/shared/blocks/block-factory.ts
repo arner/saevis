@@ -1,38 +1,19 @@
-import {PollExtended, EventExtended, PollComponent, EventComponent} from './instances';
-import {BlockExtended, BlockContentInterface, BlockTextOptions, BlockComponentInterface} from '.';
+import {BlockExtended, BlockContentInterface} from '.';
+import {BlockComponentInterface} from './block.component';
+import {CONTENT_TYPES, ContentTypeString} from './config';
 import {Block} from '../sdk';
 
-export type BlockContentConstructor<T extends BlockContentInterface> = {new (data?: any, options?: BlockTextOptions): T;}
+export type BlockContentConstructor<T extends BlockContentInterface> = {new (data?: any): T;}
 export type BlockComponentConstructor<T extends BlockComponentInterface> = {new (...args: any[]): T;}
-export type ContentTypeString = 'Poll'|'Event';
-
-interface BlockClasses {
-  entity: BlockContentConstructor<BlockContentInterface>,
-  component: BlockComponentConstructor<BlockComponentInterface>
-}
-
-interface ContentTypes {
-  [key: string]: BlockClasses;
-}
 
 export class BlockFactory {
-  private static contentTypes: ContentTypes = {
-    Poll: {
-      entity: PollExtended,
-      component: PollComponent,
-    },
-    Event: {
-      entity: EventExtended,
-      component: EventComponent,
-    },
-  };
 
   public static getEntity(type: ContentTypeString): BlockContentConstructor<BlockContentInterface> {
-    return this.contentTypes[type].entity;
+    return CONTENT_TYPES[type].entity;
   }
 
   public static getComponent(type: ContentTypeString): BlockComponentConstructor<BlockComponentInterface> {
-    return this.contentTypes[type].component;
+    return CONTENT_TYPES[type].component;
   }
 
   public static createNew(blockContentType: ContentTypeString, topicId: number): BlockExtended<any> {

@@ -1,5 +1,5 @@
 export interface BlockContentInterface {
-//  constructor(data: any, options: BlockTextOptions): void;
+//  constructor(data: any): void;
   icon: string;
   canEdit: boolean;
   canDelete: boolean;
@@ -7,14 +7,4 @@ export interface BlockContentInterface {
   getHasDone: (userId: number) => boolean;
   getShortText: (userId: number) => string;
   id: number;
-}
-
-export interface BlockTextOptions {
-  userId: number
-}
-
-export interface ActionButton {
-  text: string;
-  name: string;
-  fn: () => void;
 }

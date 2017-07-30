@@ -1,12 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {TopicApi} from '../shared/sdk/services/custom/Topic';
+import {Topic, TopicApi, Block, LoopBackAuth} from '../shared/sdk';
 import {Observable} from 'rxjs';
-import {Topic} from '../shared/sdk/models/Topic';
 import {ActivatedRoute, Router} from '@angular/router';
 import {TopicMode} from './topic-detail/topic-detail.component';
-import {Block} from '../shared/sdk/models/Block';
-import {BlockFactory} from '../shared/blocks/block-factory';
-import {LoopBackAuth} from '../shared/sdk/services/core/auth.service';
+import {BlockFactory} from '../shared/blocks';
 
 @Component({
   selector: 'saevis-topics',

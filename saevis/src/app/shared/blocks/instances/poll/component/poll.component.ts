@@ -1,7 +1,8 @@
 import {Component, ElementRef, QueryList, ViewChildren} from '@angular/core';
 import {Poll, PollApi, LoopBackAuth} from '../../../../sdk/';
-import {PollExtended} from '..';
-import {BlockComponent, ActionButton, BlockFactory} from '../../..';
+import {PollExtended} from '../poll-extended';
+import {ActionButton, BlockFactory} from '../../..';
+import {BlockComponent} from '../../../block.component';
 
 @Component({
   selector: 'saevis-poll',

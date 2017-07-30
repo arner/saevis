@@ -1,10 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {TopicApi, Topic} from '../../shared/sdk';
-import {BlockExtended} from '../../shared/blocks/block-extended';
-import {BlockTextOptions} from '../../shared/blocks/block-content-interface';
-import {Block} from '../../shared/sdk/models/Block';
-import {BlockFactory, ContentTypeString} from '../../shared/blocks/block-factory';
+import {TopicApi, Topic, Block} from '../../shared/sdk';
+import {BlockExtended, BlockFactory, ContentTypeString} from '../../shared/blocks';
 
 @Component({
   selector: 'saevis-topic-detail',
@@ -15,7 +12,6 @@ export class TopicDetailComponent implements OnInit {
   public topic: Topic;
   public mode: TopicMode;
   public topicMode = TopicMode;
-  private options: BlockTextOptions;
   private previousState: Topic;
 
   constructor(

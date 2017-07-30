@@ -63,7 +63,7 @@ const routes: Routes = [
     HttpModule,
     SDKBrowserModule.forRoot(),
     BrowserAnimationsModule,
-    FlexLayoutModule,
+  //  FlexLayoutModule,
     // Todo make separate module
     MdButtonModule,
     MdCheckboxModule,
