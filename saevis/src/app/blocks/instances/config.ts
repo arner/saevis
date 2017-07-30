@@ -1,7 +1,8 @@
-import {PollComponent, PollExtended, EventComponent, EventExtended} from './instances';
-import {BlockContentConstructor, BlockComponentConstructor} from './block-factory';
-import {BlockComponentInterface} from './block.component';
-import {BlockContentInterface} from './block-content-interface';
+import {PollComponent, PollExtended} from './poll';
+import {EventComponent, EventExtended} from './event';
+import {BlockContentConstructor, BlockComponentConstructor} from '../block-factory';
+import {BlockComponentInterface} from '../block.component';
+import {BlockContentInterface} from '../block-content-interface';
 
 interface BlockClasses {
   entity: BlockContentConstructor<BlockContentInterface>,

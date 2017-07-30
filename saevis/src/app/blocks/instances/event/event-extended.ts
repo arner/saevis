@@ -1,5 +1,6 @@
-import {Event, Member, EventInterface} from '../../../sdk';
-import {BlockContentInterface, ActionButton} from '../..';
+import {Event, Member, EventInterface} from '../../sdk';
+import {ActionButton} from '../../action-button';
+import {BlockContentInterface} from '../../block-content-interface';
 
 export class EventExtended extends Event implements BlockContentInterface {
 

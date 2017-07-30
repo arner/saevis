@@ -6,20 +6,14 @@ import { AppComponent } from './app.component';
 import {HttpModule} from '@angular/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { Routes, RouterModule } from '@angular/router';
-import {
-  MdCardModule, MdButtonModule, MdCheckboxModule, MdToolbarModule, MdSidenavModule,
-  MdIconModule, MdRadioModule, MdListModule, MdNativeDateModule, MdDatepickerModule, MdInputModule,
-  MdSelectModule, MdDialogModule, MdSlideToggleModule, MdMenuModule, MdChipsModule, MdProgressBarModule
-} from '@angular/material';
 import { TopicsComponent } from './topics/topics.component';
 import { ToolbarComponent } from './toolbar/toolbar.component';
-import { FullBlockComponent } from './shared/blocks/full-block/full-block.component';
-import { PollComponent } from './shared/blocks/instances/poll/component/poll.component';
 import { TopicDetailComponent } from './topics/topic-detail/topic-detail.component';
-import { EventComponent } from './shared/blocks/instances/event/component/event.component';
 import { LoginComponent } from './login/login.component';
 import {MemberService} from './member.service';
 import {FlexLayoutModule} from '@angular/flex-layout';
+import {MaterialModule} from './material.module';
+import {BlocksModule} from './blocks/blocks.module';
 
 
 const routes: Routes = [
@@ -49,10 +43,7 @@ const routes: Routes = [
     AppComponent,
     TopicsComponent,
     ToolbarComponent,
-    FullBlockComponent,
-    PollComponent,
     TopicDetailComponent,
-    EventComponent,
     LoginComponent
   ],
   imports: [
@@ -63,29 +54,12 @@ const routes: Routes = [
     HttpModule,
     SDKBrowserModule.forRoot(),
     BrowserAnimationsModule,
+    MaterialModule,
+    BlocksModule,
   //  FlexLayoutModule,
-    // Todo make separate module
-    MdButtonModule,
-    MdCheckboxModule,
-    MdCardModule,
-    MdToolbarModule,
-    MdSidenavModule,
-    MdIconModule,
-    MdRadioModule,
-    MdListModule,
-    MdDatepickerModule,
-    MdNativeDateModule,
-    MdInputModule,
-    MdSelectModule,
-    MdDialogModule,
-    MdSlideToggleModule,
-    MdMenuModule,
-    MdChipsModule,
-    MdProgressBarModule
   ],
   providers: [MemberService],
-  bootstrap: [AppComponent],
-  entryComponents: [PollComponent, EventComponent]
+  bootstrap: [AppComponent]
 })
 
 export class AppModule { }

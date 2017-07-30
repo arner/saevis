@@ -1,4 +1,4 @@
-import {Block, BlockInterface} from '../sdk';
+import {Block, BlockInterface} from './sdk';
 import {BlockContentInterface} from './block-content-interface';
 
 export class BlockExtended<T> extends Block {

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {TopicApi, Topic, Block} from '../../shared/sdk';
-import {BlockExtended, BlockFactory, ContentTypeString} from '../../shared/blocks';
+import {BlockExtended, BlockFactory, ContentTypeString} from '../../blocks';
 
 @Component({
   selector: 'saevis-topic-detail',

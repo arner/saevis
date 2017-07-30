@@ -1,6 +1,8 @@
 import {EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {BaseLoopBackApi, BlockInterface, LoopBackAuth} from '../sdk';
-import {ActionButton, BlockContentInterface, BlockMode} from './';
+import {BaseLoopBackApi, BlockInterface, LoopBackAuth} from './sdk';
+import {BlockContentInterface} from './block-content-interface';
+import {BlockMode} from './block-extended';
+import {ActionButton} from './action-button';
 
 export interface BlockComponentInterface {
   actions: EventEmitter<string>;

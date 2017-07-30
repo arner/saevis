@@ -1,7 +1,8 @@
-import {BlockExtended, BlockContentInterface} from '.';
+import {BlockExtended} from './block-extended';
+import {BlockContentInterface} from './block-content-interface';
 import {BlockComponentInterface} from './block.component';
-import {CONTENT_TYPES, ContentTypeString} from './config';
-import {Block} from '../sdk';
+import {CONTENT_TYPES, ContentTypeString} from './instances/config';
+import {Block} from './sdk';
 
 export type BlockContentConstructor<T extends BlockContentInterface> = {new (data?: any): T;}
 export type BlockComponentConstructor<T extends BlockComponentInterface> = {new (...args: any[]): T;}

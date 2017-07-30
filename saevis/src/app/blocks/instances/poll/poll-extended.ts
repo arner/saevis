@@ -1,4 +1,4 @@
-import {Poll, Vote, PollInterface} from '../../../sdk';
+import {Poll, Vote, PollInterface} from '../../sdk';
 import {BlockContentInterface} from '../../block-content-interface';
 
 export class PollExtended extends Poll implements BlockContentInterface {

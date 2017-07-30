@@ -3,7 +3,7 @@ import {Topic, TopicApi, Block, LoopBackAuth} from '../shared/sdk';
 import {Observable} from 'rxjs';
 import {ActivatedRoute, Router} from '@angular/router';
 import {TopicMode} from './topic-detail/topic-detail.component';
-import {BlockFactory} from '../shared/blocks';
+import {BlockFactory} from '../blocks';
 
 @Component({
   selector: 'saevis-topics',

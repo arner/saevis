@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {BlockComponent} from '../../../block.component';
-import {ActionButton} from '../../..';
-import {Member, LoopBackAuth, EventApi} from '../../../../sdk';
+import {ActionButton} from '../../../action-button';
+import {Member, LoopBackAuth, EventApi} from '../../../sdk';
 import {EventExtended} from '../event-extended';
 
 @Component({

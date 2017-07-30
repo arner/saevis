@@ -2,7 +2,7 @@ import {
   Component, ComponentFactory, ComponentFactoryResolver, ComponentRef, EventEmitter, Input, Output, ViewChild,
   ViewContainerRef
 } from '@angular/core';
-import {BlockExtended, BlockMode, BlockFactory, ContentTypeString} from '..';
+import {BlockExtended, BlockMode, BlockFactory, ContentTypeString} from '../';
 import {BlockComponentInterface} from '../block.component';
 
 @Component({
