@@ -10,10 +10,8 @@ export class AppComponent implements OnInit {
   title = 'Saevis';
 
   constructor() {
-
   }
 
   ngOnInit() {
-
   }
 }

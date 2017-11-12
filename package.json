@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "setup": "cd fireloop/ && npm install && node server/server.js"
+    "setup": "cd server && npm install && node server/server.js"
   },
   "keywords": [],
   "author": "",

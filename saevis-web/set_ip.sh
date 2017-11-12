@@ -3,15 +3,15 @@
 # -- Do not run from host machine --
 
 DIR="/usr/share/nginx/html"
-TARGET1="$DIR/main.bundle.js"
-TARGET2="$DIR/main.bundle.js.map"
 
 # check for input
-if [ -z $SERVER_URL ];  then
+if [ -z "${SERVER_URL}" ];  then
     echo "SERVER_URL environment variable needs to be set."
     exit 1
 fi
 
-echo "Setting API url to ${SERVER_URL}"
-sed -i "s/apiUrl: .*'/apiUrl: '$SERVER_URL'/g" $TARGET1
-sed -i "s/apiUrl: .*'/apiUrl: '$SERVER_URL'/g" $TARGET2
+for target in main.bundle.js main.bundle.js.map; do
+  sed -i "s/apiUrl: .*'/apiUrl: '${SERVER_URL}'/g" "${DIR}/${target}"
+done
+
+echo "Set API url to ${SERVER_URL}."

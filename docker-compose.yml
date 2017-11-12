@@ -1,0 +1,17 @@
+version: '2.0'
+services:
+  saevis-web:
+    build:
+      context: saevis-web
+      dockerfile: dev-Dockerfile
+    ports:
+      - 4200:4200
+      - 35729:35729
+    volumes:
+      - ./saevis-web/src:/usr/src/app/src
+  server:
+    build: server
+    ports:
+      - 3000:3000
+    volumes:
+      - ./server:/usr/src/app

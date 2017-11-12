@@ -1,8 +1,13 @@
 @import '~@angular/material/prebuilt-themes/pink-bluegrey.css';
 
-html, body {
+html, body, saevis-root {
   margin: 0;
-  height: 100%;
+  padding: 0;
+  height: 100vh;
+}
+
+mat-sidenav-container {
+  min-height: calc(100% - 64px);
 }
 
 md-card {
