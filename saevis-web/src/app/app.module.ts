@@ -21,21 +21,24 @@ import { TypeSelectorComponent } from './blocks/type-selector/type-selector.comp
 import { LoginComponent } from './login/login.component';
 import {MemberService} from './member.service';
 import { MiniBlockComponent } from './blocks/mini-block/mini-block.component';
+import {IsLoggedIn} from "./guards/IsLoggedIn";
 
 const routes: Routes = [
   {
     path: 'topics',
     component: TopicsComponent,
-    children: []
-  },
-  {
-    path: 'login',
-    component: LoginComponent,
+    canActivate: [IsLoggedIn],
     children: []
   },
   {
     path: 'topics/:id',
     component: TopicDetailComponent,
+    canActivate: [IsLoggedIn]
+  },
+  {
+    path: 'login',
+    component: LoginComponent,
+    children: []
   },
   {
     path: '',
@@ -65,7 +68,8 @@ const routes: Routes = [
     HttpModule,
     SDKBrowserModule.forRoot(),
     BrowserAnimationsModule,
-    // Todo make separate module
+    // Todo make separate
+    MatInputModule,
     MatButtonModule,
     MatCheckboxModule,
     MatCardModule,
@@ -82,7 +86,7 @@ const routes: Routes = [
     MatSlideToggleModule,
     MatMenuModule
   ],
-  providers: [MemberService],
+  providers: [MemberService, IsLoggedIn],
   bootstrap: [AppComponent],
   entryComponents: [TypeSelectorComponent]
 })

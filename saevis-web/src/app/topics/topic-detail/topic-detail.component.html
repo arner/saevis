@@ -16,13 +16,13 @@
       <mat-card-title>
         <span *ngIf="mode === topicMode.NORMAL">{{topic.title}}</span>
         <mat-input-container class="full-width" *ngIf="mode === topicMode.EDIT">
-          <input mdInput placeholder="Title" [(ngModel)]="topic.title">
+          <input matInput placeholder="Title" [(ngModel)]="topic.title">
         </mat-input-container>
       </mat-card-title>
     <mat-card-content>
       <span *ngIf="mode === topicMode.NORMAL">{{topic.text}}</span>
       <mat-input-container class="full-width" *ngIf="mode === topicMode.EDIT">
-        <textarea mdInput placeholder="Description" [(ngModel)]="topic.text"></textarea>
+        <textarea matInput placeholder="Description" [(ngModel)]="topic.text"></textarea>
       </mat-input-container>
     </mat-card-content>
     <mat-card-actions *ngIf="mode === topicMode.EDIT">
