@@ -1,0 +1,26 @@
+<ng-container *ngIf="mode === blockMode.EDIT || mode === blockMode.NEW">
+  <mat-input-container>
+    <input mdInput [matDatepicker]="startDatepicker" [min]="minDate" placeholder="Start" [(ngModel)]="event.startTime" (change)="onChangeStartTime()">
+    <mat-datepicker-toggle matSuffix [for]="startDatepicker"></mat-datepicker-toggle>
+    <mat-datepicker #startDatepicker [touchUi]="true"></mat-datepicker>
+  </mat-input-container>
+  <br>
+  <mat-input-container>
+    <input mdInput [matDatepicker]="endDatepicker" [min]="minDate" placeholder="Eind" [(ngModel)]="event.endTime">
+    <mat-datepicker-toggle matSuffix [for]="endDatepicker"></mat-datepicker-toggle>
+    <mat-datepicker #endDatepicker [touchUi]="true"></mat-datepicker>
+  </mat-input-container>
+  <br>
+  <mat-input-container>
+    <input mdInput type="text" placeholder="Locatie" [(ngModel)]="event.locationText"/>
+  </mat-input-container>
+  <br>
+  <!--<mat-card-actions>-->
+    <a mat-button (click)="save()">Opslaan</a>
+    <!--<a mat-button (click)="discard()" *ngIf="isNew">Annuleren</a>-->
+  <!--</mat-card-actions>-->
+</ng-container>
+
+<ng-container *ngIf="mode === blockMode.NORMAL">
+  Bij {{event.locationText}} van {{event.startTime | date}} tot {{event.endTime | date}}.
+</ng-container>

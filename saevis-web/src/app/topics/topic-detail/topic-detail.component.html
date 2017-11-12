@@ -1,0 +1,41 @@
+<ng-container *ngIf="topic">
+  <mat-card>
+    <button mat-icon-button [matMenuTriggerFor]="menu" *ngIf="mode === topicMode.NORMAL" class="menu-button">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="edit()">
+        <mat-icon>edit</mat-icon>
+        <span>Edit</span>
+      </button>
+      <!--<button mat-menu-item (click)="delete()">-->
+        <!--<mat-icon>delete</mat-icon>-->
+        <!--<span>Delete</span>-->
+      <!--</button>-->
+    </mat-menu>
+      <mat-card-title>
+        <span *ngIf="mode === topicMode.NORMAL">{{topic.title}}</span>
+        <mat-input-container class="full-width" *ngIf="mode === topicMode.EDIT">
+          <input mdInput placeholder="Title" [(ngModel)]="topic.title">
+        </mat-input-container>
+      </mat-card-title>
+    <mat-card-content>
+      <span *ngIf="mode === topicMode.NORMAL">{{topic.text}}</span>
+      <mat-input-container class="full-width" *ngIf="mode === topicMode.EDIT">
+        <textarea mdInput placeholder="Description" [(ngModel)]="topic.text"></textarea>
+      </mat-input-container>
+    </mat-card-content>
+    <mat-card-actions *ngIf="mode === topicMode.EDIT">
+      <a mat-button (click)="save()">Opslaan</a>
+      <a mat-button (click)="cancel()">Annuleren</a>
+    </mat-card-actions>
+  </mat-card>
+
+  <saevis-full-block *ngFor="let block of topic.blocks" [block]="block"></saevis-full-block>
+
+  <a mat-fab color="primary" [matMenuTriggerFor]="newBlockMenu" class="add-block-button" *ngIf="!addingBlock"><mat-icon>add</mat-icon></a>
+  <mat-menu #newBlockMenu="matMenu" [overlapTrigger]="false">
+    <button mat-menu-item (click)="createBlock('Poll')"> <mat-icon> poll </mat-icon> <span> Poll </span></button>
+    <button mat-menu-item (click)="createBlock('Event')"> <mat-icon> event </mat-icon> <span> Event </span></button>
+  </mat-menu>
+</ng-container>

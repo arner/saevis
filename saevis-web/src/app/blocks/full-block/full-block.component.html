@@ -1,0 +1,26 @@
+<mat-card>
+  <button mat-icon-button [matMenuTriggerFor]="menu" *ngIf="mode === blockMode.NORMAL" class="menu-button">
+    <mat-icon>more_vert</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="block.edit()" [disabled]="!block.canEdit">
+      <mat-icon>edit</mat-icon>
+      <span>Edit</span>
+    </button>
+    <button mat-menu-item (click)="delete()" [disabled]="!block.canDelete">
+      <mat-icon>delete</mat-icon>
+      <span>Delete</span>
+    </button>
+  </mat-menu>
+  <mat-card-header>
+    <mat-icon mat-card-avatar>{{block.icon}}</mat-icon>
+    <mat-card-title>
+      {{block.blockContentType}}
+    </mat-card-title>
+  </mat-card-header>
+  <ng-container [ngSwitch]="block.blockContentType">
+    <saevis-poll *ngSwitchCase="'Poll'" [content]="block.blockContent" [mode]="block.mode"></saevis-poll>
+    <saevis-event *ngSwitchCase="'Event'" [content]="block.blockContent" [mode]="block.mode"></saevis-event>
+    <div *ngSwitchDefault>Not found</div>
+  </ng-container>
+</mat-card>

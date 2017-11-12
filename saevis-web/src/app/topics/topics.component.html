@@ -1,0 +1,9 @@
+<mat-card *ngFor="let topic of topics | async" [routerLink]="topic.id">
+  <mat-card-title>{{topic.title}}</mat-card-title>
+  <mat-card-content>
+    <ng-container *ngFor="let block of topic.blocks">
+      <saevis-mini-block [block]="block"></saevis-mini-block>
+    </ng-container>
+  </mat-card-content>
+</mat-card>
+<a mat-fab color="secondary" (click)="create()" class="add-topic-button"><mat-icon>add</mat-icon></a>

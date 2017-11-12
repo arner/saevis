@@ -1,0 +1,58 @@
+
+<section class="not-voted" *ngIf="!poll.userVoted && mode === blockMode.NORMAL">
+  <p>{{poll.text}}</p>
+  <mat-radio-group [(ngModel)]="option" *ngIf="!poll.settings.multipleChoice">
+    <div *ngFor="let option of poll.options" >
+      <mat-radio-button [value]="option.id">
+        {{option.text}}
+      </mat-radio-button>
+    </div>
+  </mat-radio-group>
+  <div *ngIf="poll.settings.multipleChoice">
+    <div *ngFor="let option of poll.options">
+      <mat-checkbox [(ngModel)]="option.checked">{{option.text}}</mat-checkbox>
+    </div>
+  </div>
+  <a mat-button (click)="vote()">Stem</a>
+</section>
+
+<section class="has-voted" *ngIf="poll.userVoted && mode === blockMode.NORMAL">
+  <p>{{poll.text}}</p>
+  <div *ngFor="let option of poll.options">
+    <span>{{option.text}}</span> - <span>{{option.votes}}</span>
+  </div>
+</section>
+
+<section class="create" *ngIf="mode === blockMode.NEW">
+  <mat-input-container>
+    <textarea mdInput placeholder="Tekst" [(ngModel)]="poll.text"></textarea>
+  </mat-input-container>
+  <br>
+  <mat-slide-toggle color="accent" [(ngModel)]="poll.settings.multipleChoice">
+    Multiple choice
+  </mat-slide-toggle>
+  <br>
+  <mat-slide-toggle color="accent" [(ngModel)]="poll.settings.anonymous">
+    Anoniem
+  </mat-slide-toggle>
+  <hr>
+  <span *ngFor="let option of poll.options; index as i;">
+    <mat-radio-button [disabled]="true" *ngIf="!poll.settings.multipleChoice">
+        <mat-input-container>
+          <input mdInput type="text" placeholder="Tekst" [(ngModel)]="option.text"/>
+          <a mdSuffix (click)="removeOption(i)"><mat-icon>delete</mat-icon></a>
+        </mat-input-container>
+    </mat-radio-button>
+    <mat-checkbox [disabled]="true" *ngIf="poll.settings.multipleChoice" checked>
+      <mat-input-container>
+          <input mdInput type="text" placeholder="Tekst" [(ngModel)]="option.text"/>
+          <a mdSuffix (click)="removeOption(i)"><mat-icon>delete</mat-icon></a>
+      </mat-input-container>
+    </mat-checkbox>
+    <br />
+  </span>
+  <button mat-button (click)="addOption()"><mat-icon>add</mat-icon></button>
+  <hr>
+
+  <a mat-raised-button (click)="save()">Opslaan</a>
+</section>

@@ -1,0 +1,8 @@
+  <mat-list>
+    <h3 mat-subheader>Types</h3>
+    <mat-list-item *ngFor="let type of blockTypes" (click)="dialogRef.close(type)">
+      <mat-icon mat-list-icon>folder</mat-icon>
+      <h4 mat-line>{{type}}</h4>
+      <p mat-line>Description</p>
+    </mat-list-item>
+  </mat-list>
