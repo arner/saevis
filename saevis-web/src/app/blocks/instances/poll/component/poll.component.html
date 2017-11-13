@@ -1,0 +1,83 @@
+<section class="not-voted" *ngIf="!content.userVoted && mode === BlockMode.NORMAL">
+  <p>{{content.text}}</p>
+  <mat-radio-group [(ngModel)]="option" *ngIf="!content.settings.multipleChoice">
+    <div *ngFor="let option of content.options" >
+      <mat-radio-button [value]="option.id">
+        {{option.text}}
+      </mat-radio-button>
+    </div>
+  </mat-radio-group>
+  <div *ngIf="content.settings.multipleChoice">
+    <div *ngFor="let option of content.options">
+      <mat-checkbox [(ngModel)]="option.checked">{{option.text}}</mat-checkbox>
+    </div>
+  </div>
+</section>
+
+<section class="has-voted" *ngIf="content.userVoted && mode === BlockMode.NORMAL">
+  <p>{{content.text}}</p>
+  <div *ngFor="let option of content.options">
+    <div class="description">{{option.text}} ({{option.votes}})</div>
+    <div>
+      <mat-progress-bar [value]="(option.votes / content.votes.length) * 100"></mat-progress-bar>
+    </div>
+  </div>
+</section>
+
+<section class="create" *ngIf="mode === BlockMode.NEW">
+  <div>
+    <div class="question" fxFlex="66">
+      <mat-input-container class="text">
+        <textarea mdInput placeholder="Tekst" [(ngModel)]="content.text"></textarea>
+      </mat-input-container>
+
+      <br />
+      <!-- Options  -->
+      <span *ngFor="let option of content.options; index as i">
+        <mat-checkbox disabled *ngIf="content.settings.multipleChoice" [checked]="true">
+          <mat-input-container>
+              <input mdInput type="text" placeholder="Tekst" [(ngModel)]="option.text" #optionelement />
+              <a mdSuffix (click)="removeOption(i)"><mat-icon>delete</mat-icon></a>
+          </mat-input-container>
+        </mat-checkbox>
+
+        <mat-radio-button disabled *ngIf="!content.settings.multipleChoice">
+            <mat-input-container>
+              <input mdInput type="text" placeholder="Tekst" [(ngModel)]="option.text" #optionelement />
+              <a mdSuffix (click)="removeOption(i)"><mat-icon>delete</mat-icon></a>
+            </mat-input-container>
+        </mat-radio-button>
+
+        <br />
+      </span>
+
+      <!-- Add -->
+      <span *ngIf="content.options[content.options.length -1].text">
+        <mat-checkbox disabled *ngIf="content.settings.multipleChoice" [checked]="true" (click)="addOption()">
+          <mat-input-container>
+              <input mdInput type="text" placeholder="Voeg toe..." />
+          </mat-input-container>
+        </mat-checkbox>
+
+        <mat-radio-button disabled *ngIf="!content.settings.multipleChoice" (click)="addOption()">
+            <mat-input-container>
+              <input mdInput type="text" placeholder="Voeg toe..." />
+            </mat-input-container>
+        </mat-radio-button>
+
+        <br />
+      </span>
+    </div>
+
+    <div class="settings" fxFlex="33">
+      <mat-slide-toggle color="accent" [(ngModel)]="content.settings.multipleChoice">
+        {{content.settings.multipleChoice ? 'Multiple choice' : 'Enkele keuze'}}
+      </mat-slide-toggle>
+      <br>
+      <mat-slide-toggle color="accent" [(ngModel)]="content.settings.anonymous">
+        Anoniem
+      </mat-slide-toggle>
+    </div>
+
+  </div>
+</section>

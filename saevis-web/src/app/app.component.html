@@ -1,0 +1,12 @@
+<saevis-toolbar></saevis-toolbar>
+<mat-sidenav-container>
+  <mat-sidenav mode="side" opened="true" class="left-nav">
+    <mat-nav-list>
+      <a mat-list-item [routerLink]="'/topics'">Topics</a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <div class="content">
+    <router-outlet></router-outlet>
+  </div>
+</mat-sidenav-container>
+

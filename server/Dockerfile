@@ -1,14 +1,10 @@
-FROM node:6
-
-RUN mkdir -p /usr/src/app/
+FROM node:8.9.1
 WORKDIR /usr/src/app
+RUN npm install -g nodemon@1.12.1
 
-# Cache node modules
-COPY package.json /usr/src/app/
-RUN npm install --loglevel error
-
-COPY . /usr/src/app
+COPY package.json .
+RUN npm install --loglevel=error
+COPY . .
 
 EXPOSE 3000
-
-CMD [ "npm", "start" ]
+CMD [ "nodemon" ]

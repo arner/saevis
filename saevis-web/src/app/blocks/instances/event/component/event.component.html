@@ -1,0 +1,29 @@
+<ng-container *ngIf="mode === BlockMode.EDIT || mode === BlockMode.NEW">
+  <mat-input-container>
+    <input mdInput [mdDatepicker]="startDatepicker" [min]="minDate" placeholder="Start" [(ngModel)]="content.startTime" (change)="onChangeStartTime()">
+    <button mdSuffix [mdDatepickerToggle]="startDatepicker"></button>
+  </mat-input-container>
+  <mat-datepicker #startDatepicker [touchUi]="true"></mat-datepicker>
+  <br>
+  <mat-input-container>
+    <input mdInput [mdDatepicker]="endDatepicker" [min]="minDate" placeholder="Eind" [(ngModel)]="content.endTime">
+    <button mdSuffix [mdDatepickerToggle]="endDatepicker"></button>
+  </mat-input-container>
+  <mat-datepicker #endDatepicker [touchUi]="true"></mat-datepicker>
+  <br>
+  <mat-input-container>
+    <input mdInput type="text" placeholder="Locatie" [(ngModel)]="content.locationText"/>
+  </mat-input-container>
+  <br>
+</ng-container>
+
+<ng-container *ngIf="mode === BlockMode.NORMAL">
+  <p>Bij {{content.locationText}} van {{content.startTime | date}} tot {{content.endTime | date}}.</p>
+  <mat-slide-toggle (change)="toggleParticipating()" [checked]="isParticipating">
+    {{isParticipating ? 'Bij' : 'Niet bij'}}
+  </mat-slide-toggle>
+  <br />
+  <mat-chip-list>
+    <mat-chip *ngFor="let participant of content.participants">{{participant.email}}</mat-chip>
+  </mat-chip-list>
+</ng-container>

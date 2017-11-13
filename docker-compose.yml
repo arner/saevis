@@ -1,14 +1,19 @@
-version: '2.1'
+version: "2"
 services:
+  saevis-web:
+    build:
+      context: saevis-web
+      dockerfile: dev-Dockerfile
+    ports:
+      - 4200:4200
+      - 35729:35729
+    volumes:
+      - ./saevis-web/src:/usr/src/app/src
+    environment:
+      - SERVER_URL=https:\/\/localhost
   server:
     build: server
     ports:
       - 3000:3000
-  client:
-    build: saevis
-    ports:
-      - 80:80
-      - 443:443
-    environment:
-      - SERVER_URL=https:\/\/localhost
-
+    volumes:
+      - ./server:/usr/src/app
