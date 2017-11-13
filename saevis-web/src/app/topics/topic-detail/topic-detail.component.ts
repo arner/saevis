@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {TopicApi, Topic, Block} from '../../shared/sdk';
-import {BlockExtended, BlockFactory, ContentTypeString} from '../../blocks';
+import {BlockExtended, BlockFactory} from '../../blocks';
+import {ContentTypeString} from '../../blocks/instances/config';
 
 @Component({
   selector: 'saevis-topic-detail',
@@ -31,6 +32,14 @@ export class TopicDetailComponent implements OnInit {
       topic.blocks = topic.blocks.map((block: Block) => BlockFactory.fromBlock(block));
       this.topic = topic;
     });
+  }
+
+  public get isInEditMode(): boolean {
+    return this.mode === TopicMode.EDIT;
+  }
+
+  public get isInNormalMode(): boolean {
+    return this.mode === TopicMode.NORMAL;
   }
 
   public createBlock(type: ContentTypeString): void {

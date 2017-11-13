@@ -15,10 +15,10 @@ export class BlockExtended<T> extends Block {
 
   private validate(data: BlockInterface) {
     if (!data.blockContentType) {
-      throw 'Specify the type.';
+      throw new Error('Specify the type.');
     }
     if (!data.topicId) {
-      throw 'Specify a topic';
+      throw new Error('Specify a topic');
     }
   }
 

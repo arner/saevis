@@ -18,7 +18,6 @@ export class BlockExtended extends Block {
           data.blockContent.topicId = data.topicId;
         }
         this.blockContent = new type(data.blockContent);
-        console.log(this.blockContent.id);
         if (!this.blockContent.id) {
           this._mode = BlockMode.NEW;
         } else {

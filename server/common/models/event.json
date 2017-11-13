@@ -34,7 +34,7 @@
     },
     "locationText": {
       "type": "string",
-      "required": true
+      "required": false
     },
     "location": {
       "type": "geopoint"

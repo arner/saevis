@@ -1,7 +1,6 @@
 import {Component, ElementRef, QueryList, ViewChildren} from '@angular/core';
 import {Poll, PollApi, LoopBackAuth} from '../../../sdk';
 import {PollExtended} from '../poll-extended';
-import {BlockFactory} from '../../..';
 import {ActionButton} from '../../../action-button';
 import {BlockComponent} from '../../../block.component';
 
@@ -42,7 +41,7 @@ export class PollComponent extends BlockComponent<PollExtended> {
       : [this.option];
     this.api.createVotes(this.content.id, {value}).subscribe(() => {
       this.api.findById(this.content.id).subscribe(
-        (poll: Poll) => this.content = BlockFactory.createContent(PollExtended, poll)
+        (poll: Poll) => this.content = new PollExtended(poll)
       );
     });
   }

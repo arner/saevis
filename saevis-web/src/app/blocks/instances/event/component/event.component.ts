@@ -34,19 +34,19 @@ export class EventComponent extends BlockComponent<EventExtended> {
     }
   }
 
-  private participate() {
+  private participate(): void {
     this.api.linkParticipants(this.content.id, this.userId).subscribe(r => {
       this.content.participants.push(this.auth.getCurrentUserData());
     });
   }
 
-  private unparticipate() {
+  private unparticipate(): void {
     this.api.unlinkParticipants(this.content.id, this.userId).subscribe(r => {
       this.content.participants = this.content.participants.filter((member: Member) => member.id !== this.userId);
     });
   }
 
-  public onChangeStartTime() {
+  public onChangeStartTime(): void {
     if (this.content && this.content.startTime && !this.content.endTime) {
       this.content.endTime = this.content.startTime;
     }

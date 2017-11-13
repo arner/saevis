@@ -98,7 +98,6 @@ class Poll {
   }
 
   onLoad(ctx: any, next: Function) {
-    console.log('on load poll');
     const token = ctx.options.accessToken;
     if (!token || !token.userId) {
       return next();

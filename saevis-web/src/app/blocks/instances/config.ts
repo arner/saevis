@@ -1,17 +1,6 @@
 import {PollComponent, PollExtended} from './poll';
 import {EventComponent, EventExtended} from './event';
-import {BlockContentConstructor, BlockComponentConstructor} from '../block-factory';
-import {BlockComponentInterface} from '../block.component';
-import {BlockContentInterface} from '../block-content-interface';
-
-interface BlockClasses {
-  entity: BlockContentConstructor<BlockContentInterface>,
-  component: BlockComponentConstructor<BlockComponentInterface>
-}
-
-interface ContentTypes {
-  [key: string]: BlockClasses;
-}
+import {ContentTypes} from "./content-types-interface";
 
 export type ContentTypeString = 'Poll'|'Event';
 

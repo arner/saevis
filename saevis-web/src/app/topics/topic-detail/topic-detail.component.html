@@ -1,6 +1,6 @@
 <ng-container *ngIf="topic">
   <mat-card class="{{topic.published ? 'published' : 'draft'}}">
-    <button mat-icon-button [matMenuTriggerFor]="menu" *ngIf="mode === topicMode.NORMAL" class="menu-button">
+    <button mat-icon-button [matMenuTriggerFor]="menu" *ngIf="isInNormalMode" class="menu-button">
       <mat-icon>more_vert</mat-icon>
     </button>
     <mat-menu #menu="matMenu">
@@ -18,18 +18,18 @@
       <!--</button>-->
     </mat-menu>
       <mat-card-title>
-        <span *ngIf="mode === topicMode.NORMAL">{{topic.title}}</span>
-        <mat-input-container class="full-width" *ngIf="mode === topicMode.EDIT">
+        <span *ngIf="isInNormalMode">{{topic.title}}</span>
+        <mat-input-container class="full-width" *ngIf="isInEditMode">
           <input matInput placeholder="Title" [(ngModel)]="topic.title">
         </mat-input-container>
       </mat-card-title>
     <mat-card-content>
-      <span *ngIf="mode === topicMode.NORMAL">{{topic.text}}</span>
-      <mat-input-container class="full-width" *ngIf="mode === topicMode.EDIT">
+      <span *ngIf="isInNormalMode">{{topic.text}}</span>
+      <mat-input-container class="full-width" *ngIf="isInEditMode">
         <textarea matInput placeholder="Description" [(ngModel)]="topic.text"></textarea>
       </mat-input-container>
     </mat-card-content>
-    <mat-card-actions *ngIf="mode === topicMode.EDIT">
+    <mat-card-actions *ngIf="isInEditMode">
       <a mat-button (click)="save()">Opslaan</a>
       <a mat-button (click)="cancel()">Annuleren</a>
     </mat-card-actions>

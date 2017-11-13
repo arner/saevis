@@ -1,5 +1,5 @@
 <mat-card>
-  <button mat-icon-button [matMenuTriggerFor]="menu" *ngIf="block.mode === BlockMode.NORMAL && block.blockContent.canEdit || block.blockContent.canDelete" class="menu-button">
+  <button mat-icon-button [matMenuTriggerFor]="menu" *ngIf="menuButtonVisible" class="menu-button">
     <mat-icon>more_vert</mat-icon>
   </button>
   <mat-menu #menu="matMenu">

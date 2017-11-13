@@ -2,7 +2,8 @@ import {
   Component, ComponentFactory, ComponentFactoryResolver, ComponentRef, EventEmitter, Input, Output, ViewChild,
   ViewContainerRef
 } from '@angular/core';
-import {BlockExtended, BlockMode, BlockFactory, ContentTypeString} from '../';
+import {BlockExtended, BlockMode, BlockFactory} from '../';
+import {ContentTypeString} from '../instances/config';
 import {BlockComponentInterface} from '../block.component';
 
 @Component({
@@ -23,11 +24,11 @@ export class FullBlockComponent {
   @ViewChild('blockContainer', { read: ViewContainerRef })
   public container: ViewContainerRef;
 
+  private blockComponent: ComponentRef<BlockComponentInterface>;
+
   constructor(
     private resolver: ComponentFactoryResolver
   ) { }
-
-  private blockComponent: ComponentRef<BlockComponentInterface>;
 
   ngOnInit() {
     this.createComponent();
@@ -38,10 +39,14 @@ export class FullBlockComponent {
     this.blockComponent.instance.mode = this.block.mode;
   }
 
+  public get menuButtonVisible(): boolean {
+    return this.block.mode === BlockMode.NORMAL && (this.block.blockContent.canEdit || this.block.blockContent.canDelete);
+  }
+
   private createComponent() {
     this.container.clear();
     const component = BlockFactory.getComponent(<ContentTypeString>this.block.blockContentType);
-    const factory: ComponentFactory<any> = this.resolver.resolveComponentFactory(component);
+    const factory = this.resolver.resolveComponentFactory(component);
     this.blockComponent = this.container.createComponent(factory);
     this.setFields(this.blockComponent.instance);
   }
