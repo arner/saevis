@@ -10,9 +10,11 @@ services:
     volumes:
       - ./saevis-web/src:/usr/src/app/src
     environment:
-      - SERVER_URL=https:\/\/localhost
+      - SERVER_URL=https:\/\/server:3000
   server:
-    build: server
+    build:
+      context: server
+      dockerfile: dev-Dockerfile
     ports:
       - 3000:3000
     volumes:

@@ -29,6 +29,7 @@ export class Helper {
         .map((d) => d + relation)
         .filter((d) => excludes.indexOf(d) === -1)
         .forEach((item) => {
+          // console.log(`Disabling ${this.model} ${item}`);
           this.model.disableRemoteMethodByName(item);
         });
     });

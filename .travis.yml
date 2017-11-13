@@ -11,9 +11,6 @@ env:
   global:
      BLUEMIX_TARGET_URL="https://api.eu-de.bluemix.net"
 
-before_install:
-  - npm install -g @angular/cli@1.0.0 --loglevel error
-
 deploy:
   provider: script
   skip_cleanup: true

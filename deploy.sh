@@ -1,5 +1,4 @@
-#!/bin/bash
-set -ue
+#!/bin/bash -ue
 
 die() {
     echo $1
@@ -14,8 +13,12 @@ hash bx || die "bx not found"
 hash kubectl || die "kubectl not found"
 
 ### Login
-bx login -a "$BLUEMIX_TARGET_URL" -c "$BLUEMIX_ACCOUNT" -o "$BLUEMIX_ORG" -s "$BLUEMIX_SPACE" --apikey "$BLUEMIX_API_KEY" \
-    || die "Failed to authenticate to Bluemix"
+bx login \
+  -a "${BLUEMIX_TARGET_URL}" \
+  -c "${BLUEMIX_ACCOUNT}" \
+  -o "${BLUEMIX_ORG}" \
+  -s "${BLUEMIX_SPACE}" \
+  --apikey "${BLUEMIX_API_KEY}" || die "Failed to authenticate to Bluemix"
 
 # Init container clusters
 bx cs init || die "Failed to initialize to Bluemix Container Service"
