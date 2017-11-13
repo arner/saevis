@@ -1,7 +1,7 @@
 import {Component, ElementRef, QueryList, ViewChildren} from '@angular/core';
 import {Poll, PollApi, LoopBackAuth} from '../../../sdk';
 import {PollExtended} from '../poll-extended';
-import {BlockFactory} from '../../../../../../../saevis/src/app/blocks';
+import {BlockFactory} from '../../..';
 import {ActionButton} from '../../../action-button';
 import {BlockComponent} from '../../../block.component';
 

@@ -66,7 +66,7 @@ export abstract class BlockComponent<T extends BlockInterface> implements OnInit
   }
 
   @Output()
-  public modeChange = new EventEmitter();
+  public modeChange = new EventEmitter<BlockMode>();
 
   public set mode(val) {
     this._mode = val;

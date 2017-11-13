@@ -4,6 +4,7 @@ services:
     build: saevis-web
     ports:
       - 80:80
+      - 443:443
   server:
     build: server
     ports:

@@ -14,7 +14,6 @@ import {MemberService} from './member.service';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {MaterialModule} from './material.module';
 import {BlocksModule} from './blocks/blocks.module';
-import { MiniBlockComponent } from './blocks/mini-block/mini-block.component';
 import {IsLoggedIn} from "./guards/IsLoggedIn";
 
 const routes: Routes = [

@@ -1,19 +1,16 @@
 <ng-container *ngIf="mode === BlockMode.EDIT || mode === BlockMode.NEW">
   <mat-input-container>
-    <input mdInput [mdDatepicker]="startDatepicker" [min]="minDate" placeholder="Start" [(ngModel)]="content.startTime" (change)="onChangeStartTime()">
-    <button mdSuffix [mdDatepickerToggle]="startDatepicker"></button>
+    <input matInput [matDatepicker]="startDatepicker" [min]="minDate" placeholder="Start" [(ngModel)]="content.startTime" (change)="onChangeStartTime()">
+    <mat-datepicker-toggle matSuffix [for]="startDatepicker"></mat-datepicker-toggle>
+    <mat-datepicker #startDatepicker [touchUi]="true"></mat-datepicker>
   </mat-input-container>
-  <mat-datepicker #startDatepicker [touchUi]="true"></mat-datepicker>
   <br>
   <mat-input-container>
-    <input mdInput [mdDatepicker]="endDatepicker" [min]="minDate" placeholder="Eind" [(ngModel)]="content.endTime">
-    <button mdSuffix [mdDatepickerToggle]="endDatepicker"></button>
+    <input matInput [matDatepicker]="endDatepicker" [min]="minDate" placeholder="Eind" [(ngModel)]="content.endTime">
+    <mat-datepicker-toggle matSuffix [for]="endDatepicker"></mat-datepicker-toggle>
+    <mat-datepicker #endDatepicker [touchUi]="true"></mat-datepicker>
   </mat-input-container>
-  <mat-datepicker #endDatepicker [touchUi]="true"></mat-datepicker>
-  <br>
-  <mat-input-container>
-    <input mdInput type="text" placeholder="Locatie" [(ngModel)]="content.locationText"/>
-  </mat-input-container>
+
   <br>
 </ng-container>
 
