@@ -53,7 +53,7 @@ export class PollComponent extends BlockComponent<PollExtended> {
       this.removeOption(lastIndex);
     }
 
-    super.save();
+    return super.save();
   }
 
   public removeOption(optionIndex: number) {

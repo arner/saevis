@@ -1,0 +1,39 @@
+{
+  "_meta": {
+    "sources": [
+      "../common/blocks/poll",
+      "../common/blocks/event"
+    ]
+  },
+  "Poll": {
+    "dataSource": "db",
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "create": true,
+          "findById": true,
+          "find": true
+        }
+      }
+    }
+  },
+  "Vote": {
+    "dataSource": "db",
+    "public": true
+  },
+  "Event": {
+    "dataSource": "db",
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "replaceById": true,
+          "create": true,
+          "delete": true,
+          "findById": true
+        }
+      }
+    }
+  }
+}

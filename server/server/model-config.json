@@ -67,34 +67,20 @@
       }
     }
   },
-  "Poll": {
+  "Container": {
+    "dataSource": "storage",
+    "public": true,
+    "nameConflict": "makeUnique"
+  },
+  "Attachment": {
     "dataSource": "db",
     "public": true,
     "options": {
       "remoting": {
         "sharedMethods": {
-          "create": true,
-          "findById": true
+          "*": true
         }
       }
     }
-  },
-  "Event": {
-    "dataSource": "db",
-    "public": true,
-    "options": {
-      "remoting": {
-        "sharedMethods": {
-          "replaceById": true,
-          "create": true,
-          "delete": true,
-          "findById": true
-        }
-      }
-    }
-  },
-  "Vote": {
-    "dataSource": "db",
-    "public": true
   }
 }

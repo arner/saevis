@@ -1,0 +1,92 @@
+{
+  "name": "Poll",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "mixins": {
+    "TimeStamp": {
+      "required": false
+    },
+    "CreateBlock": {},
+    "Stats": [
+      {
+        "method": "stats",
+        "endpoint": "/stats",
+        "description": "Statistical information for Poll registers.",
+        "type": "model",
+        "count": {
+          "on": "createdAt",
+          "by": "index"
+        }
+      }
+    ]
+  },
+  "properties": {
+    "text": {
+      "type": "string"
+    },
+    "options": {
+      "type": "array",
+      "required": true
+    },
+    "settings": {
+      "type": "object",
+      "default": {}
+    },
+    "userVoted": {
+      "type": "boolean"
+    }
+  },
+  "validations": [],
+  "relations": {
+    "votes": {
+      "type": "hasMany",
+      "model": "Vote"
+    },
+    "voters": {
+      "type": "hasMany",
+      "model": "Member",
+      "through": "Vote",
+      "keyThrough": "voterId",
+      "foreignKey": "pollId"
+    }
+  },
+  "acls": [
+    {
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "DENY",
+      "property": "*"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$authenticated",
+      "permission": "ALLOW",
+      "property": "create"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$authenticated",
+      "permission": "ALLOW",
+      "property": "__create__votes"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$authenticated",
+      "permission": "ALLOW",
+      "property": "findById"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$authenticated",
+      "permission": "ALLOW",
+      "property": "find"
+    }
+  ],
+  "methods": {},
+  "scope": {
+    "include": "votes"
+  }
+}

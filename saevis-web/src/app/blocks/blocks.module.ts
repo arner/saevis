@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {EventComponent, PollComponent} from './instances';
 import {FullBlockComponent} from './full-block/full-block.component';
-import {MaterialModule} from '../material.module';
+import {MaterialModule} from '../shared/material.module';
 import {FormsModule} from '@angular/forms';
 import {BrowserModule} from '@angular/platform-browser';
 
