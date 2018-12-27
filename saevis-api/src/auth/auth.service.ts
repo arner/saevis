@@ -1,33 +1,19 @@
 import { JwtService } from '@nestjs/jwt';
 import { Injectable } from '@nestjs/common';
-import { UsersService } from '../users/users.service';
 import { JwtPayload } from './interfaces/jwt-payload.interface';
+import {User} from '../users/user.entity';
 
 @Injectable()
 export class AuthService {
   constructor(
-    private readonly usersService: UsersService,
-    private readonly jwtService: JwtService,
+    private readonly jwtService: JwtService
   ) {}
 
-  async signIn(): Promise<string> {
-    // In the real-world app you shouldn't expose this method publicly
-    // instead, return a token once you verify user credentials
-    const user: JwtPayload = { email: 'arne@example.com' };
-
-    return this.jwtService.sign(user);
-  }
-
-  async createToken() {
-    const user: JwtPayload = {email: 'arne@example.com'};
-    const accessToken = this.jwtService.sign(user);
-    return {
-      expiresIn: 360000,
-      accessToken,
-    };
+  public async createToken(user: User): Promise<string> {
+    return this.jwtService.sign({username: user.username});
   }
 
   async validateUser(payload: JwtPayload): Promise<any> {
-    return await this.usersService.findOneByEmail(payload.email);
+    return await User.findOneOrFail({username: payload.username});
   }
 }

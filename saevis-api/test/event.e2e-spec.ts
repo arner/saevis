@@ -4,7 +4,6 @@ import {Helper} from './Helper';
 const helper = new Helper();
 const createURL = `${helper.baseURL}/content`;
 const eventURL = `${helper.baseURL}/events`;
-const topicURL = `${helper.baseURL}/topics`;
 const testUser = {
   id: 1,
   username: 'arne'
@@ -27,19 +26,8 @@ describe('Event (e2e)', () => {
 
   beforeAll(async () => {
     token = await helper.getToken(testUser.id);
+    topicId = await helper.createTestTopic(token);
 
-    // Create topic
-    await request(topicURL)
-      .post('/')
-      .set('Authorization', `Bearer ${token}`)
-      .send(helper.getTestTopic())
-      .expect(201)
-      .then(res => {
-        topicId = res.body.id;
-      });
-  });
-
-  it('create ok', () => {
     return request(createURL)
       .post('/')
       .set('Authorization', `Bearer ${token}`)
@@ -55,12 +43,11 @@ describe('Event (e2e)', () => {
       });
   });
 
-  it('/:id/participants (PUT) ok', () => {
+  it('/:id/participants (POST) ok', () => {
     return request(eventURL)
-      .put(`/${createdEvent.id}/participants`)
+      .post(`/${createdEvent.id}/participants`)
       .set('Authorization', `Bearer ${token}`)
-      .send({})
-      .expect(200)
+      .expect(201)
       .then(res => {
         expect(res.body.text).toEqual(createdEvent.text);
         expect(res.body.startTime).toEqual(createdEvent.startTime);
@@ -69,19 +56,23 @@ describe('Event (e2e)', () => {
       });
   });
 
-  // it('/:id/participants (PUT) 2nd time', () => {
-  //   return request(eventURL)
-  //     .put(`/${createdEvent.id}/participants`)
-  //     .set('Authorization', `Bearer ${token}`)
-  //     .send({})
-  //     .expect(500);
-  // });
+  it('/:id/participants (POST) 2nd time should not have 2 entries', () => {
+    return request(eventURL)
+      .post(`/${createdEvent.id}/participants`)
+      .set('Authorization', `Bearer ${token}`)
+      .expect(201)
+      .then(res => {
+        expect(res.body.text).toEqual(createdEvent.text);
+        expect(res.body.startTime).toEqual(createdEvent.startTime);
+        expect(res.body.endTime).toEqual(createdEvent.endTime);
+        expect(res.body.participants).toEqual([testUser]);
+      });
+  });
 
   it('/:id/participants (DELETE) ok', () => {
     return request(eventURL)
       .delete(`/${createdEvent.id}/participants`)
       .set('Authorization', `Bearer ${token}`)
-      .send({})
       .expect(200)
       .then(res => {
         expect(res.body.text).toEqual(createdEvent.text);
@@ -91,7 +82,7 @@ describe('Event (e2e)', () => {
       });
   });
 
-  it('/ (POST)', () => {
+  it('/:id (PUT) edit event', () => {
     const editedEvent = getTestEvent() as any;
     editedEvent.startTime = '2017-06-07T14:34:08.700Z';
     editedEvent.endTime = '2017-06-07T16:34:08.700Z';
@@ -100,10 +91,10 @@ describe('Event (e2e)', () => {
     editedEvent.id = createdEvent.id;
 
     return request(eventURL)
-      .post('/')
+      .put(`/${createdEvent.id}`)
       .set('Authorization', `Bearer ${token}`)
       .send(editedEvent)
-//      .expect(200)
+      .expect(200)
       .then(res => {
         expect(res.body.text).toEqual(editedEvent.text);
         expect(res.body.startTime).toEqual(editedEvent.startTime);

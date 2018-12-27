@@ -37,7 +37,7 @@
 
   <saevis-full-block *ngFor="let block of topic.blocks; index as i" [block]="block" (destroy)="topic.blocks.splice(i, 1)"></saevis-full-block>
 
-  <a mat-fab color="primary" [matMenuTriggerFor]="newBlockMenu" class="add-block-button" *ngIf="!addingBlock"><mat-icon>add</mat-icon></a>
+  <a mat-fab color="primary" [matMenuTriggerFor]="newBlockMenu" class="add-block-button" *ngIf="!addingContent"><mat-icon>add</mat-icon></a>
   <mat-menu #newBlockMenu="matMenu" [overlapTrigger]="false">
     <button mat-menu-item (click)="createBlock('Poll')"> <mat-icon> poll </mat-icon> <span> Poll </span></button>
     <button mat-menu-item (click)="createBlock('Event')"> <mat-icon> event </mat-icon> <span> Event </span></button>

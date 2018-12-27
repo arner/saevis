@@ -1,41 +1,41 @@
 import {Body, Controller, Delete, Param, ParseIntPipe, Post, Put, Req, UseGuards} from '@nestjs/common';
-import {EventService} from './event.service';
 import {Event} from './event.entity';
-import {ApiBearerAuth} from '@nestjs/swagger';
+import {ApiBearerAuth, ApiUseTags} from '@nestjs/swagger';
 import {AuthGuard} from '@nestjs/passport';
+import {SubjectEntity} from '../../auth/entity.decorator';
+import {IsCreator} from '../../auth/is-creator.guard';
 
 @Controller('events')
 @ApiBearerAuth()
+@ApiUseTags('event')
 @UseGuards(AuthGuard('jwt'))
 export class EventController {
-  constructor(private eventService: EventService) { }
+  constructor() { }
 
-  @Post('/')
-  public async update(@Req() req, @Body() editedEvent: Event): Promise<Event> {
-    // TODO: this will move to a more generic auth check
-    const existingEvent = await this.eventService.findWithContentOrFail(editedEvent.id);
-    if (existingEvent.content.createdBy.id !== req.user.id) {
-      throw new Error('Unauthorized. (TODO: proper error');
-    }
+  @Put(':id')
+  @UseGuards(IsCreator)
+  @SubjectEntity(Event)
+  public async update(@Param('id') id: number, @Body() editedEvent: Event): Promise<Event> {
+    const existingEvent = await Event.findOneOrFail(id) as Event;
 
-    const updatedFields: Partial<Event> = {
-      startTime: editedEvent.startTime,
-      endTime:  editedEvent.endTime,
-      text: editedEvent.text
-    };
+    existingEvent.startTime = editedEvent.startTime;
+    existingEvent.endTime = editedEvent.endTime;
+    existingEvent.text = editedEvent.text;
 
-    return await this.eventService.update(editedEvent.id, updatedFields);
+    return existingEvent.save();
   }
 
-  @Put('/:id/participants')
-  public async participate(@Param() id: number, @Req() req): Promise<Event> {
-    return await this.eventService.participate(id, req.user.id);
+  @Post(':id/participants')
+  public async participate(@Param('id') id: number, @Req() req): Promise<Event> {
+    const event: Event = await Event.findOneOrFail(id);
+
+    return await event.participate(req.user);
   }
 
-  @Delete('/:id/participants')
-  public async unparticipate(@Param() id: number, @Req() req): Promise<Event> {
-    console.log('-------------------------------------------', req.user.id);
+  @Delete(':id/participants')
+  public async unparticipate(@Param('id') id: number, @Req() req): Promise<Event> {
+    const event: Event = await Event.findOneOrFail(id);
 
-    return await this.eventService.unparticipate(id, req.user.id);
+    return await event.unparticipate(req.user);
   }
 }

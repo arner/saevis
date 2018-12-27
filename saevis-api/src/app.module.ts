@@ -18,7 +18,7 @@ import { ContentModule } from './content/content.module';
       database: 'database.db',
       synchronize: true,
       dropSchema: true,
-      logging: false,
+      logging: true,
       entities: [__dirname + '/../**/*.entity{.ts,.js}'],
     }),
     ContentModule

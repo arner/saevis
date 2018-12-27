@@ -1,0 +1,51 @@
+<ng-container *ngIf="topic">
+  <mat-card>
+    <button mat-icon-button [matMenuTriggerFor]="menu" *ngIf="isInNormalMode" class="menu-button">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+    <mat-card-title>
+      <span *ngIf="isInNormalMode">{{topic.title}}</span>
+      <mat-form-field  class="full-width" *ngIf="isInEditMode">
+        <input matInput placeholder="Title" [(ngModel)]="topic.title">
+      </mat-form-field >
+      <mat-card-subtitle>Created by {{topic.createdBy.username}} on {{topic.createdAt | date}}</mat-card-subtitle>
+    </mat-card-title>
+
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="edit()">
+        <mat-icon>edit</mat-icon>
+        <span>Edit</span>
+      </button>
+      <button mat-menu-item (click)="publish()">
+        <mat-icon>publish</mat-icon>
+        <span>Publish</span>
+      </button>
+      <!--<button mat-menu-item (click)="delete()">-->
+      <!--<mat-icon>delete</mat-icon>-->
+      <!--<span>Delete</span>-->
+      <!--</button>-->
+    </mat-menu>
+
+    <mat-card-content>
+      <span *ngIf="isInNormalMode">{{topic.text}}</span>
+      <mat-form-field class="full-width" *ngIf="isInEditMode">
+        <textarea matInput placeholder="Description" [(ngModel)]="topic.text"></textarea>
+      </mat-form-field>
+    </mat-card-content>
+
+    <mat-card-actions *ngIf="isInEditMode">
+      <a mat-button (click)="save()">Opslaan</a>
+      <a mat-button (click)="cancel()">Annuleren</a>
+    </mat-card-actions>
+  </mat-card>
+
+  <app-content *ngFor="let content of topic.content; index as i" (destroy)="topic.content.splice(i, 1)" [content]="content">
+  </app-content>
+
+  <a mat-fab color="primary" [matMenuTriggerFor]="newContentMenu" class="add-block-button" *ngIf="!addingContent"><mat-icon>add</mat-icon></a>
+  <mat-menu #newContentMenu="matMenu" [overlapTrigger]="false">
+    <button mat-menu-item (click)="createContent('Poll')"> <mat-icon> poll </mat-icon> <span> Poll </span></button>
+    <button mat-menu-item (click)="createContent('Event')"> <mat-icon> event </mat-icon> <span> Event </span></button>
+  </mat-menu>
+
+</ng-container>

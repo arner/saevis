@@ -1,22 +1,20 @@
 import {
-  Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn,
-  UpdateDateColumn
+  Column, Entity, OneToMany
 } from 'typeorm';
-import {IsString, Length} from 'class-validator';
+import {IsOptional, IsString, Length} from 'class-validator';
 import {ApiModelProperty} from '@nestjs/swagger';
-import {User} from '../users/user.entity';
 import {Content} from '../content/content.entity';
+import {CreatedEntity} from '../created.entity';
 
 @Entity()
-export class Topic {
+export class Topic extends CreatedEntity {
   public constructor(topic?: Partial<Topic>) {
+    super();
+
     if (topic) {
       Object.assign(this, topic);
     }
   }
-
-  @PrimaryGeneratedColumn()
-  id: number;
 
   @IsString()
   @Length(3, 200)
@@ -24,17 +22,13 @@ export class Topic {
   @Column({ length: 200 })
   title: string;
 
+  @IsString()
+  @IsOptional()
+  @ApiModelProperty({required: false})
+  @Column({'default': ''})
   text: string;
 
+  @ApiModelProperty({required: false, type: [Content]})
   @OneToMany(type => Content, (content: Content) => content.topic)
   content: Content[];
-
-  @ManyToOne(type => User, (user: User) => user.topics)
-  createdBy: User;
-
-  @CreateDateColumn()
-  createdAt: Date;
-
-  @UpdateDateColumn()
-  updatedAt: Date;
 }

@@ -1,0 +1,10 @@
+<mat-card *ngIf="content">
+  <mat-card-title>
+    <mat-icon mat-card-avatar>{{contentMetadata.icon}}</mat-icon>
+    <span>{{contentMetadata.title}}</span>
+    <mat-card-subtitle>Created by {{contentMetadata.content.createdBy?.username}} on {{contentMetadata.content.createdAt | date}}</mat-card-subtitle>
+  </mat-card-title>
+  <mat-card-content>
+    {{content | json}}
+  </mat-card-content>
+</mat-card>

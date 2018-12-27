@@ -1,0 +1,13 @@
+export * from './auth.service';
+import { AuthService } from './auth.service';
+export * from './default.service';
+import { DefaultService } from './default.service';
+export * from './discussion.service';
+import { DiscussionService } from './discussion.service';
+export * from './event.service';
+import { EventService } from './event.service';
+export * from './topic.service';
+import { TopicService } from './topic.service';
+export * from './user.service';
+import { UserService } from './user.service';
+export const APIS = [AuthService, DefaultService, DiscussionService, EventService, TopicService, UserService];

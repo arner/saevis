@@ -1,36 +1,46 @@
 import {
-  Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, Query, UseGuards
+  Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, Query, ReflectMetadata, Req, UseGuards
 } from '@nestjs/common';
-import {TopicService} from './topic.service';
 import {Topic} from './topic.entity';
-import {ApiBearerAuth} from '@nestjs/swagger';
+import {ApiBearerAuth, ApiUseTags} from '@nestjs/swagger';
 import {AuthGuard} from '@nestjs/passport';
+import {IsCreator} from '../auth/is-creator.guard';
+import {SubjectEntity} from '../auth/entity.decorator';
 
 @Controller('topics')
 @ApiBearerAuth()
+@ApiUseTags('topic')
 @UseGuards(AuthGuard('jwt'))
 export class TopicController {
-  constructor(private topicService: TopicService) { }
+  constructor() { }
 
   @Get()
-  public async findAll(@Query() query?: any): Promise<Topic[]> {
-    return await this.topicService.findAll();
+  public async findAll(): Promise<Topic[]> {
+    return await Topic.find({ relations: ['content'] });
   }
 
   @Post()
   public async create(@Body() topic: Topic): Promise<Topic> {
-    return await this.topicService.create(topic);
+    delete topic.id;
+
+    return await Topic.save(topic);
   }
 
   @Get(':id')
-  public async findOne(@Param('id', new ParseIntPipe()) id): Promise<Topic> {
-    return await this.topicService.findOne(id);
+  public async findOne(@Param('id') id: number): Promise<Topic> {
+    return await Topic.findOne({where: {id}, relations: ['content']});
   }
-  //
-  // @Put(':id')
-  // public async update(@Param('id') id,  @Body() updateCatDto) {
-  //
-  // }
+
+  @Put(':id')
+  @UseGuards(IsCreator)
+  @SubjectEntity(Topic)
+  public async update(@Param('id') id: number,  @Body() topic: Topic): Promise<Topic> {
+    const existingTopic = await Topic.findOneOrFail(id) as Topic;
+    existingTopic.title = topic.title;
+    existingTopic.text = topic.text;
+
+    return await existingTopic.save();
+  }
   //
   // @Delete(':id')
   // public async delete(@Param('id') id) {

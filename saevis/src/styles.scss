@@ -1,0 +1,33 @@
+/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  background-color: #183152;
+}
+
+//html, body, saevis-root {
+//  margin: 0;
+//  padding: 0;
+//  height: 100vh;
+//}
+
+mat-sidenav-container {
+  min-height: calc(100% - 64px);
+}
+
+mat-card {
+  margin-bottom: 20px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+@mixin md-icon-size($size: 24px) {
+  font-size: $size;
+  height: $size;
+  width: $size;
+  line-height: $size;
+}

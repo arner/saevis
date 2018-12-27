@@ -1,42 +1,47 @@
-import {Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn} from 'typeorm';
+import {
+  BaseEntity, Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToOne,
+  PrimaryGeneratedColumn
+} from 'typeorm';
 import {Topic} from '../topic/topic.entity';
 import {Poll} from './poll/poll.entity';
 import {Event} from './event/event.entity';
 import {IsNotEmpty, ValidateNested} from 'class-validator';
 import {Type} from 'class-transformer';
 import {ApiModelProperty} from '@nestjs/swagger';
-import {User} from '../users/user.entity';
+import {Discussion} from './discussion/discussion.entity';
+import {ContentType} from './content-type.enum';
 
 @Entity()
-export class Content {
+export class Content extends BaseEntity {
   public constructor(content?: Partial<Content>) {
+    super();
+
     if (content) {
       Object.assign(this, content);
     }
   }
 
+  @ApiModelProperty({required: false, type: 'integer'})
   @PrimaryGeneratedColumn()
   id: number;
 
   @IsNotEmpty()
   @Column()
-  @ApiModelProperty()
+  @ApiModelProperty({required: false, type: 'integer'})
   topicId: number;
 
   @ManyToOne(type => Topic, (topic: Topic) => topic.content)
   topic: Topic;
 
-  @JoinColumn()
-  @ManyToOne(type => User, {eager: true})
-  createdBy: User;
-
-  @CreateDateColumn()
-  createdAt: Date;
+  @IsNotEmpty()
+  @Column({'enum': ContentType})
+  @ApiModelProperty({type: ContentType})
+  type: ContentType;
 
   // Types
   @Type(() => Poll)
   @ValidateNested()
-  @ApiModelProperty()
+  @ApiModelProperty({required: false, type: Poll})
   @OneToOne(type => Poll, (poll: Poll) => poll.content, {
     eager: true,
     cascade: ['insert']
@@ -45,10 +50,19 @@ export class Content {
 
   @ValidateNested()
   @Type(() => Event)
-  @ApiModelProperty()
+  @ApiModelProperty({required: false, type: Event})
   @OneToOne(type => Event, (event: Event) => event.content, {
     eager: true,
     cascade: ['insert']
   })
   event: Event;
+
+  @ValidateNested()
+  @Type(() => Discussion)
+  @ApiModelProperty({required: false, type: Discussion})
+  @OneToOne(type => Discussion, (discussion: Discussion) => discussion.content, {
+    eager: true,
+    cascade: ['insert']
+  })
+  discussion: Discussion;
 }
