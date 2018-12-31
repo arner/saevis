@@ -1,20 +1,33 @@
-<ng-container class="login-container">
-  <mat-card>
-    <form class="login-form" (ngSubmit)="login()" #loginForm="ngForm">
-      <mat-card-title>
-        Login
-      </mat-card-title>
-      <mat-card-content>
-        <mat-form-field class="full-width">
-          <input matInput placeholder="Email" [(ngModel)]="email" name="email">
-        </mat-form-field>
-        <mat-form-field class="full-width">
-          <input matInput type="password" placeholder="Password" [(ngModel)]="password" name="password">
-        </mat-form-field>
-      </mat-card-content>
-      <mat-card-actions>
-        <button type="submit" mat-button [disabled]="!loginForm.form.valid">Login</button>
-      </mat-card-actions>
-    </form>
-  </mat-card>
-</ng-container>
+<form nz-form [formGroup]="validateForm" class="login-form" (ngSubmit)="login($event, validateForm.value)">
+  <nz-form-item>
+    <nz-form-control>
+      <nz-input-group [nzPrefix]="prefixUser">
+        <input type="text" nz-input formControlName="username" placeholder="Username">
+      </nz-input-group>
+      <nz-form-explain *ngIf="validateForm.get('username').dirty && validateForm.get('username').errors">
+        Please enter your username!
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-control>
+      <nz-input-group [nzPrefix]="prefixLock">
+        <input type="password" nz-input formControlName="password" placeholder="Password">
+      </nz-input-group>
+      <nz-form-explain *ngIf="validateForm.get('password').dirty && validateForm.get('password').errors">
+        Please enter your password!
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-control>
+      <!--<label nz-checkbox formControlName="remember">-->
+        <!--<span>Remember me</span>-->
+      <!--</label>-->
+      <!--<a class="login-form-forgot" class="login-form-forgot">Forgot password</a>-->
+      <button nz-button class="login-form-button" [nzType]="'primary'">Log in</button>
+    </nz-form-control>
+  </nz-form-item>
+</form>
+<ng-template #prefixUser><i nz-icon type="user"></i></ng-template>
+<ng-template #prefixLock><i nz-icon type="lock"></i></ng-template>

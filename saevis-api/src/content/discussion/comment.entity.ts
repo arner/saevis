@@ -3,7 +3,9 @@ import {Discussion} from './discussion.entity';
 import {CreatedEntity} from '../../created.entity';
 import {ApiModelProperty} from '@nestjs/swagger';
 
-@Entity()
+@Entity({orderBy: {
+  createdAt: 'ASC'
+}})
 export class Comment extends CreatedEntity {
   public constructor(content?: Partial<Comment>) {
     super();

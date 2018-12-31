@@ -11,7 +11,7 @@
  */
 
 export interface User { 
-    id: number;
+    readonly id?: number;
     username: string;
-    token: string;
+    token?: string;
 }

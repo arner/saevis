@@ -1,1 +1,35 @@
-<router-outlet></router-outlet>
+<nz-layout class="main-body">
+  <nz-header>
+    <div class="logo">
+      Saevis
+    </div>
+    <ul nz-menu [nzTheme]="'dark'" [nzMode]="'horizontal'" style="line-height: 64px;">
+      <!--<li nz-menu-item>nav 1</li>-->
+      <!--<li nz-menu-item>nav 2</li>-->
+      <!--<li nz-menu-item>nav 3</li>-->
+    </ul>
+  </nz-header>
+  <nz-layout>
+    <nz-sider [nzWidth]="200" style="background:#fff">
+      <ul nz-menu [nzMode]="'inline'">
+        <li nz-menu-item routerLink="/topics"><span><i nz-icon type="file"></i><span class="nav-text">Topics</span></span></li>
+        <!--<li nz-submenu>-->
+          <!--<span title><i nz-icon type="notification"></i>subnav 3</span>-->
+          <!--<ul>-->
+            <!--<li nz-menu-item>option9</li>-->
+            <!--<li nz-menu-item>option10</li>-->
+            <!--<li nz-menu-item>option11</li>-->
+            <!--<li nz-menu-item>option12</li>-->
+          <!--</ul>-->
+        <!--</li>-->
+      </ul>
+    </nz-sider>
+    <nz-layout style="padding:0 24px 24px">
+      <nz-breadcrumb style="margin:16px 0;" [nzAutoGenerate]="true">
+      </nz-breadcrumb>
+      <nz-content>
+        <router-outlet></router-outlet>
+      </nz-content>
+    </nz-layout>
+  </nz-layout>
+</nz-layout>

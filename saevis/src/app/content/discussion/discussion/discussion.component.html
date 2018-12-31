@@ -1,0 +1,51 @@
+<nz-card class="list-item" *ngIf="item">
+  <nz-list [nzDataSource]="item.comments" [nzRenderItem]="comment" [nzItemLayout]="'horizontal'" [nzLoading]="loading">
+    <ng-template #comment let-comment>
+      <nz-list-item [nzExtra]="extraTemplate">
+        <nz-list-item-meta
+          [nzTitle]="nzTitle"
+          [nzAvatar]="avatarTemplate"
+          [nzDescription]="comment.text">
+          <ng-template #nzTitle>
+            {{comment.createdBy.username}}
+          </ng-template>
+          <ng-template #extraTemplate>
+            <small>{{comment.createdAt | timeago: live}}</small>
+          </ng-template>
+          <ng-template #avatarTemplate>
+            <nz-avatar [nzText]="comment.createdBy.username"></nz-avatar>
+          </ng-template>
+        </nz-list-item-meta>
+      </nz-list-item>
+    </ng-template>
+    <nz-list-item>
+      <nz-list-item-meta
+        [nzTitle]="nzTitle"
+        [nzAvatar]="avatarTemplate"
+        [nzDescription]="formTemplate">
+        <ng-template #nzTitle>
+          you
+        </ng-template>
+        <ng-template #avatarTemplate>
+          <nz-avatar nzIcon="user"></nz-avatar>
+        </ng-template>
+        <ng-template #formTemplate>
+          <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm($event,validateForm.value)">
+            <nz-form-item>
+              <nz-form-control>
+                <textarea formControlName="comment" nz-input rows="2" placeholder="Your comment"></textarea>
+                <nz-form-explain *ngIf="validateForm.get('comment').dirty&&validateForm.get('comment').hasError('minLength')">Please write a bit more.</nz-form-explain>
+              </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+              <nz-form-control class="submit-control">
+                <button nz-button nzType="primary" nzAlign="right" [disabled]="!validateForm.valid">Submit</button>
+              </nz-form-control>
+            </nz-form-item>
+          </form>
+        </ng-template>
+      </nz-list-item-meta>
+    </nz-list-item>
+  </nz-list>
+</nz-card>
+

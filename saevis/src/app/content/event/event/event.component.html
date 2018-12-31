@@ -1,0 +1,26 @@
+<nz-card class="list-item" *ngIf="item" [nzActions]="[extraTemplate]" nzCardGrid>
+  <nz-card-meta [nzTitle]="item.title"
+                [nzDescription]="descriptionTemplate"
+                [nzAvatar]="avatarTemplate">
+  </nz-card-meta>
+  <ng-template #avatarTemplate>
+    <nz-avatar nzIcon="calendar"></nz-avatar>
+  </ng-template>
+  <ng-template #descriptionTemplate>
+    <p>{{item.startTime | date: 'fullDate'}}<br>
+      {{item.startTime | date: 'shortTime'}} - {{item.endTime | date: 'shortTime'}}
+    </p>
+  </ng-template>
+  <ng-template #extraTemplate>
+    <button nz-button nzType="default" nzShape="circle" *ngIf="isParticipating()" (click)="unParticipate()">
+      <i nz-icon [type]="'user-delete'"></i>
+    </button>
+    <button nz-button nzType="primary" nzShape="circle" *ngIf="!isParticipating()" (click)="participate()">
+      <i nz-icon [type]="'schedule'"></i>
+    </button>
+    <nz-divider nzType="vertical"></nz-divider>
+    <span *ngFor="let user of item.participants">
+      <nz-avatar [nzText]="user.username"></nz-avatar>
+    </span>
+  </ng-template>
+</nz-card>

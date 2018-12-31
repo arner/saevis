@@ -12,15 +12,16 @@ export class Event extends CreatedEntity {
     Object.assign(this, event);
   }
 
-  @ApiModelProperty({'default': '', example: 'Comic convention'})
+  @ApiModelProperty({example: 'Comic convention'})
   @Column()
   title: string;
 
-  @ApiModelProperty({'default': 'A cosy gathering of comic enthousiasts.'})
+  @ApiModelProperty({'default': '', example: 'A cosy gathering of comic enthousiasts.'})
   @Column({'default': ''})
   text: string;
 
   @JoinColumn()
+  @ApiModelProperty({type: Content})
   @OneToOne(type => Content, (content: Content) => content.event)
   content: Content;
 
@@ -34,15 +35,13 @@ export class Event extends CreatedEntity {
   @Column()
   endTime: Date;
 
-  //@ApiModelProperty({description: 'All the users participating in this event.'})
-  @ManyToMany(type => User, {eager: true})
+  @ApiModelProperty({required: false, type: [User]})
   @JoinTable()
+  @ManyToMany(type => User, (user: User) => user.events, {eager: true})
   participants: User[];
 
   public async participate(user: User): Promise<Event> {
     if (this.participants.some((p => p.id === user.id))) {
-      console.log('Already participating!');
-
       return this;
     }
 
@@ -54,8 +53,6 @@ export class Event extends CreatedEntity {
   public async unparticipate(user: User): Promise<Event> {
     const index = this.participants.findIndex((p => p.id === user.id));
     if (index === -1) {
-      console.log('Already not participating!');
-
       return this;
     }
 

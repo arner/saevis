@@ -23,11 +23,11 @@ export class TopicsComponent implements OnInit {
     this.refresh();
   }
 
-  refresh() {
+  public refresh() {
     this.topics = this.topicService.topicsGet();
   }
 
-  create() {
+  public create() {
     this.topicService.topicsPost({title: 'Test topic'}).subscribe((r) => {
       console.log(r);
     })

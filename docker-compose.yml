@@ -1,21 +1,22 @@
 version: "2"
 services:
-  saevis-web:
+  saevis:
     build:
-      context: saevis-web
-      dockerfile: dev-Dockerfile
+      context: saevis
+      dockerfile: devDockerfile
     ports:
       - 4200:4200
       - 35729:35729
     volumes:
-      - ./saevis-web/src:/usr/src/app/src
-    environment:
-      - SERVER_URL=https:\/\/server:3000
-  server:
+      - ./saevis/src:/usr/src/app/src
+  saevis-api:
     build:
-      context: server
-      dockerfile: dev-Dockerfile
+      context: saevis-api
+      dockerfile: devDockerfile
+    volumes:
+      - ./saevis-api:/usr/src/app/
+      - /usr/src/app/node_modules
+      - ./saevis-api/database.db:/usr/src/app/database.db
     ports:
       - 3000:3000
-    volumes:
-      - ./server:/usr/src/app
+

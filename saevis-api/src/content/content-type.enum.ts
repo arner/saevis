@@ -1,5 +1,5 @@
 export enum ContentType {
-  POLL,
-  EVENT,
-  DISCUSSION
+  POLL = 'POLL',
+  EVENT = 'EVENT',
+  DISCUSSION = 'DISCUSSION'
 }

@@ -9,12 +9,16 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */import { Content } from './content';
+import { ModelDate } from './modelDate';
+import { User } from './user';
 
 
 export interface Topic { 
     id?: number;
+    createdBy?: User;
+    updatedAt?: ModelDate;
+    createdAt?: ModelDate;
     title: string;
+    text?: string;
     content?: Array<Content>;
-    createdAt?: Date;
-    updatedAt?: Date;
 }

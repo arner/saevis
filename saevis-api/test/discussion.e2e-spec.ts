@@ -54,7 +54,7 @@ describe('Discussion (e2e)', () => {
       .send({topicId: topicId, discussion: getTestDiscussion()})
       .expect(201)
       .then(res => {
-        createdDiscussion = res.body.discussion;
+        createdDiscussion = res.body.content;
         expect(createdDiscussion.title).toEqual(getTestDiscussion().title);
         expect(createdDiscussion.id).toBeGreaterThan(0);
       });

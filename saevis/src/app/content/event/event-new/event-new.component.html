@@ -1,0 +1,20 @@
+<form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="title">Title</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <input nz-input formControlName="title" id="title">
+      <nz-form-explain *ngIf="validateForm.get('title').dirty && validateForm.get('title').errors">Title is required</nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>Time</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <nz-range-picker
+        formControlName="rangePickerTime"
+        [ngModel]="times"
+        [nzFormat]="'MMM d, y, HH:mm'"
+        [nzShowTime]="{nzFormat: 'HH:mm', nzMinuteStep: 5}">
+      </nz-range-picker>
+    </nz-form-control>
+  </nz-form-item>
+</form>

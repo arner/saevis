@@ -2,10 +2,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import {MaterialModule} from './material/material.module';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { LoginComponent } from './login/login.component';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {AuthModule} from './auth/auth.module';
 import {ApiModule} from './api/api.module';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
@@ -16,6 +15,15 @@ import {apiConfigurationFactory} from './apiConfigurationFactory';
 import {ErrorInterceptor} from './error.interceptor';
 import { TopicDetailComponent } from './topics/topic-detail/topic-detail.component';
 import {ContentModule} from './content/content.module';
+import {NgZorroAntdModule} from 'ng-zorro-antd';
+import { NZ_I18N } from 'ng-zorro-antd';
+import { en_US } from 'ng-zorro-antd';
+import { registerLocaleData } from '@angular/common';
+import en from '@angular/common/locales/en';
+import {TimeagoModule} from 'ngx-timeago';
+import {environment} from '../environments/environment';
+
+registerLocaleData(en);
 
 @NgModule({
   declarations: [
@@ -27,18 +35,21 @@ import {ContentModule} from './content/content.module';
   imports: [
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     AppRoutingModule,
-    MaterialModule,
     BrowserAnimationsModule,
     AuthModule,
     HttpClientModule,
+    NgZorroAntdModule,
     ApiModule,
-    ContentModule
+    ContentModule,
+    TimeagoModule.forRoot()
   ],
   providers: [
-    { provide: BASE_PATH, useValue: 'http://localhost:3000' },
+    { provide: BASE_PATH, useValue: environment.apiBaseUrl },
     { provide: Configuration, useFactory: apiConfigurationFactory},
-    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    { provide: NZ_I18N, useValue: en_US }
   ],
   bootstrap: [AppComponent]
 })

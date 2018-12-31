@@ -7,21 +7,41 @@ import {TopicDetailComponent} from './topics/topic-detail/topic-detail.component
 
 const routes: Routes = [
   {
+    path: '',
+    data: {
+      breadcrumb: 'Home'
+    },
+    children: [
+      {
+        path: 'topics',
+        canActivate: [AuthGuard],
+        data: {
+          breadcrumb: 'Topics'
+        },
+        children: [
+          {
+            path: '',
+            component: TopicsComponent,
+            data: {
+              breadcrumb: 'All'
+            }
+          },
+          {
+            path: ':id',
+            component: TopicDetailComponent,
+            data: {
+              breadcrumb: 'Detail'
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
     path: 'login',
     component: LoginComponent,
     children: []
   },
-  {
-    path: 'topics',
-    component: TopicsComponent,
-    canActivate: [AuthGuard],
-    children: []
-  },
-  {
-    path: 'topics/:id',
-    component: TopicDetailComponent,
-    canActivate: [AuthGuard]
-  }
 ];
 
 @NgModule({

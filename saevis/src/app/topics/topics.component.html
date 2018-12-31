@@ -1,16 +1,28 @@
-<mat-card *ngFor="let topic of topics | async" [routerLink]="topic.id">
-  <mat-card-header>
-    <div mat-card-avatar class="example-header-image">{{topic.content.length}}</div>
-    <mat-card-title>{{topic.title}}</mat-card-title>
-  <mat-card-subtitle>{{topic.createdBy.username}}</mat-card-subtitle>
-  </mat-card-header>
-  <mat-card-content>
+<nz-list
+  [nzDataSource]="topics | async"
+  [nzItemLayout]="'vertical'"
+  [nzRenderItem]="topic"
+  [nzGrid]="{gutter: 16, xs: 24, sm: 24, md: 12, lg: 6, xl: 4 }">
 
-  </mat-card-content>
-  <mat-card-actions>
-    <mat-icon matBadge="4" matBadgeColor="primary" *ngFor="let content of topic.content">
-      {{poll}}
-    </mat-icon>
-  </mat-card-actions>
-</mat-card>
-<a mat-fab [color]="'primary'" (click)="create()" class="add-topic-button"><mat-icon>add</mat-icon></a>
+  <!--[nzPagination]="pagination"-->
+  <ng-template #topic let-topic let-i="index">
+    <button *ngIf="i===0" nz-button nzType="dashed" class="list-item new-button"><i nz-icon type="plus-circle"></i>&nbsp;Create topic</button>
+
+    <nz-card [nzActions]="[actions]" class="list-item">
+      <ng-template #actions>
+        <app-content-preview *ngFor="let content of topic.content; let last = last" [content]="content" [isLast]="last"></app-content-preview>
+      </ng-template>
+
+      <nz-card-meta
+        [nzAvatar]="topic.avatar"
+        [nzTitle]="nzTitle"
+        [nzDescription]="topic.createdBy.username">
+        <ng-template #nzTitle><a routerLink="{{topic.id}}">{{topic.title}}</a></ng-template>
+      </nz-card-meta>
+    </nz-card>
+  </ng-template>
+  <!--<ng-template #pagination>-->
+    <!--<nz-pagination [nzPageIndex]="1" [nzTotal]="50" (nzPageIndexChange)="console.log($event)"></nz-pagination>-->
+  <!--</ng-template>-->
+  <!--<a mat-fab [color]="'primary'" (click)="create()" class="add-topic-button"><mat-icon>add</mat-icon></a>-->
+</nz-list>

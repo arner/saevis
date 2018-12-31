@@ -7,6 +7,8 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 swagger-codegen generate -i http://localhost:3000/swagger.json -l typescript-angular --additional-properties ngVersion=7.1.0 && sed -i '' 's/rxjs\/Observable/rxjs/' api/*.service.ts && echo '}' >> api/*.service.ts
 ```
 
+Due to a bug, we need to manuall add 'body' to all the POST and PUT functions in the services...
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.

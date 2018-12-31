@@ -1,0 +1,6 @@
+<ng-container *ngIf="item">
+  <span nz-tooltip *ngIf="item.comments.length" nzPlacement="bottom"
+        nzTitle="Last comment {{getLastComment().createdAt | timeago: live}} by {{getLastComment().createdBy.username}}">
+    <i nz-icon type="message"></i>&nbsp;{{item.comments.length}}
+  </span>
+</ng-container>

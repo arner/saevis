@@ -1,5 +1,5 @@
 import {
-  BaseEntity, Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToOne,
+  BaseEntity, Column, Entity, ManyToOne, OneToOne,
   PrimaryGeneratedColumn
 } from 'typeorm';
 import {Topic} from '../topic/topic.entity';
@@ -21,7 +21,7 @@ export class Content extends BaseEntity {
     }
   }
 
-  @ApiModelProperty({required: false, type: 'integer'})
+  @ApiModelProperty({required: false, readOnly: true, type: 'integer'})
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -35,7 +35,7 @@ export class Content extends BaseEntity {
 
   @IsNotEmpty()
   @Column({'enum': ContentType})
-  @ApiModelProperty({type: ContentType})
+  @ApiModelProperty({'enum': ['POLL', 'DISCUSSION', 'EVENT']})
   type: ContentType;
 
   // Types

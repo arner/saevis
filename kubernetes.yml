@@ -1,18 +1,18 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: saevis-server
+  name: saevis-api
 spec:
   replicas: 1
   template:
     metadata:
       labels:
-        name: pod-saevis-server
-        run: saevis-server
+        name: pod-saevis-api
+        run: saevis-api
     spec:
       containers:
-      - name: server
-        image: registry.eu-de.bluemix.net/arne/saevis-server:latest
+      - name: api
+        image: registry.eu-de.bluemix.net/arne/saevis-api:latest
 ---
 apiVersion: extensions/v1beta1
 kind: Deployment
@@ -28,7 +28,7 @@ spec:
     spec:
       containers:
       - name: client
-        image: registry.eu-de.bluemix.net/arne/saevis-client:latest
+        image: registry.eu-de.bluemix.net/arne/saevis:latest
         env:
          - name: SERVER_URL
            value: http:\/\/169.51.8.10:30072

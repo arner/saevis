@@ -9,10 +9,15 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */import { Comment } from './comment';
+import { ModelDate } from './modelDate';
+import { User } from './user';
 
 
 export interface Discussion { 
-    id: number;
+    id?: number;
+    createdBy?: User;
+    updatedAt?: ModelDate;
+    createdAt?: ModelDate;
     title?: string;
     text?: string;
     comments?: Array<Comment>;
