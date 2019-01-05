@@ -1,55 +1,39 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import {Topic} from '../../api/model/topic';
 import {TopicService} from '../../api/api/topic.service';
 import {ActivatedRoute} from '@angular/router';
-import {ContentService} from '../../content/content.service';
-import {ContentProvider} from '../../content/content-provider';
-import {Content} from '../../api/model/content';
+import {Observable} from 'rxjs';
+import * as fromTopics from '../topics.reducer';
+import {Store} from '@ngrx/store';
+import * as topicsActions from '../topics.actions';
+import * as fromRoot from '../../app.reducer';
 
 @Component({
   selector: 'app-topic-detail',
   templateUrl: './topic-detail.component.html',
   styleUrls: ['./topic-detail.component.scss']
 })
-export class TopicDetailComponent implements OnInit {
-  public topic: Topic;
-  public contentProviders: ContentProvider[];
+export class TopicDetailComponent {
+  public topic: Observable<Topic>;
 
   constructor(
     private route: ActivatedRoute,
     private topicService: TopicService,
-    private contentService: ContentService
+    private store: Store<fromTopics.State>
   ) {
-    this.contentProviders = contentService.getProviders();
-  }
+    this.topic = this.store.select(fromRoot.getCurrentTopic);
 
-  ngOnInit() {
-    const id = this.route.snapshot.params['id'];
-
-    this.topicService.topicsIdGet(id).subscribe((topic: Topic) => {
-      this.topic = topic;
+    // TODO add route to state
+    this.route.params.subscribe(params => {
+      this.store.dispatch(new topicsActions.SelectTopic(params['id']));
     });
   }
 
-  private createNewContentModal(type: Content.TypeEnum): void {
-    this.contentService.showNewModal(type, this.topic);
-  }
-
-  public save(): void {
-    this.topicService.topicsIdPut(this.topic, this.topic.id).subscribe((topic: Topic) => {
-      this.topic.updatedAt = topic.updatedAt;
+  public save(topic: Topic): void {
+    this.topicService.topicsIdPut(topic, topic.id).subscribe((updatedTopic: Topic) => {
+      // this.topic.updatedAt = updatedTopic.updatedAt;
     }, (err: Error) => {
       console.warn(err.message);
     });
-  }
-
-  public publish(): void {
-    // this.topic.published = true; return;
-    // this.topicApi.updateAttributes(this.topic.id, this.topic).subscribe((topic: Topic) => {
-    //   console.log('Saved topic.', topic);
-    //   // this.mode = TopicMode.NORMAL;
-    // }, (err: Error) => {
-    //   console.warn(err.message);
-    // });
   }
 }

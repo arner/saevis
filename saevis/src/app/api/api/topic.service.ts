@@ -129,7 +129,7 @@ export class TopicService {
         // to determine the Content-Type header
         const consumes: string[] = [
         ];
-
+console.log(`${this.basePath}/topics/${encodeURIComponent(String(id))}`);
         return this.httpClient.get(`${this.basePath}/topics/${encodeURIComponent(String(id))}`,
             {
                 withCredentials: this.configuration.withCredentials,

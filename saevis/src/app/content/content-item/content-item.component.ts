@@ -4,11 +4,11 @@ import {ContentDirective} from './content.directive';
 import {ContentService} from '../content.service';
 
 @Component({
-  selector: 'app-content',
-  templateUrl: './content.component.html',
-  styleUrls: ['./content.component.scss']
+  selector: 'app-content-item',
+  templateUrl: './content-item.html',
+  styleUrls: ['./content-item.component.scss']
 })
-export class ContentComponent implements OnInit {
+export class ContentItemComponent implements OnInit {
   @Input()
   public content: Content;
 

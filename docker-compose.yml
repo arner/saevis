@@ -16,7 +16,7 @@ services:
     volumes:
       - ./saevis-api:/usr/src/app/
       - /usr/src/app/node_modules
-      - ./saevis-api/database.db:/usr/src/app/database.db
+      - ./saevis-api/databa:/usr/src/app/data
     ports:
       - 3000:3000
 

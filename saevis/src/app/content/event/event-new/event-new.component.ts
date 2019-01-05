@@ -5,6 +5,9 @@ import {NewComponent} from '../../new-component.interface';
 import {Topic} from '../../../api/model/topic';
 import {Content} from '../../../api/model/content';
 import {DefaultService} from '../../../api/api/default.service';
+import {Store} from '@ngrx/store';
+import * as fromContent from '../../content.reducer';
+import {CreateContent} from '../../content.actions';
 
 @Component({
   selector: 'app-event-new',
@@ -21,7 +24,7 @@ export class EventNewComponent implements OnInit, NewComponent {
   public times: [Date, Date];
   public validateForm: FormGroup;
 
-  constructor(private api: DefaultService) {
+  constructor(private store: Store<fromContent.State>) {
     const startTime = new Date();
     startTime.setHours(20);
     startTime.setMinutes(0);
@@ -52,6 +55,7 @@ export class EventNewComponent implements OnInit, NewComponent {
       this.validateForm.controls[ i ].updateValueAndValidity();
     }
 
+    // TODO reduxify
     const content = {
       topicId: this.topic.id,
       type: Content.TypeEnum.EVENT,
@@ -63,8 +67,6 @@ export class EventNewComponent implements OnInit, NewComponent {
       }
     };
 
-    this.api.contentPost(content).subscribe(res => {
-      console.log(res);
-    });
+    this.store.dispatch(new CreateContent(content));
   }
 }

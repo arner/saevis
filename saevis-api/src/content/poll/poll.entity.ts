@@ -1,10 +1,10 @@
 import {Column, Entity, JoinColumn, OneToOne} from 'typeorm';
 import {Content} from '../content.entity';
-import {CreatedEntity} from '../../created.entity';
 import {ApiModelProperty} from '@nestjs/swagger';
+import {ContentItem} from '../content-item.entity';
 
 @Entity()
-export class Poll extends CreatedEntity {
+export class Poll extends ContentItem {
   public constructor(content: Partial<Poll>) {
     super();
     Object.assign(this, content);

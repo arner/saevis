@@ -15,7 +15,7 @@ import { ContentModule } from './content/content.module';
     UsersModule,
     TypeOrmModule.forRoot({
       type: 'sqlite',
-      database: 'database.db',
+      database: 'data/database.db',
       synchronize: true,
       dropSchema: true,
       logging: true,

@@ -4,6 +4,9 @@ import {Comment} from '../../../api/model/comment';
 import {FormGroup, Validators, FormBuilder} from '@angular/forms';
 import {DiscussionService} from '../../../api/api/discussion.service';
 import {ItemComponent} from '../../item-component.interface';
+import {CreateComment} from '../discussion.actions';
+import {Store} from '@ngrx/store';
+import * as fromContent from '../../content.reducer';
 
 @Component({
   selector: 'app-discussion',
@@ -16,7 +19,8 @@ export class DiscussionComponent implements OnInit, ItemComponent {
 
   public validateForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private discussionService: DiscussionService) {
+  constructor(private fb: FormBuilder,
+              private store: Store<fromContent.State>) {
     this.validateForm = this.fb.group({
       comment : [ '', [ Validators.required, Validators.minLength(1) ] ]
     });
@@ -29,16 +33,7 @@ export class DiscussionComponent implements OnInit, ItemComponent {
       this.validateForm.controls[ key ].updateValueAndValidity();
     }
 
-    this.discussionService.discussionIdCommentsPost({
-      text: value.comment
-    }, this.item.id).subscribe((res: Comment) => {
-      this.item.comments.push(res);
-
-      // TODO: need more elegant solution with observables. Global state?
-      console.log(this.item.comments);
-
-      this.validateForm.reset();
-    });
+    this.store.dispatch(new CreateComment(this.item.id, value.comment, this.item.contentId));
   };
 
   ngOnInit() {

@@ -21,7 +21,12 @@ export class ContentService {
   }
 
   public getProvider(type: Content.TypeEnum): ContentProvider {
-    return this.getProviders().find(provider => provider.type === type);
+    const provider = this.getProviders().find(provider => provider.type === type);
+    if (!provider) {
+      throw new Error(`Provider of type ${type} not found.`);
+    }
+
+    return provider;
   }
 
   private getActualContent(content: Content): any {
@@ -70,7 +75,7 @@ export class ContentService {
 
   private loadComponent(content: Content, viewContainerRef: ViewContainerRef, component: any, ): void {
     if (!component) {
-      console.warn('Provider not found');
+      console.warn('Provider not found', content);
 
       return;
     }

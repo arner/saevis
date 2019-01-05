@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {Topic} from '../api/model/topic';
+import {Topic} from '../../api/model/topic';
 import {Observable} from 'rxjs';
-import {TopicService} from '../api/api/topic.service';
+import {TopicService} from '../../api/api/topic.service';
+import {select, Store} from '@ngrx/store';
+import * as fromRoot from '../../app.reducer';
+import * as topicsActions from '../topics.actions';
 
 @Component({
   selector: 'app-topics',
@@ -11,20 +13,20 @@ import {TopicService} from '../api/api/topic.service';
 })
 export class TopicsComponent implements OnInit {
   private topics: Observable<Topic[]>;
-  private userId: number;
 
   constructor(
     private topicService: TopicService,
-    private router: Router,
-    private route: ActivatedRoute,
-  ) { }
+    private store: Store<fromRoot.State>
+  ) {
+    this.topics = this.store.pipe(select(fromRoot.getAllTopics));
+  }
 
   ngOnInit() {
     this.refresh();
   }
 
   public refresh() {
-    this.topics = this.topicService.topicsGet();
+    this.store.dispatch(new topicsActions.GetTopics());
   }
 
   public create() {

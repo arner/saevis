@@ -16,7 +16,7 @@
       <nz-card-meta
         [nzAvatar]="topic.avatar"
         [nzTitle]="nzTitle"
-        [nzDescription]="topic.createdBy.username">
+        [nzDescription]="topic.createdBy?.username">
         <ng-template #nzTitle><a routerLink="{{topic.id}}">{{topic.title}}</a></ng-template>
       </nz-card-meta>
     </nz-card>

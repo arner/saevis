@@ -1,11 +1,11 @@
 import {Column, Entity, JoinColumn, OneToMany, OneToOne} from 'typeorm';
 import {Content} from '../content.entity';
 import {Comment} from './comment.entity';
-import {CreatedEntity} from '../../created.entity';
 import {ApiModelProperty} from '@nestjs/swagger';
+import {ContentItem} from '../content-item.entity';
 
 @Entity()
-export class Discussion extends CreatedEntity {
+export class Discussion extends ContentItem {
   public constructor(discussion: Partial<Discussion>) {
     super();
     Object.assign(this, discussion);

@@ -2,11 +2,11 @@ import {Column, Entity, JoinColumn, JoinTable, ManyToMany, OneToMany, OneToOne} 
 import {Content} from '../content.entity';
 import {IsDateString} from 'class-validator';
 import {User} from '../../users/user.entity';
-import {CreatedEntity} from '../../created.entity';
 import {ApiModelProperty} from '@nestjs/swagger';
+import {ContentItem} from '../content-item.entity';
 
 @Entity()
-export class Event extends CreatedEntity {
+export class Event extends ContentItem {
   public constructor(event?: Partial<Event>) {
     super();
     Object.assign(this, event);
