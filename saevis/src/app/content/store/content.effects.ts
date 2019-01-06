@@ -2,9 +2,9 @@ import {Injectable} from '@angular/core';
 import {Actions, Effect, ofType} from '@ngrx/effects';
 import {Action} from '@ngrx/store';
 import {from, Observable, of, pipe} from 'rxjs';
-import {catchError, map, switchMap} from 'rxjs/internal/operators';
+import {catchError, map, switchMap} from 'rxjs/operators';
 import * as contentActions from './content.actions';
-import {DefaultService} from '../api/api/default.service';
+import {DefaultService} from '../../api/api/default.service';
 
 @Injectable()
 export class ContentEffects {

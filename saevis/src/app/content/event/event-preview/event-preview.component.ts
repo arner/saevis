@@ -3,7 +3,7 @@ import {Event} from '../../../api/model/event';
 import {AuthenticationService} from '../../../auth/authentication.service';
 import {ItemComponent} from '../../item-component.interface';
 import {Participate, Unparticipate} from '../event.actions';
-import * as fromContent from '../../content.reducer';
+import * as fromContent from '../../store/content.reducer';
 import {Store} from '@ngrx/store';
 
 @Component({

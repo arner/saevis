@@ -6,8 +6,8 @@ import {Topic} from '../../../api/model/topic';
 import {Content} from '../../../api/model/content';
 import {DefaultService} from '../../../api/api/default.service';
 import {Store} from '@ngrx/store';
-import * as fromContent from '../../content.reducer';
-import {CreateContent} from '../../content.actions';
+import * as fromContent from '../../store/content.reducer';
+import {CreateContent} from '../../store/content.actions';
 
 @Component({
   selector: 'app-event-new',

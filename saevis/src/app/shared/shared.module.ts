@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {TimeagoModule} from 'ngx-timeago';
 import {NgZorroAntdModule} from 'ng-zorro-antd';
-import {AppRoutingModule} from '../app-routing.module';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 @NgModule({
@@ -12,16 +11,14 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
     TimeagoModule,
     NgZorroAntdModule,
     FormsModule,
-    ReactiveFormsModule,
-    AppRoutingModule
+    ReactiveFormsModule
   ],
   exports: [
     CommonModule,
     TimeagoModule,
     NgZorroAntdModule,
     FormsModule,
-    ReactiveFormsModule,
-    AppRoutingModule
+    ReactiveFormsModule
   ]
 })
 export class SharedModule { }

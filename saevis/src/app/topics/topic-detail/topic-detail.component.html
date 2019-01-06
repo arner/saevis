@@ -1,9 +1,9 @@
-<ng-container *ngIf="topic | async as topic">
+<ng-container *ngIf="topic$ | async as topic$">
   <h1>
-    {{topic.title}}
+    {{topic$.title}}
   </h1>
   <p>
-    Created by {{topic.createdBy?.username}} on {{topic.createdAt | date}}
+    Created by {{topic$.createdBy?.username}} on {{topic$.createdAt | date}}
   </p>
-  <app-contents [contents]="topic.content" [parentTopic]="topic"></app-contents>
+  <app-contents [contents]="topic$.content" [parentTopic]="topic$"></app-contents>
 </ng-container>

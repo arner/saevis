@@ -6,7 +6,7 @@ import {DiscussionService} from '../../../api/api/discussion.service';
 import {ItemComponent} from '../../item-component.interface';
 import {CreateComment} from '../discussion.actions';
 import {Store} from '@ngrx/store';
-import * as fromContent from '../../content.reducer';
+import * as fromContent from '../../store/content.reducer';
 
 @Component({
   selector: 'app-discussion',

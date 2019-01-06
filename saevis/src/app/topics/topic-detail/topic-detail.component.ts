@@ -1,32 +1,27 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Topic} from '../../api/model/topic';
 import {TopicService} from '../../api/api/topic.service';
-import {ActivatedRoute} from '@angular/router';
 import {Observable} from 'rxjs';
-import * as fromTopics from '../topics.reducer';
 import {Store} from '@ngrx/store';
-import * as topicsActions from '../topics.actions';
-import * as fromRoot from '../../app.reducer';
+import * as fromTopics from '../store/topics.reducer';
+import * as topicsSelectors from '../store/topics.selectors';
 
 @Component({
   selector: 'app-topic-detail',
   templateUrl: './topic-detail.component.html',
   styleUrls: ['./topic-detail.component.scss']
 })
-export class TopicDetailComponent {
-  public topic: Observable<Topic>;
+export class TopicDetailComponent implements OnInit {
+  public topic$: Observable<Topic>;
 
   constructor(
-    private route: ActivatedRoute,
     private topicService: TopicService,
     private store: Store<fromTopics.State>
   ) {
-    this.topic = this.store.select(fromRoot.getCurrentTopic);
+  }
 
-    // TODO add route to state
-    this.route.params.subscribe(params => {
-      this.store.dispatch(new topicsActions.SelectTopic(params['id']));
-    });
+  ngOnInit() {
+    this.topic$ = this.store.select(topicsSelectors.getSelectedTopic);
   }
 
   public save(topic: Topic): void {

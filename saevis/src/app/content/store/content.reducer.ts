@@ -1,10 +1,10 @@
 import {createEntityAdapter, EntityAdapter, EntityState} from '@ngrx/entity';
 import {createFeatureSelector, createSelector} from '@ngrx/store';
-import {Content} from '../api/model/content';
+import {Content} from '../../api/model/content';
 import * as contentActions from './content.actions';
-import * as eventActions from './event/event.actions';
-import * as discussionActions from './discussion/discussion.actions';
-import {Discussion} from '../api/model/discussion';
+import * as eventActions from '../event/event.actions';
+import * as discussionActions from '../discussion/discussion.actions';
+import {Discussion} from '../../api/model/discussion';
 
 export const adapter: EntityAdapter<Content> = createEntityAdapter<Content>();
 
@@ -52,7 +52,7 @@ export const {
 } = adapter.getSelectors();
 
 export const getState = createFeatureSelector<State>('content');
-export const getContentItems = createSelector(
+export const selectContentEntities = createSelector(
   getState,
   selectEntities
 );

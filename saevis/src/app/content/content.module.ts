@@ -8,10 +8,10 @@ import { ContentPreviewDirective } from './content-preview/content-preview.direc
 import {ContentDirective} from './content-item/content.directive';
 import { ContentsComponent } from './contents/contents.component';
 import {ContentItemComponent} from './content-item/content-item.component';
-import * as fromContent from './content.reducer';
+import * as fromContent from './store/content.reducer';
 import {StoreModule} from '@ngrx/store';
 import {EffectsModule} from '@ngrx/effects';
-import {ContentEffects} from './content.effects';
+import {ContentEffects} from './store/content.effects';
 import {EventEffects} from './event/event.effects';
 import {DiscussionEffects} from './discussion/discussion.effects';
 

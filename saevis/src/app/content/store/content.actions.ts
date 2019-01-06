@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import {Content} from '../api/model/content';
+import {Content} from '../../api/model/content';
 
 export enum ActionTypes {
   CreateContent = '[ContentApi] Create content',

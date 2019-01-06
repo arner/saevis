@@ -1,41 +1,24 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import {LoginComponent} from './login/login.component';
-import {TopicsComponent} from './topics/topics/topics.component';
 import {AuthGuard} from './auth/auth.guard';
-import {TopicDetailComponent} from './topics/topic-detail/topic-detail.component';
 
 const routes: Routes = [
   {
     path: '',
+    redirectTo: 'topics',
+    pathMatch: 'full',
     data: {
       breadcrumb: 'Home'
+    }
+  },
+  {
+    path: 'topics',
+    canActivate: [AuthGuard],
+    data: {
+      breadcrumb: 'Topics'
     },
-    children: [
-      {
-        path: 'topics',
-        canActivate: [AuthGuard],
-        data: {
-          breadcrumb: 'Topics'
-        },
-        children: [
-          {
-            path: '',
-            component: TopicsComponent,
-            data: {
-              breadcrumb: 'All'
-            }
-          },
-          {
-            path: ':id',
-            component: TopicDetailComponent,
-            data: {
-              breadcrumb: 'Detail'
-            }
-          }
-        ]
-      }
-    ]
+    loadChildren: './topics/topics.module#TopicsModule'
   },
   {
     path: 'login',

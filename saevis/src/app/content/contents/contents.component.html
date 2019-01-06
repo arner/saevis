@@ -22,7 +22,7 @@
            [nzDataSource]="contentProviders"
            [nzRenderItem]="provider">
     <ng-template #provider let-provider let-i="index">
-      <nz-list-item (click)="createNewContentModal(provider.type, topic)">
+      <nz-list-item (click)="createNewContentModal(provider.type, topic$)">
         <nz-list-item-meta
           [nzTitle]="provider.title"
           [nzAvatar]="avatarTemplate"

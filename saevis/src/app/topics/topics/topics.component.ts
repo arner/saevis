@@ -1,37 +1,28 @@
 import { Component, OnInit } from '@angular/core';
 import {Topic} from '../../api/model/topic';
 import {Observable} from 'rxjs';
-import {TopicService} from '../../api/api/topic.service';
 import {select, Store} from '@ngrx/store';
-import * as fromRoot from '../../app.reducer';
-import * as topicsActions from '../topics.actions';
+
+// TODO barrels
+import * as topicsSelectors from '../store/topics.selectors';
+import * as topicsActions from '../store/topics.actions';
+import * as fromTopics from '../store/topics.reducer';
 
 @Component({
   selector: 'app-topics',
   templateUrl: './topics.component.html',
   styleUrls: ['./topics.component.scss']
 })
-export class TopicsComponent implements OnInit {
+export class TopicsComponent {
   private topics: Observable<Topic[]>;
 
   constructor(
-    private topicService: TopicService,
-    private store: Store<fromRoot.State>
+    private store: Store<fromTopics.State>
   ) {
-    this.topics = this.store.pipe(select(fromRoot.getAllTopics));
-  }
-
-  ngOnInit() {
-    this.refresh();
-  }
-
-  public refresh() {
-    this.store.dispatch(new topicsActions.GetTopics());
+    this.topics = this.store.pipe(select(topicsSelectors.getAllTopics));
   }
 
   public create() {
-    this.topicService.topicsPost({title: 'Test topic'}).subscribe((r) => {
-      console.log(r);
-    })
+    this.store.dispatch(new topicsActions.CreateTopic({title: 'Test topic'}));
   }
 }

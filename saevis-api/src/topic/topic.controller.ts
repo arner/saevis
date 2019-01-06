@@ -20,8 +20,10 @@ export class TopicController {
   }
 
   @Post()
-  public async create(@Body() topic: Topic): Promise<Topic> {
+  public async create(@Body() topic: Topic, @Req() req): Promise<Topic> {
     delete topic.id;
+
+    topic.createdBy = req.user;
 
     return await Topic.save(topic);
   }

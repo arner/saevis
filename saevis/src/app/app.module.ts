@@ -1,34 +1,36 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import { LoginComponent } from './login/login.component';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {AuthModule} from './auth/auth.module';
-import {ApiModule} from './api/api.module';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
-import {BASE_PATH} from './api/variables';
-import { TopicsComponent } from './topics/topics/topics.component';
-import {Configuration} from './api/';
-import {apiConfigurationFactory} from './apiConfigurationFactory';
-import {ErrorInterceptor} from './error.interceptor';
-import { TopicDetailComponent } from './topics/topic-detail/topic-detail.component';
-import {ContentModule} from './content/content.module';
-import {NgZorroAntdModule} from 'ng-zorro-antd';
-import { NZ_I18N } from 'ng-zorro-antd';
-import { en_US } from 'ng-zorro-antd';
 import { registerLocaleData } from '@angular/common';
 import en from '@angular/common/locales/en';
-import {TimeagoModule} from 'ngx-timeago';
-import {environment} from '../environments/environment';
+
+// ngrx
 import { StoreModule } from '@ngrx/store';
-import {TopicsModule} from './topics/topics.module';
-import {storeFreeze} from 'ngrx-store-freeze';
-import {SharedModule} from './shared/shared.module';
 import {EffectsModule} from '@ngrx/effects';
 import {StoreDevtoolsModule} from '@ngrx/store-devtools';
-import {reducers} from './app.reducer';
+import {CustomSerializer, reducers} from './store/app.reducer';
+import {RouterStateSerializer, StoreRouterConnectingModule} from '@ngrx/router-store';
+import {storeFreeze} from 'ngrx-store-freeze';
+
+// API
+import {ApiModule} from './api/api.module';
+import {BASE_PATH} from './api/variables';
+import {Configuration} from './api/';
+import {apiConfigurationFactory} from './apiConfigurationFactory';
+
+import {NgZorroAntdModule, NZ_I18N, en_US} from 'ng-zorro-antd';
+import {TimeagoModule} from 'ngx-timeago';
+
+import {ErrorInterceptor} from './error.interceptor';
+import {environment} from '../environments/environment';
+
+import {AuthModule} from './auth/auth.module';
+import {LoginComponent} from './login/login.component';
+import {SharedModule} from './shared/shared.module';
+import {AppRoutingModule} from './app-routing.module';
+import {ContentModule} from './content/content.module';
 
 registerLocaleData(en);
 
@@ -45,14 +47,17 @@ registerLocaleData(en);
     HttpClientModule,
     NgZorroAntdModule,
     ApiModule,
-    TopicsModule,
+    ContentModule, // Eager load for now
     TimeagoModule.forRoot(),
     StoreModule.forRoot(reducers, {metaReducers: [storeFreeze]}),
     EffectsModule.forRoot([]),
-    StoreDevtoolsModule.instrument()
+    StoreRouterConnectingModule,
+    StoreDevtoolsModule.instrument(),
+    AppRoutingModule
   ],
   providers: [
     { provide: BASE_PATH, useValue: environment.apiBaseUrl },
+    { provide: RouterStateSerializer, useClass: CustomSerializer},
     { provide: Configuration, useFactory: apiConfigurationFactory},
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     { provide: NZ_I18N, useValue: en_US }

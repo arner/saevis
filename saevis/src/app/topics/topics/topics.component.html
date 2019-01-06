@@ -6,7 +6,7 @@
 
   <!--[nzPagination]="pagination"-->
   <ng-template #topic let-topic let-i="index">
-    <button *ngIf="i===0" nz-button nzType="dashed" class="list-item new-button"><i nz-icon type="plus-circle"></i>&nbsp;Create topic</button>
+    <button *ngIf="i===0" nz-button nzType="dashed" class="list-item new-button" (click)="create()"><i nz-icon type="plus-circle"></i></button>
 
     <nz-card [nzActions]="[actions]" class="list-item">
       <ng-template #actions>
