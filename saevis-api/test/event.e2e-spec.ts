@@ -1,13 +1,14 @@
 import * as request from 'supertest';
-import {Helper} from './Helper';
+import {Helper} from './helper';
+import {User} from '../src/users/user.entity';
 
 const helper = new Helper();
 const createURL = `${helper.baseURL}/content`;
 const eventURL = `${helper.baseURL}/events`;
-const testUser = {
+const testUser = new User({
   id: 1,
   username: 'arne'
-};
+});
 
 const getTestEvent = () => {
   return {
@@ -25,7 +26,7 @@ describe('Event (e2e)', () => {
   let createdEvent: any;
 
   beforeAll(async () => {
-    token = await helper.getToken(testUser.id);
+    token = await helper.getToken(testUser);
     topicId = await helper.createTestTopic(token);
 
     return request(createURL)

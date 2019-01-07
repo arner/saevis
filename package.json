@@ -4,8 +4,8 @@
   "description": "Site for friends",
   "main": "docker-compose.yml",
   "config": {
-    "client": "registry.eu-de.bluemix.net/arne/saevis-client",
-    "server": "registry.eu-de.bluemix.net/arne/saevis-server"
+    "client": "arner/saevis-web",
+    "server": "arner/saevis-api"
   },
   "scripts": {
     "start": "docker-compose up",

@@ -9,17 +9,21 @@ export class Helper {
   public readonly baseURL = 'http://localhost:3000';
 
 
-  public async getToken(userId: number = 1): Promise<string> {
+  public async getToken(user?: User): Promise<string> {
+    if (!user) {
+      user = new User({id: 1, username: 'arne'});
+    }
+
     const moduleFixture = await Test.createTestingModule({
       imports: [AuthModule]
     }).overrideProvider(getRepositoryToken(User))
-      .useValue({findOne: () => ({id: userId})})
+      .useValue({findOne: () => ({id: user.id})})
       .compile();
 
     const app = moduleFixture.createNestApplication();
     const authService = app.get<AuthService>(AuthService);
 
-    return (await authService.createToken()).accessToken;
+    return (await authService.createToken(user));
   }
 
   public async createTestTopic(token?: string): Promise<number> {
@@ -39,7 +43,7 @@ export class Helper {
     });
   }
 
-  private getTestTopic() {
+  public getTestTopic() {
     return {
       title: 'test topic'
     };

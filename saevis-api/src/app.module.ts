@@ -19,7 +19,7 @@ import { ContentModule } from './content/content.module';
       synchronize: true,
       dropSchema: true,
       logging: true,
-      entities: [__dirname + '/../**/*.entity{.ts,.js}'],
+      entities: [__dirname + '/../**/*.entity' + (process.env.NODE_ENV === 'production' ? '.js' : '.ts')],
     }),
     ContentModule
   ],

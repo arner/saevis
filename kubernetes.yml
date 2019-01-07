@@ -12,7 +12,7 @@ spec:
     spec:
       containers:
       - name: api
-        image: registry.eu-de.bluemix.net/arne/saevis-api:latest
+        image: arner/saevis-api:latest
 ---
 apiVersion: extensions/v1beta1
 kind: Deployment
@@ -28,7 +28,7 @@ spec:
     spec:
       containers:
       - name: client
-        image: registry.eu-de.bluemix.net/arne/saevis:latest
+        image: arner/saevis-web:latest
         env:
          - name: SERVER_URL
            value: http:\/\/169.51.8.10:30072

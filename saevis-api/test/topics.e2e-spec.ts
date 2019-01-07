@@ -1,5 +1,5 @@
 import * as request from 'supertest';
-import {Helper} from './Helper';
+import {Helper} from './helper';
 
 const helper = new Helper();
 const URL = `${helper.baseURL}/topics`;
