@@ -55,7 +55,6 @@ export class EventNewComponent implements OnInit, NewComponent {
       this.validateForm.controls[ i ].updateValueAndValidity();
     }
 
-    // TODO reduxify
     const content = {
       topicId: this.topic.id,
       type: Content.TypeEnum.EVENT,

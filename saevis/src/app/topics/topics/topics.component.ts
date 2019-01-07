@@ -14,7 +14,7 @@ import * as fromTopics from '../store/topics.reducer';
   styleUrls: ['./topics.component.scss']
 })
 export class TopicsComponent {
-  private topics: Observable<Topic[]>;
+  public topics: Observable<Topic[]>;
 
   constructor(
     private store: Store<fromTopics.State>
